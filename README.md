@@ -1,7 +1,7 @@
 # Project SAS SMK TI BAZMA
 
 ## Penginstallan Aplikasi
-### Sebelum install Laravel 10 pastikan PHP anda diatas 8.2
+
 Cara instalasi seperti berikut:
 
 1. git clone
