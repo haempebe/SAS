@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IzinController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TendikController;
 use Illuminate\Support\Facades\Auth;
@@ -31,5 +32,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/siswa-edit/{id}', 'edit')->name('siswa.edit');
         Route::put('/siswa-edit/{id}', 'update')->name('siswa.update');
         Route::delete('siswa/{id}', 'destroy')->name('siswa.delete');
+    });
+    Route::controller(IzinController::class)->group(function () {
+        Route::get('/izin', 'index');
+        Route::get('/izin-create', 'create');
+        Route::post('/izin-create', 'store')->name('izin.perform');
+        Route::get('/izin-edit/{id}', 'edit')->name('izin.edit');
+        Route::put('/izin-edit/{id}', 'update')->name('izin.update');
+        Route::delete('izin/{id}', 'destroy')->name('izin.delete');
     });
 });

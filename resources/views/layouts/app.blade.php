@@ -79,7 +79,7 @@
                                 </a>
                             </li>
                             <li
-                                class="nav-item dropdown {{ str_contains(request()->url(), 'tendik' && 'siswa') == true ? 'active show' : '' }}">
+                                class="nav-item dropdown {{ str_contains(request()->url(), 'tendik' && 'siswa') == true ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                                     data-bs-auto-close="false" role="button" aria-expanded="true">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -111,8 +111,8 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./form-elements.html">
+                            <li class="nav-item {{ str_contains(request()->url(), 'izin') == true ? 'active' : '' }}">
+                                <a class="nav-link" href="izin">
                                     <span
                                         class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

@@ -120,4 +120,9 @@ class SiswaController extends Controller
 
         return redirect('/siswa')->with('delete', 'Data Siswa Berhasil Dihapus');
     }
+    public function show($id)
+    {
+        $siswa = siswa::find($id);
+        return view('admin.izin', ['siswa' => $siswa]);
+    }
 }
