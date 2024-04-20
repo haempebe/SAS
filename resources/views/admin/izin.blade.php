@@ -177,9 +177,10 @@
                                                         <h1>Yakin Ingin<br>Menghapus Data Ini</h1>
                                                         <div class="row justify-content-center mt-5">
                                                             <div class="col-3">
-                                                                <a href="#" class="btn btn-danger w-100">
+                                                                <button href="#" type="submit"
+                                                                    class="btn btn-danger w-100">
                                                                     YA
-                                                                </a>
+                                                                </button>
                                                             </div>
                                                             <div class="col-3">
                                                                 <a href="#" class="btn btn-outline-primary w-100">
@@ -202,6 +203,17 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-footer d-flex align-items-center">
+                        <p class="m-0 text-secondary">
+                            Showing {{ $izin->firstItem() }}
+                            to {{ $izin->lastItem() }}
+                            of {{ $izin->total() }}
+                            entries
+                        </p>
+                        <ul class="pagination m-0 ms-auto">
+                            {{ $izin->links() }}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -223,12 +235,12 @@
                             <select class="form-select" name="nama">
                                 <optgroup label="Tendik">
                                     @foreach ($tendik as $itemT)
-                                        <option value="{{ $itemT->id }}">{{ $itemT->nama }}</option>
+                                        <option value="{{ $itemT->nama }}">{{ $itemT->nama }}</option>
                                     @endforeach
                                 </optgroup>
                                 <optgroup label="Siswa">
                                     @foreach ($siswa as $itemS)
-                                        <option value="{{ $itemS->id }}">{{ $itemS->nama }}</option>
+                                        <option value="{{ $itemS->nama }}">{{ $itemS->nama }}</option>
                                     @endforeach
                                 </optgroup>
                             </select>
@@ -502,106 +514,109 @@
             </form>
         </div> --}}
         <div class="modal modal-blur fade" id="modal-update" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('izin.update', $item->id) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tambah Data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <label class="form-label required">Nama</label>
-                        <div class="mb-3">
-                            <select class="form-select" name="nama" value="{{ $item->nama }}>
+            <form action="{{ route('izin.update', $item->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tambah Data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label class="form-label required">Nama</label>
+                            <div class="mb-3">
+                                <select class="form-select" name="nama"
+                                    value="{{ $item->nama }}>
                                 <optgroup label="Tendik">
                                     @foreach ($tendik as $itemT)
                                         <option value="{{ $itemT->id }}">{{ $itemT->nama }}</option>
                                     @endforeach
-                                </optgroup>
-                                <optgroup label="Siswa">
-                                    @foreach ($siswa as $itemS)
-                                        <option value="{{ $itemS->id }}">{{ $itemS->nama }}</option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
-                            @error('nama')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
-                        </div>
-                        <label class="form-label required">Role</label>
-                        <div class="form-selectgroup-boxes row mb-3">
-                            <div class="col-lg-6">
-                                <label class="form-selectgroup-item">
-                                    <input type="radio" name="role" value="Tendik" class="form-selectgroup-input"
-                                        checked>
-                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <span class="me-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </span>
-                                        <span class="form-selectgroup-label-content">
-                                            <span class="form-selectgroup-title strong mb-1">Tendik</span>
-                                        </span>
-                                    </span>
-                                </label>
+                                    </optgroup>
+                                    <optgroup label="Siswa">
+                                        @foreach ($siswa as $itemS)
+                                            <option value="{{ $itemS->id }}">{{ $itemS->nama }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                                @error('nama')
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                @enderror
                             </div>
-                            <div class="col-lg-6">
-                                <label class="form-selectgroup-item">
-                                    <input type="radio" name="role" value="Siswa" class="form-selectgroup-input"
-                                        checked>
-                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <span class="me-3">
-                                            <span class="form-selectgroup-check"></span>
+                            <label class="form-label required">Role</label>
+                            <div class="form-selectgroup-boxes row mb-3">
+                                <div class="col-lg-6">
+                                    <label class="form-selectgroup-item">
+                                        <input type="radio" name="role" value="Tendik"
+                                            class="form-selectgroup-input" checked>
+                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <span class="me-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </span>
+                                            <span class="form-selectgroup-label-content">
+                                                <span class="form-selectgroup-title strong mb-1">Tendik</span>
+                                            </span>
                                         </span>
-                                        <span class="form-selectgroup-label-content">
-                                            <span class="form-selectgroup-title strong mb-1">Siswa</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="form-selectgroup-item">
+                                        <input type="radio" name="role" value="Siswa"
+                                            class="form-selectgroup-input" checked>
+                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <span class="me-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </span>
+                                            <span class="form-selectgroup-label-content">
+                                                <span class="form-selectgroup-title strong mb-1">Siswa</span>
+                                            </span>
                                         </span>
-                                    </span>
-                                </label>
+                                    </label>
+                                </div>
+                                @error('role')
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                @enderror
                             </div>
-                            @error('role')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
+                            <label class="form-label required">Jenis Izin</label>
+                            <div class="mb-3">
+                                <select class="form-select" name="jenis_izin">
+                                    <option value="Izin">Izin</option>
+                                    <option value="Sakit">Sakit</option>
+                                    <option value="Alpa">Alpa</option>
+                                    <option value="Lembur">Lembur</option>
+                                </select>
+                                @error('jenis_izin')
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                @enderror
+                            </div>
+                            <label class="form-label required">Keterangan</label>
+                            <div class="mb-3">
+                                <textarea rows="5" class="form-control" name="keterangan"></textarea>
+                                @error('keterangan')
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                @enderror
+                            </div>
                         </div>
-                        <label class="form-label required">Jenis Izin</label>
-                        <div class="mb-3">
-                            <select class="form-select" name="jenis_izin">
-                                <option value="Izin">Izin</option>
-                                <option value="Sakit">Sakit</option>
-                                <option value="Alpa">Alpa</option>
-                                <option value="Lembur">Lembur</option>
-                            </select>
-                            @error('jenis_izin')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </a>
+                            <button href="#" type="submit" class="btn btn-primary ms-auto"
+                                data-bs-dismiss="modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M12 5l0 14"></path>
+                                    <path d="M5 12l14 0"></path>
+                                </svg>
+                                Simpan
+                            </button>
                         </div>
-                        <label class="form-label required">Keterangan</label>
-                        <div class="mb-3">
-                            <textarea rows="5" class="form-control" name="keterangan"></textarea>
-                            @error('keterangan')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                            Cancel
-                        </a>
-                        <button href="#" type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M12 5l0 14"></path>
-                                <path d="M5 12l14 0"></path>
-                            </svg>
-                            Simpan
-                        </button>
                     </div>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
     @endforeach
 @endsection

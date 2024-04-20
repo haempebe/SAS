@@ -10,7 +10,7 @@ class TendikController extends Controller
 {
     public function index()
     {
-        $tendik = Tendik::get();
+        $tendik = Tendik::orderBy('nama')->paginate(10);
         return view('admin.tendik', compact('tendik'));
     }
     public function store(Request $request)

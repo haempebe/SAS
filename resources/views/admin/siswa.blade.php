@@ -3,14 +3,58 @@
 @section('content')
     <div class="page-wrapper">
         <div class="container">
-            @if (session('status'))
+            @if (session('create'))
                 <div class="alert alert-success alert-dismissible mt-3" role="alert">
-                    {{ session('status') }}
+                    <div class="d-flex">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M5 12l5 5l10 -10"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            {{ session('create') }}
+                        </div>
+                    </div>
+                    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                </div>
+            @endif
+            @if (session('update'))
+                <div class="alert alert-info alert-dismissible mt-3" role="alert">
+                    <div class="d-flex">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M5 12l5 5l10 -10"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            {{ session('update') }}
+                        </div>
+                    </div>
+                    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
                 </div>
             @endif
             @if (session('delete'))
                 <div class="alert alert-danger alert-dismissible mt-3" role="alert">
-                    {{ session('delete') }}
+                    <div class="d-flex">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M5 12l5 5l10 -10"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            {{ session('delete') }}
+                        </div>
+                    </div>
+                    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
                 </div>
             @endif
             <div class="page-header d-print-none mb-3">
@@ -149,6 +193,17 @@
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+                    <div class="card-footer d-flex align-items-center">
+                        <p class="m-0 text-secondary">
+                            Showing {{ $siswa->firstItem() }}
+                            to {{ $siswa->lastItem() }}
+                            of {{ $siswa->total() }}
+                            entries
+                        </p>
+                        <ul class="pagination m-0 ms-auto">
+                            {{ $siswa->links() }}
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ class IzinController extends Controller
 {
     public function index()
     {
-        $izin = Izin::get();
+        $izin = Izin::orderBy('created_at','desc')->paginate(10);
         $tendik = tendik::get();
         $siswa = siswa::get();
         return view('admin.izin', compact('izin', 'tendik', 'siswa'));

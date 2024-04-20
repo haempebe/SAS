@@ -191,6 +191,17 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-footer d-flex align-items-center">
+                        <p class="m-0 text-secondary">
+                            Showing {{ $tendik->firstItem() }}
+                            to {{ $tendik->lastItem() }}
+                            of {{ $tendik->total() }}
+                            entries
+                        </p>
+                        <ul class="pagination m-0 ms-auto">
+                            {{ $tendik->links() }}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -342,8 +353,8 @@
         </form>
     </div>
 
+    {{-- Form Edit --}}
     @foreach ($tendik as $item)
-        {{-- Form Edit --}}
         <div class="modal modal-blur fade" id="modal-update" tabindex="-1" role="dialog" aria-hidden="true">
             <form action="{{ route('tendik.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
