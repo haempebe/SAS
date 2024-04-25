@@ -19,6 +19,7 @@
     <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet" />
+    @yield('styles')
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
@@ -62,8 +63,7 @@
                         <ul class="navbar-nav pt-lg-3">
                             <li class="nav-item {{ Route::currentRouteName() == 'home' ? 'active' : '' }}">
                                 <a class="nav-link" href="/">
-                                    <span
-                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                             stroke-linecap="round" stroke-linejoin="round">
@@ -79,9 +79,10 @@
                                 </a>
                             </li>
                             <li
-                                class="nav-item dropdown {{ str_contains(request()->url(), 'tendik' && 'siswa') == true ? 'active show' : '' }}">
-                                <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="false" role="button" aria-expanded="true">
+                                class="nav-item dropdown {{ Route::currentRouteName() == 'siswa' ? 'active show' : '' }} {{ Route::currentRouteName() == 'tendik' ? 'active show' : '' }}">
+                                <a class="nav-link dropdown-toggle {{ Route::currentRouteName() == 'siswa' ? 'show' : '' }} {{ Route::currentRouteName() == 'tendik' ? 'show' : '' }}"
+                                    href="#navbar-layout" data-bs-toggle="dropdown" data-bs-auto-close="false"
+                                    role="button" aria-expanded="true">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -96,7 +97,8 @@
                                         Peserta
                                     </span>
                                 </a>
-                                <div class="dropdown-menu">
+                                <div
+                                    class="dropdown-menu {{ Route::currentRouteName() == 'siswa' ? 'show' : '' }} {{ Route::currentRouteName() == 'tendik' ? 'show' : '' }}">
                                     <div class="dropdown-menu-columns">
                                         <div class="dropdown-menu-column">
                                             <a class="dropdown-item {{ str_contains(request()->url(), 'tendik') == true ? 'active' : '' }}"
@@ -186,7 +188,7 @@
             </aside>
             {{-- Top Nav --}}
             <header class="navbar navbar-expand-md d-none d-lg-flex d-print-none">
-                <div class="container-xl">
+                <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -238,10 +240,18 @@
                 </div>
             </header>
         @endauth
-
-        @yield('content')
+        <div class="page-wrapper">
+            @guest
+                @yield('content')
+            @endguest
+            @auth
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+            @endauth
+        </div>
     </div>
-
+    @yield('scripts')
     <!-- Libs JS -->
     <script src="{{ asset('dist/libs/apexcharts/dist/apexcharts.min.js') }}" defer></script>
     <script src="{{ asset('dist/libs/jsvectormap/dist/js/jsvectormap.min.js') }}" defer></script>
@@ -329,6 +339,7 @@
         });
         // @formatter:on
     </script>
+
 </body>
 
 </html>

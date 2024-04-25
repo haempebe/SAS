@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\TendikController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IzinController;
+use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\TendikController;
 
 
 
@@ -13,7 +15,8 @@ Auth::routes([
     'verify' => false, // Email Verification Routes...
 ]);
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/masukfind', [HomeController::class, 'masuk'])->name('home.masuk');
 
 Route::middleware(['auth'])->group(function () {
     Route::controller(TendikController::class)->group(function () {
@@ -31,5 +34,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/siswa-edit/{id}', 'edit')->name('siswa.edit');
         Route::put('/siswa-edit/{id}', 'update')->name('siswa.update');
         Route::delete('siswa/{id}', 'destroy')->name('siswa.delete');
+    });
+    Route::controller(IzinController::class)->group(function () {
+        Route::get('/izin', 'index');
+        Route::get('/izin-create', 'create');
+        Route::post('/izin-create', 'store')->name('izin.perform');
+        Route::get('/izin-edit/{id}', 'edit')->name('izin.edit');
+        Route::put('/izin-edit/{id}', 'update')->name('izin.update');
+        Route::delete('izin/{id}', 'destroy')->name('izin.delete');
     });
 });

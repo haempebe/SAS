@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="page-wrapper">
-        <div class="container">
+
             <div class="page-header d-print-none mb-3">
                 <div class="row g-2 align-items-center">
                     <div class="col">
@@ -225,8 +224,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
     {{-- Form Create --}}
     <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">

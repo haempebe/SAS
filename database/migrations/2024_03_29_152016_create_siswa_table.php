@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('role');
-            $table->integer('nomor_whatsapp');
+            $table->string('nomor_whatsapp');
             $table->string('foto');
             $table->timestamps();
         });

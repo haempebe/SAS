@@ -28,6 +28,8 @@ class TendikController extends Controller
         ]);
 
 
+
+
         $fotoName = time() . '.' . $request->foto->extension();
 
         $request->foto->move(public_path('img/foto'), $fotoName);

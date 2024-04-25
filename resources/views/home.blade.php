@@ -1,127 +1,158 @@
 @extends('layouts.app')
+@section('styles')
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.17);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
+        .bg-gradient-orange {
+            background: rgb(255, 114, 0);
+            background: linear-gradient(335deg, rgba(255, 114, 0, 1) 0%, rgba(255, 172, 4, 1) 90%, rgba(252, 179, 88, 1) 100%);
+        }
+    </style>
+@endsection
 @section('content')
-    <div class="page-wrapper mt-3">
-        <div class="container">
-            <div class="row row-deck row-cards">
-                <div class="col-12">
-                    <div class="row row-cards">
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="card card-sm">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span
-                                                class="bg-primary text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path
-                                                        d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2">
-                                                    </path>
-                                                    <path d="M12 3v3m0 12v3"></path>
-                                                </svg>
-                                            </span>
+    @php
+        date_default_timezone_set('Asia/jakarta');
+    @endphp
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card rounded-4 mt-4 mb-3">
+                        <div class="card-body">
+                            <div class="page-header d-print-none mt-0">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col">
+                                        <div class="page-pretitle">
+                                            Sistem Absensi Sekolah
                                         </div>
-                                        <div class="col">
-                                            <div class="font-weight-medium">
-                                                132 Sales
-                                            </div>
-                                            <div class="text-secondary">
-                                                12 waiting payments
-                                            </div>
-                                        </div>
+                                        <h2 class="page-title">
+                                            SMK TI Bazma
+                                        </h2>
+                                    </div>
+                                    <div class="col-auto ms-auto d-print-none">
+                                        <h2 class="page-title">
+                                            <div id="jam"></div>
+                                        </h2>
+                                        <p class="mb-0 page-pretitle">{{ $time = now()->isoFormat('dddd, D MMMM Y') }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="card card-sm">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span
-                                                class="bg-green text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                                                    <path d="M17 17h-11v-14h-2"></path>
-                                                    <path d="M6 5l14 1l-1 7h-13"></path>
-                                                </svg>
-                                            </span>
+                    </div>
+                    <div class="card rounded-4 mb-3">
+                        <div class="card-body py-5">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <div class="align-items-center">
+                                        <div class="text-center">
+                                            <img src="{{ asset('img/gif/6.gif') }}" alt=""
+                                                style="max-height: 250px;">
                                         </div>
-                                        <div class="col">
-                                            <div class="font-weight-medium">
-                                                78 Orders
-                                            </div>
-                                            <div class="text-secondary">
-                                                32 shipped
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="card card-sm">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span
-                                                class="bg-twitter text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path
-                                                        d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z">
-                                                    </path>
-                                                </svg>
-                                            </span>
+                                <div class="col-md-6">
+                                    <div class="card rounded-3 border-0">
+                                        <div class="card-header">
+                                            <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
+                                                <li class="nav-item">
+                                                    <a href="#tabs-masuk-form" class="nav-link active" data-bs-toggle="tab">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                                                            <path d="M3 12h13l-3 -3" />
+                                                            <path d="M13 15l3 -3" />
+                                                        </svg>
+                                                        <span class="ms-1"></span>Masuk
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#tabs-pulang-form" class="nav-link" data-bs-toggle="tab">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                                                            <path d="M15 12h-12l3 -3" />
+                                                            <path d="M6 15l-3 -3" />
+                                                        </svg>
+                                                        <span class="ms-1"></span>Pulang
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <div class="col">
-                                            <div class="font-weight-medium">
-                                                623 Shares
-                                            </div>
-                                            <div class="text-secondary">
-                                                16 today
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="card card-sm">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <span
-                                                class="bg-facebook text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-facebook -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path
-                                                        d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3">
-                                                    </path>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                        <div class="col">
-                                            <div class="font-weight-medium">
-                                                132 Likes
-                                            </div>
-                                            <div class="text-secondary">
-                                                21 today
+                                        <div class="card-body">
+                                            <div class="tab-content">
+                                                <div class="tab-pane active show" id="tabs-masuk-form">
+                                                    <form action="{{ route('home.masuk') }}">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nomor induk</label>
+                                                            <input type="text" class="form-control rounded-4"
+                                                                name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                value="{{ old('noid') }}" />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nama Peserta</label>
+                                                            <input type="text" class="form-control rounded-4"
+                                                                name="nama" placeholder="Input placeholder"
+                                                                value="{{ old('nama') }}" />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Kelas</label>
+                                                            <input type="text" class="form-control rounded-4"
+                                                                name="kelas" placeholder="Input placeholder"
+                                                                value="{{ old('kelas') }}" />
+                                                        </div>
+                                                        @if ($errors->any())
+                                                            <div class="text-danger mb-3">
+                                                                {{ $errors->first() }}
+                                                            </div>
+                                                        @endif
+                                                        @if (session('message'))
+                                                            <div class="text-danger mb-3" role="alert">
+                                                                {{ session('message') }}
+                                                            </div>
+                                                        @endif
+                                                        <button type="submit" id="masukButton"
+                                                            class="btn btn-primary rounded-4 w-100">Masuk</button>
+                                                    </form>
+                                                </div>
+                                                <div class="tab-pane" id="tabs-pulang-form">
+                                                    <form action="">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nomor induk</label>
+                                                            <input type="text" class="form-control rounded-4"
+                                                                name="noid" placeholder="Masukan NISN/NUPTK" />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nama Peserta</label>
+                                                            <input type="text" class="form-control rounded-4"
+                                                                name="nama" placeholder="Input placeholder" />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Kelas</label>
+                                                            <input type="text" class="form-control rounded-4"
+                                                                name="kelas" placeholder="Input placeholder" />
+                                                        </div>
+                                                        <button type="submit" id="pulangButton"
+                                                            class="btn btn-primary rounded-4 w-100">Pulang</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -129,828 +160,318 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Social Media Traffic</h3>
-                        </div>
-                        <table class="table card-table table-vcenter">
-                            <thead>
-                                <tr>
-                                    <th>Network</th>
-                                    <th colspan="2">Visitors</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Instagram</td>
-                                    <td>3,550</td>
-                                    <td class="w-50">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-primary" style="width: 71.0%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Twitter</td>
-                                    <td>1,798</td>
-                                    <td class="w-50">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-primary" style="width: 35.96%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Facebook</td>
-                                    <td>1,245</td>
-                                    <td class="w-50">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-primary" style="width: 24.9%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>TikTok</td>
-                                    <td>986</td>
-                                    <td class="w-50">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-primary" style="width: 19.72%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Pinterest</td>
-                                    <td>854</td>
-                                    <td class="w-50">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-primary" style="width: 17.08%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>VK</td>
-                                    <td>650</td>
-                                    <td class="w-50">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-primary" style="width: 13.0%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Pinterest</td>
-                                    <td>420</td>
-                                    <td class="w-50">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar bg-primary" style="width: 8.4%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Tasks</h3>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table card-table table-vcenter">
-                                <tbody>
-                                    <tr>
-                                        <td class="w-1 pe-0">
-                                            <input type="checkbox" class="form-check-input m-0 align-middle"
-                                                aria-label="Select task" checked="">
-                                        </td>
-                                        <td class="w-100">
-                                            <a href="#" class="text-reset">Extend the data model.</a>
-                                        </td>
-                                        <td class="text-nowrap text-secondary">
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path
-                                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z">
-                                                </path>
-                                                <path d="M16 3v4"></path>
-                                                <path d="M8 3v4"></path>
-                                                <path d="M4 11h16"></path>
-                                                <path d="M11 15h1"></path>
-                                                <path d="M12 15v3"></path>
-                                            </svg>
-                                            August 05, 2021
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M5 12l5 5l10 -10"></path>
-                                                </svg>
-                                                2/7
-                                            </a>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/message -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M8 9h8"></path>
-                                                    <path d="M8 13h6"></path>
-                                                    <path
-                                                        d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z">
-                                                    </path>
-                                                </svg>
-                                                3</a>
-                                        </td>
-                                        <td>
-                                            <span class="avatar avatar-sm"
-                                                style="background-image: url(./static/avatars/000m.jpg)"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="w-1 pe-0">
-                                            <input type="checkbox" class="form-check-input m-0 align-middle"
-                                                aria-label="Select task">
-                                        </td>
-                                        <td class="w-100">
-                                            <a href="#" class="text-reset">Verify the event flow.</a>
-                                        </td>
-                                        <td class="text-nowrap text-secondary">
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path
-                                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z">
-                                                </path>
-                                                <path d="M16 3v4"></path>
-                                                <path d="M8 3v4"></path>
-                                                <path d="M4 11h16"></path>
-                                                <path d="M11 15h1"></path>
-                                                <path d="M12 15v3"></path>
-                                            </svg>
-                                            January 01, 2019
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M5 12l5 5l10 -10"></path>
-                                                </svg>
-                                                3/10
-                                            </a>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/message -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M8 9h8"></path>
-                                                    <path d="M8 13h6"></path>
-                                                    <path
-                                                        d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z">
-                                                    </path>
-                                                </svg>
-                                                6</a>
-                                        </td>
-                                        <td>
-                                            <span class="avatar avatar-sm">JL</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="w-1 pe-0">
-                                            <input type="checkbox" class="form-check-input m-0 align-middle"
-                                                aria-label="Select task">
-                                        </td>
-                                        <td class="w-100">
-                                            <a href="#" class="text-reset">Database backup and maintenance</a>
-                                        </td>
-                                        <td class="text-nowrap text-secondary">
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path
-                                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z">
-                                                </path>
-                                                <path d="M16 3v4"></path>
-                                                <path d="M8 3v4"></path>
-                                                <path d="M4 11h16"></path>
-                                                <path d="M11 15h1"></path>
-                                                <path d="M12 15v3"></path>
-                                            </svg>
-                                            December 28, 2018
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M5 12l5 5l10 -10"></path>
-                                                </svg>
-                                                0/6
-                                            </a>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/message -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M8 9h8"></path>
-                                                    <path d="M8 13h6"></path>
-                                                    <path
-                                                        d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z">
-                                                    </path>
-                                                </svg>
-                                                1</a>
-                                        </td>
-                                        <td>
-                                            <span class="avatar avatar-sm"
-                                                style="background-image: url(./static/avatars/002m.jpg)"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="w-1 pe-0">
-                                            <input type="checkbox" class="form-check-input m-0 align-middle"
-                                                aria-label="Select task" checked="">
-                                        </td>
-                                        <td class="w-100">
-                                            <a href="#" class="text-reset">Identify the implementation team.</a>
-                                        </td>
-                                        <td class="text-nowrap text-secondary">
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path
-                                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z">
-                                                </path>
-                                                <path d="M16 3v4"></path>
-                                                <path d="M8 3v4"></path>
-                                                <path d="M4 11h16"></path>
-                                                <path d="M11 15h1"></path>
-                                                <path d="M12 15v3"></path>
-                                            </svg>
-                                            November 11, 2020
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M5 12l5 5l10 -10"></path>
-                                                </svg>
-                                                6/10
-                                            </a>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/message -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M8 9h8"></path>
-                                                    <path d="M8 13h6"></path>
-                                                    <path
-                                                        d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z">
-                                                    </path>
-                                                </svg>
-                                                12</a>
-                                        </td>
-                                        <td>
-                                            <span class="avatar avatar-sm"
-                                                style="background-image: url(./static/avatars/003m.jpg)"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="w-1 pe-0">
-                                            <input type="checkbox" class="form-check-input m-0 align-middle"
-                                                aria-label="Select task">
-                                        </td>
-                                        <td class="w-100">
-                                            <a href="#" class="text-reset">Define users and workflow</a>
-                                        </td>
-                                        <td class="text-nowrap text-secondary">
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path
-                                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z">
-                                                </path>
-                                                <path d="M16 3v4"></path>
-                                                <path d="M8 3v4"></path>
-                                                <path d="M4 11h16"></path>
-                                                <path d="M11 15h1"></path>
-                                                <path d="M12 15v3"></path>
-                                            </svg>
-                                            November 14, 2021
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M5 12l5 5l10 -10"></path>
-                                                </svg>
-                                                3/7
-                                            </a>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/message -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M8 9h8"></path>
-                                                    <path d="M8 13h6"></path>
-                                                    <path
-                                                        d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z">
-                                                    </path>
-                                                </svg>
-                                                5</a>
-                                        </td>
-                                        <td>
-                                            <span class="avatar avatar-sm"
-                                                style="background-image: url(./static/avatars/000f.jpg)"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="w-1 pe-0">
-                                            <input type="checkbox" class="form-check-input m-0 align-middle"
-                                                aria-label="Select task" checked="">
-                                        </td>
-                                        <td class="w-100">
-                                            <a href="#" class="text-reset">Check Pull Requests</a>
-                                        </td>
-                                        <td class="text-nowrap text-secondary">
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path
-                                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z">
-                                                </path>
-                                                <path d="M16 3v4"></path>
-                                                <path d="M8 3v4"></path>
-                                                <path d="M4 11h16"></path>
-                                                <path d="M11 15h1"></path>
-                                                <path d="M12 15v3"></path>
-                                            </svg>
-                                            February 11, 2021
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M5 12l5 5l10 -10"></path>
-                                                </svg>
-                                                2/9
-                                            </a>
-                                        </td>
-                                        <td class="text-nowrap">
-                                            <a href="#" class="text-secondary">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/message -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M8 9h8"></path>
-                                                    <path d="M8 13h6"></path>
-                                                    <path
-                                                        d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z">
-                                                    </path>
-                                                </svg>
-                                                3</a>
-                                        </td>
-                                        <td>
-                                            <span class="avatar avatar-sm"
-                                                style="background-image: url(./static/avatars/001f.jpg)"></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Invoices</h3>
-                        </div>
-                        <div class="card-body border-bottom py-3">
-                            <div class="d-flex">
-                                <div class="text-secondary">
-                                    Show
-                                    <div class="mx-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm" value="8"
-                                            size="3" aria-label="Invoices count">
-                                    </div>
-                                    entries
+                    <div class="row gx-2">
+                        <div class="col-lg-4">
+                            <div class="card bg-twitter rounded-4">
+                                <div class="p-2 text-white">
+                                    <strong>On Time</strong>
                                 </div>
-                                <div class="ms-auto text-secondary">
-                                    Search:
-                                    <div class="ms-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm"
-                                            aria-label="Search invoice">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card bg-pink rounded-4">
+                                <div class="p-2 text-white">
+                                    <strong>Terlambat</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card bg-gradient-orange border-0 rounded-4">
+                                <div class="p-2">
+                                    <div class="row gx-2 ">
+                                        <div class="col-6">
+                                            <div class="card glass">
+                                                <div class="p-2 text-white mx-auto text-center">
+                                                    <strong>Belum Masuk</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card glass">
+                                                <div class="p-2 text-white  mx-auto text-center">
+                                                    <strong>Belum Pulang</strong>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table card-table table-vcenter text-nowrap datatable">
-                                <thead>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 mt-4">
+                    <div class="card rounded-4 p-2 mb-3">
+                        <div class="row gx-2">
+                            <div class="col-4">
+                                <div class="card rounded-3 border border-primary">
+                                    <div class="card-body p-2">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <span class="bg-blue text-white avatar">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-users">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <div class="page-pretitle">Total Siswa</div>
+                                                <div class="page-title">{{ $siswaCount }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card rounded-3 border border-orange">
+                                    <div class="card-body p-2">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <span class="bg-orange text-white avatar">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                                                        <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <div class="page-pretitle">Total Tendik</div>
+                                                <div class="page-title">{{ $tendikCount }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card rounded-3 border border-purple">
+                                    <div class="card-body p-2">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <span class="bg-purple text-white avatar">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-door">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M14 12v.01" />
+                                                        <path d="M3 21h18" />
+                                                        <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <div class="page-pretitle">Total Kelas</div>
+                                                <div class="page-title">2 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 gx-2">
+                        <div class="col-6">
+                            <div class="card rounded-4 p-2">
+                                <div class="card border-twitter p-2">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <div class="page-pretitle">Jam Masuk</div>
+                                            <div class="page-title">06:00</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="bg-twitter text-white avatar">
+                                                <img src="{{ asset('img/svg/1.svg') }}" alt="">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card rounded-4 p-2">
+                                <div class="card border-twitter p-2">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="page-pretitle">Jam Pulang</div>
+                                            <div class="page-title">16:00</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="bg-twitter text-white avatar">
+                                                <img src="{{ asset('img/svg/2.svg') }}" alt="">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-4 mb-3" style="min-height: 20rem; max-height:20rem;">
+                        <div class="table-responsive rounded-4">
+                            <table class="table card-table rounded-4 table-vcenter text-nowrap datatable">
+                                <thead class="sticky-top">
                                     <tr>
-                                        <th class="w-1"><input class="form-check-input m-0 align-middle"
-                                                type="checkbox" aria-label="Select all invoices"></th>
-                                        <th class="w-1">No.
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick"
-                                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor" fill="none" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                <path d="M6 15l6 -6l6 6"></path>
-                                            </svg>
-                                        </th>
-                                        <th>Invoice Subject</th>
-                                        <th>Client</th>
-                                        <th>VAT No.</th>
-                                        <th>Created</th>
+                                        <th class="w-1">No. Induk</th>
+                                        <th>Nama</th>
+                                        <th>Kelas</th>
+                                        <th>In</th>
+                                        <th>Out</th>
                                         <th>Status</th>
-                                        <th>Price</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody style="min-height: 16.5rem; max-heigth:16.5rem;overflow-y: auto;">
                                     <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-secondary">001401</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Design Works</a>
-                                        </td>
-                                        <td>
-                                            <span class="flag flag-xs flag-country-us me-2"></span>
-                                            Carlson Limited
-                                        </td>
-                                        <td>
-                                            87956621
-                                        </td>
-                                        <td>
-                                            15 Dec 2017
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-success me-1"></span> Paid
-                                        </td>
-                                        <td>$887</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-secondary">001402</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">UX Wireframes</a>
-                                        </td>
-                                        <td>
-                                            <span class="flag flag-xs flag-country-gb me-2"></span>
-                                            Adobe
-                                        </td>
-                                        <td>
-                                            87956421
-                                        </td>
-                                        <td>
-                                            12 Apr 2017
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-warning me-1"></span> Pending
-                                        </td>
-                                        <td>$1200</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-secondary">001403</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">New Dashboard</a>
-                                        </td>
-                                        <td>
-                                            <span class="flag flag-xs flag-country-de me-2"></span>
-                                            Bluewolf
-                                        </td>
-                                        <td>
-                                            87952621
-                                        </td>
-                                        <td>
-                                            23 Oct 2017
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-warning me-1"></span> Pending
-                                        </td>
-                                        <td>$534</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-secondary">001404</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Landing Page</a>
-                                        </td>
-                                        <td>
-                                            <span class="flag flag-xs flag-country-br me-2"></span>
-                                            Salesforce
-                                        </td>
-                                        <td>
-                                            87953421
-                                        </td>
-                                        <td>
-                                            2 Sep 2017
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-secondary me-1"></span> Due in 2 Weeks
-                                        </td>
-                                        <td>$1500</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-secondary">001405</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Marketing
-                                                Templates</a></td>
-                                        <td>
-                                            <span class="flag flag-xs flag-country-pl me-2"></span>
-                                            Printic
-                                        </td>
-                                        <td>
-                                            87956621
-                                        </td>
-                                        <td>
-                                            29 Jan 2018
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-danger me-1"></span> Paid Today
-                                        </td>
-                                        <td>$648</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-secondary">001406</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Sales
-                                                Presentation</a></td>
-                                        <td>
-                                            <span class="flag flag-xs flag-country-br me-2"></span>
-                                            Tabdaq
-                                        </td>
-                                        <td>
-                                            87956621
-                                        </td>
-                                        <td>
-                                            4 Feb 2018
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-secondary me-1"></span> Due in 3 Weeks
-                                        </td>
-                                        <td>$300</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-secondary">001407</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Logo &amp;
-                                                Print</a></td>
-                                        <td>
-                                            <span class="flag flag-xs flag-country-us me-2"></span>
-                                            Apple
-                                        </td>
-                                        <td>
-                                            87956621
-                                        </td>
-                                        <td>
-                                            22 Mar 2018
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-success me-1"></span> Paid Today
-                                        </td>
-                                        <td>$2500</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                aria-label="Select invoice"></td>
-                                        <td><span class="text-secondary">001408</span></td>
-                                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Icons</a></td>
-                                        <td>
-                                            <span class="flag flag-xs flag-country-pl me-2"></span>
-                                            Tookapic
-                                        </td>
-                                        <td>
-                                            87956621
-                                        </td>
-                                        <td>
-                                            13 May 2018
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-success me-1"></span> Paid Today
-                                        </td>
-                                        <td>$940</td>
-                                        <td class="text-end">
-                                            <span class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
-                                                    data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" href="#">
-                                                        Action
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Another action
-                                                    </a>
-                                                </div>
-                                            </span>
-                                        </td>
+                                        <td>001401</td>
+                                        <td>Design Work</td>
+                                        <td>XII</td>
+                                        <td>87956621</td>
+                                        <td>7777</td>
+                                        <td><span class="badge bg-success me-1"></span>tepat
+                                            waktu</span></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="card-footer d-flex align-items-center">
-                            <p class="m-0 text-secondary">Showing <span>1</span> to <span>8</span> of <span>16</span>
-                                entries</p>
-                            <ul class="pagination m-0 ms-auto">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M15 6l-6 6l6 6"></path>
-                                        </svg>
-                                        prev
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path d="M9 6l6 6l-6 6"></path>
-                                        </svg>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal modal-blur fade" id="modal-masuk" tabindex="-1" role="dialog" aria-hidden="true">
+        <form action="{{ route('izin.perform') }}" method="POST">
+            @csrf
+            @method('POST')
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tambah Data</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label required">Nama</label>
+                        <div class="mb-3">
+                            <select class="form-select" name="nama">
+                                <optgroup label="Tendik">
+                                    @foreach ($tendik as $itemT)
+                                        <option value="{{ $itemT->id }}">{{ $itemT->nama }}</option>
+                                    @endforeach
+                                </optgroup>
+                                <optgroup label="Siswa">
+                                    @foreach ($siswa as $itemS)
+                                        <option value="{{ $itemS->id }}">{{ $itemS->nama }}</option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                            @error('nama')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
+                        </div>
+                        <label class="form-label required">Role</label>
+                        <div class="form-selectgroup-boxes row mb-3">
+                            <div class="col-lg-6">
+                                <label class="form-selectgroup-item">
+                                    <input type="radio" name="role" value="Tendik" class="form-selectgroup-input"
+                                        checked>
+                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                        <span class="me-3">
+                                            <span class="form-selectgroup-check"></span>
+                                        </span>
+                                        <span class="form-selectgroup-label-content">
+                                            <span class="form-selectgroup-title strong mb-1">Tendik</span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="form-selectgroup-item">
+                                    <input type="radio" name="role" value="Siswa" class="form-selectgroup-input"
+                                        checked>
+                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                        <span class="me-3">
+                                            <span class="form-selectgroup-check"></span>
+                                        </span>
+                                        <span class="form-selectgroup-label-content">
+                                            <span class="form-selectgroup-title strong mb-1">Siswa</span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            @error('role')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
+                        </div>
+                        <label class="form-label required">Jenis Izin</label>
+                        <div class="mb-3">
+                            <select class="form-select" name="jenis_izin">
+                                <option value="Izin">Izin</option>
+                                <option value="Sakit">Sakit</option>
+                                <option value="Alpa">Alpa</option>
+                                <option value="Lembur">Lembur</option>
+                            </select>
+                            @error('jenis_izin')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
+                        </div>
+                        <label class="form-label required">Keterangan</label>
+                        <div class="mb-3">
+                            <textarea rows="5" class="form-control" name="keterangan"></textarea>
+                            @error('keterangan')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                            Cancel
+                        </a>
+                        <button href="#" type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 5l0 14"></path>
+                                <path d="M5 12l14 0"></path>
+                            </svg>
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection
+@section('scripts')
+    <script type="text/javascript">
+        window.onload = function() {
+            jam();
+        }
+
+        function jam() {
+            var e = document.getElementById('jam'),
+                d = new Date(),
+                h, m, s;
+            h = d.getHours();
+            m = set(d.getMinutes());
+            s = set(d.getSeconds());
+
+            e.innerHTML = h + ' : ' + m + ' : ' + s + ' WIB';
+
+            setTimeout('jam()', 1000);
+        }
+
+        function set(e) {
+            e = e < 10 ? '0' + e : e;
+            return e;
+        }
+    </script>
 @endsection
