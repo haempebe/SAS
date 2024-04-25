@@ -10,7 +10,7 @@ class TendikController extends Controller
 {
     public function index()
     {
-        $tendik = Tendik::get();
+        $tendik = Tendik::orderBy('nama')->paginate(10);
         return view('admin.tendik', compact('tendik'));
     }
     public function store(Request $request)
@@ -47,7 +47,7 @@ class TendikController extends Controller
 
         $tendik->save();
 
-        return redirect('/tendik')->with('status', 'added data successfully');
+        return redirect('/tendik')->with('create', 'Data Tendik Berhasil Dibuat');
     }
     public function edit($id)
     {
@@ -89,7 +89,7 @@ class TendikController extends Controller
 
             $tendik->save();
 
-            return redirect('/tendik');
+            return redirect('/tendik')->with('update', 'Data Tendik Berhasil Diperbarui');
         } else {
             $tendik = Tendik::find($id);
 
@@ -104,7 +104,7 @@ class TendikController extends Controller
 
             $tendik->save();
 
-            return redirect('/tendik');
+            return redirect('/tendik')->with('update', 'Data Tendik Berhasil Diperbarui');
         }
     }
     public function destroy($id)
@@ -115,6 +115,11 @@ class TendikController extends Controller
         File::delete($path . $tendik->cover);
         $tendik->delete();
 
-        return redirect('/tendik')->with('success', 'success, data deleted');
+        return redirect('/tendik')->with('delete', 'Data Tendik Berhasil Dihapus');
+    }
+    public function show($id)
+    {
+        $tendik = Tendik::find($id);
+        return view('admin.izin', ['tendik' => $tendik]);
     }
 }

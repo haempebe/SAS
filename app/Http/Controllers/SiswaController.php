@@ -10,7 +10,7 @@ class SiswaController extends Controller
 {
     public function index()
     {
-        $siswa = Siswa::get();
+        $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10);
         return view('admin.siswa', compact('siswa'));
     }
     public function store(Request $request)
@@ -47,7 +47,7 @@ class SiswaController extends Controller
 
         $siswa->save();
 
-        return redirect('/siswa')->with('status', 'Data Siswa Berhasil Dibuat');
+        return redirect('/siswa')->with('create', 'Data Siswa Berhasil Dibuat');
     }
     public function edit($id)
     {
@@ -107,7 +107,7 @@ class SiswaController extends Controller
 
             $siswa->save();
 
-            return redirect('/siswa');
+            return redirect('/siswa')->with('update', 'Data Siswa Berhasil Diperbarui');
         }
     }
     public function destroy($id)
@@ -119,5 +119,10 @@ class SiswaController extends Controller
         $siswa->delete();
 
         return redirect('/siswa')->with('delete', 'Data Siswa Berhasil Dihapus');
+    }
+    public function show($id)
+    {
+        $siswa = siswa::find($id);
+        return view('admin.izin', ['siswa' => $siswa]);
     }
 }
