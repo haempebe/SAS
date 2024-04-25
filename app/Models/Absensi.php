@@ -19,6 +19,6 @@ class Absensi extends Model
     }
     public function tendik()
     {
-        return $this->belongsTo(Tendik::class);
+        return $this->belongsTo(Tendik::class, 'tendik_id', 'nik');
     }
 }
