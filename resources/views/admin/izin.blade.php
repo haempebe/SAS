@@ -126,7 +126,8 @@
                                             <div class="row g-0">
                                                 <div class="col">
                                                     <button href="#" class="btn btn-success btn-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-update">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-update-{{ $item->id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -143,7 +144,8 @@
                                                 </div>
                                                 <div class="col">
                                                     <button href="#" class="btn btn-danger btn-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-delete">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-delete-{{ $item->id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -161,9 +163,9 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    {{-- Form Create --}}
-                                    <div class="modal modal-blur fade" id="modal-delete" tabindex="-1" role="dialog"
-                                        aria-hidden="true">
+                                    {{-- Form Delete --}}
+                                    <div class="modal modal-blur fade" id="modal-delete-{{ $item->id }}"
+                                        tabindex="-1" role="dialog" aria-hidden="true">
                                         <form action="{{ route('izin.delete', $item->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -183,7 +185,8 @@
                                                                 </button>
                                                             </div>
                                                             <div class="col-3">
-                                                                <a href="#" class="btn btn-outline-primary w-100">
+                                                                <a href="#" data-bs-dismiss="modal"
+                                                                    class="btn btn-outline-primary w-100">
                                                                     TIDAK
                                                                 </a>
                                                             </div>
@@ -324,7 +327,9 @@
 
     {{-- Form Edit --}}
     @foreach ($izin as $item)
-        <div class="modal modal-blur fade" id="modal-update" tabindex="-1" role="dialog" aria-hidden="true">
+        {{-- form edit --}}
+        <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-hidden="true">
             <form action="{{ route('izin.update', $item->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -338,23 +343,25 @@
                         <div class="modal-body">
                             <label class="form-label required">Nama</label>
                             <div class="mb-3">
-                                <select class="form-select" name="nama"
-                                    value="{{ $item->nama }}>
-                                    <option value="{{ $itemT->id }}">{{ $itemT->nama }}
-                                    </option>
+                                <select class="form-select" name="nama" value="{{ $item->nama }}">
+                                    <option value="{{ $item->nama }}" selected>
+                                        {{ $item->nama }}</option>
                                     <optgroup label="Tendik">
                                         @foreach ($tendik as $itemT)
-                                            <option value="{{ $itemT->id }}">{{ $itemT->nama }}</option>
+                                            <option value="{{ $itemT->nama }}">
+                                                {{ $itemT->nama }}</option>
                                         @endforeach
                                     </optgroup>
                                     <optgroup label="Siswa">
                                         @foreach ($siswa as $itemS)
-                                            <option value="{{ $itemS->id }}">{{ $itemS->nama }}</option>
+                                            <option value="{{ $itemS->nama }}">
+                                                {{ $itemS->nama }}</option>
                                         @endforeach
                                     </optgroup>
                                 </select>
                                 @error('nama')
-                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                             <label class="form-label required">Role</label>
@@ -362,7 +369,8 @@
                                 <div class="col-lg-6">
                                     <label class="form-selectgroup-item">
                                         <input type="radio" name="role" value="Tendik"
-                                            class="form-selectgroup-input" checked>
+                                            class="form-selectgroup-input"
+                                            @if ($item->role == 'Tendik') checked @endif>
                                         <span class="form-selectgroup-label d-flex align-items-center p-3">
                                             <span class="me-3">
                                                 <span class="form-selectgroup-check"></span>
@@ -376,7 +384,8 @@
                                 <div class="col-lg-6">
                                     <label class="form-selectgroup-item">
                                         <input type="radio" name="role" value="Siswa"
-                                            class="form-selectgroup-input" checked>
+                                            class="form-selectgroup-input"
+                                            @if ($item->role == 'Siswa') checked @endif>
                                         <span class="form-selectgroup-label d-flex align-items-center p-3">
                                             <span class="me-3">
                                                 <span class="form-selectgroup-check"></span>
@@ -388,26 +397,33 @@
                                     </label>
                                 </div>
                                 @error('role')
-                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                             <label class="form-label required">Jenis Izin</label>
                             <div class="mb-3">
                                 <select class="form-select" name="jenis_izin">
-                                    <option value="Izin">Izin</option>
-                                    <option value="Sakit">Sakit</option>
-                                    <option value="Alpa">Alpa</option>
-                                    <option value="Lembur">Lembur</option>
+                                    <option value="Izin" @if ($item->jenis_izin == 'Izin') selected @endif>Izin
+                                    </option>
+                                    <option value="Sakit" @if ($item->jenis_izin == 'Sakit') selected @endif>Sakit
+                                    </option>
+                                    <option value="Alpa" @if ($item->jenis_izin == 'Alpa') selected @endif>Alpa
+                                    </option>
+                                    <option value="Lembur" @if ($item->jenis_izin == 'Lembur') selected @endif>Lembur
+                                    </option>
                                 </select>
                                 @error('jenis_izin')
-                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                             <label class="form-label required">Keterangan</label>
                             <div class="mb-3">
-                                <textarea rows="5" class="form-control" name="keterangan"></textarea>
+                                <textarea rows="5" class="form-control" name="keterangan">{{ $item->keterangan }}</textarea>
                                 @error('keterangan')
-                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
@@ -420,7 +436,8 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                    </path>
                                     <path d="M12 5l0 14"></path>
                                     <path d="M5 12l14 0"></path>
                                 </svg>
