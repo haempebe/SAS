@@ -102,7 +102,7 @@
                                 <tr>
                                     <th>Nama</th>
                                     <th>Jenis Kelamin</th>
-                                    <th>NUPTK</th>
+                                    <th>NIK</th>
                                     <th>Tempat/Tanggal Lahir</th>
                                     <th>Role</th>
                                     <th>Whatsapp</th>
@@ -127,7 +127,7 @@
                                             <div>{{ $item->jenis_kelamin }}</div>
                                         </td>
                                         <td>
-                                            <div>{{ $item->nuptk }}</div>
+                                            <div>{{ $item->nik }}</div>
                                         </td>
                                         <td>
                                             <div>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</div>
@@ -241,9 +241,9 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">NUPTK</label>
-                            <input type="number" class="form-control" name="nuptk">
-                            @error('nuptk')
+                            <label class="form-label">`NIK</label>
+                            <input type="number" class="form-control" name="nik">
+                            @error('nik')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
                         </div>
@@ -392,9 +392,9 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">NUPTK</label>
-                                <input type="number" class="form-control" name="nuptk" value="{{ $item->nuptk }}">
-                                @error('nuptk')
+                                <label class="form-label">NIK</label>
+                                <input type="number" class="form-control" name="nik" value="{{ $item->nik }}">
+                                @error('nik')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror
                             </div>

@@ -361,7 +361,7 @@
                                 </thead>
                                 <tbody style="min-height: 16.5rem; max-heigth:16.5rem;overflow-y: auto;">
                                     @foreach ($absensi as $itemA)
-                                        @if ($itemA->nik_id == null)
+                                        @if ($itemA->tendik_id == null)
                                             <tr>
                                                 <td>
                                                     {{ $itemA->siswa_id }}
@@ -376,7 +376,19 @@
                                                     waktu</span></td>
                                             </tr>
                                         @else
-                                            {{ $itemA->nik_id }}
+                                             <tr>
+                                                <td>
+                                                    {{ $itemA->tendik_id }}
+                                                </td>
+                                                <td>
+                                                    {{ $itemA->tendik->nama }}
+                                                </td>
+                                                <td>{{ $itemA->tendik->role }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
+                                                <td>7777</td>
+                                                <td><span class="badge bg-success me-1"></span>tepat
+                                                    waktu</span></td>
+                                            </tr>
                                         @endif
                                     @endforeach
                                 </tbody>
