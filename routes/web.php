@@ -16,7 +16,8 @@ Auth::routes([
 ]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/masukfind', [HomeController::class, 'masuk'])->name('home.masuk');
+Route::post('/masuk', [HomeController::class, 'masuk'])->name('home.masuk');
+Route::post('/pulang', [HomeController::class, 'pulang'])->name('home.pulang');
 
 Route::middleware(['auth'])->group(function () {
     Route::controller(TendikController::class)->group(function () {

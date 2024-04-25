@@ -11,11 +11,11 @@ class Absensi extends Model
 {
     use HasFactory;
     protected $table = 'absensi';
-    protected $fillable = ['tendik_id', 'siswa_id', 'jam_masuk', 'jam_pulang'];
+    protected $fillable = ['tendik_id', 'siswa_id', 'date', 'jam_masuk', 'jam_pulang'];
 
     public function siswa()
     {
-        return $this->belongsTo(Siswa::class, 'siswa_id','nisn');
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'nisn');
     }
     public function tendik()
     {

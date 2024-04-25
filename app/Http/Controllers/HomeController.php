@@ -60,11 +60,13 @@ class HomeController extends Controller
         if (is_null($getSiswa)) {
             Absensi::create([
                 'tendik_id' => $request->noid,
+                'date' => $currentDateTime,
                 'jam_masuk' => $currentDateTime,
             ]);
         } elseif (is_null($getTendik)) {
             Absensi::create([
                 'siswa_id' => $request->noid,
+                'date' => $currentDateTime,
                 'jam_masuk' => $currentDateTime,
             ]);
         }
@@ -72,7 +74,7 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Siswa masuk');
     }
 
-    public function pulang(Request $request, $id)
+    public function pulang(Request $request)
     {
         $request->validate([
             'noid' => 'required_without_all:nama,kelas',
@@ -96,17 +98,29 @@ class HomeController extends Controller
         $currentDateTime = Carbon::now();
 
         if (is_null($getSiswa)) {
-            Absensi::updateOrCreate([
-                'tendik_id' => $request->noid,
-                'jam_pulang' => $currentDateTime,
-            ]);
+            $absensi = Absensi::where('tendik_id', $request->noid)
+                ->whereNull('jam_pulang')
+                ->where('date', Carbon::today())
+                ->first();
+
+            if ($absensi) {
+                $absensi->update(['jam_pulang' => $currentDateTime]);
+            } else {
+                return redirect()->back()->with('error', 'Anda belum melakukan absen masuk.');
+            }
         } elseif (is_null($getTendik)) {
-            Absensi::updateOrCreate([
-                'siswa_id' => $request->noid,
-                'jam_pulang' => $currentDateTime,
-            ]);
+            $absensi = Absensi::where('siswa_id', $request->noid)
+                ->whereNull('jam_pulang')
+                ->where('date', Carbon::today())
+                ->first();
+
+            if ($absensi) {
+                $absensi->update(['jam_pulang' => $currentDateTime]);
+            } else {
+                return redirect()->back()->with('error', 'Anda belum melakukan absen masuk.');
+            }
         }
 
-        return redirect()->back()->with('success', 'Siswa masuk');
+        return redirect()->back()->with('success', 'Siswa pulang');
     }
 }

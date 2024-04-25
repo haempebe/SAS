@@ -99,76 +99,38 @@
                                         <div class="card-body">
                                             <div class="tab-content">
                                                 <div class="tab-pane active show" id="tabs-masuk-form">
-                                                    @if (isset($getSiswa) || isset($getTendik))
-                                                        @if (isset($getSiswa))
-                                                            <form action="{{ route('home.masuk') }}" method="POST">
-                                                                @csrf
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Nomor induk</label>
-                                                                    <input type="text" class="form-control rounded-4"
-                                                                        name="noid" placeholder="Masukan NISN/NUPTK"
-                                                                        value="{{ $getSiswa->nisn }}" />
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Nama Peserta</label>
-                                                                    <input type="text" class="form-control rounded-4"
-                                                                        name="nama" placeholder="Input placeholder"
-                                                                        value="{{ $getSiswa->nama }}" />
-                                                                </div>
-                                                                <button type="submit" id="masukButton"
-                                                                    class="btn btn-primary rounded-4 w-100">Masuk</button>
-                                                            </form>
-                                                        @endif
-                                                        @if (isset($getTendik))
-                                                            <form action="{{ route('home.masuk') }}" method="POST">
-                                                                @csrf
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Nomor induk</label>
-                                                                    <input type="text" class="form-control rounded-4"
-                                                                        name="noid" placeholder="Masukan NISN/NUPTK"
-                                                                        value="{{ $getTendik->nuptk }}" />
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">Nama Peserta</label>
-                                                                    <input type="text" class="form-control rounded-4"
-                                                                        name="nama" placeholder="Input placeholder"
-                                                                        value="{{ $getTendik->nama }}" />
-                                                                </div>
-                                                                <button type="submit" id="masukButton"
-                                                                    class="btn btn-primary rounded-4 w-100">Masuk</button>
-                                                            </form>
-                                                        @endif
-                                                    @else
-                                                        <form action="{{ route('home.masuk') }}">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Nomor induk</label>
-                                                                <input type="text" class="form-control rounded-4"
-                                                                    name="noid" placeholder="Masukan NISN/NUPTK"
-                                                                    value="{{ old('noid') }}" />
+                                                    <form action="{{ route('home.masuk') }}" method="POST">
+                                                        @csrf
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nomor induk</label>
+                                                            <input type="text" class="form-control rounded-4"
+                                                                name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                value="{{ old('noid') }}" />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nama Peserta</label>
+                                                            <input type="text" class="form-control rounded-4"
+                                                                name="nama" placeholder="Input placeholder"
+                                                                value="{{ old('nama') }}" />
+                                                        </div>
+                                                        @if ($errors->any())
+                                                            <div class="text-danger mb-3">
+                                                                {{ $errors->first() }}
                                                             </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Nama Peserta</label>
-                                                                <input type="text" class="form-control rounded-4"
-                                                                    name="nama" placeholder="Input placeholder"
-                                                                    value="{{ old('nama') }}" />
+                                                        @endif
+                                                        @if (session('message'))
+                                                            <div class="text-danger mb-3" role="alert">
+                                                                {{ session('message') }}
                                                             </div>
-                                                            @if ($errors->any())
-                                                                <div class="text-danger mb-3">
-                                                                    {{ $errors->first() }}
-                                                                </div>
-                                                            @endif
-                                                            @if (session('message'))
-                                                                <div class="text-danger mb-3" role="alert">
-                                                                    {{ session('message') }}
-                                                                </div>
-                                                            @endif
-                                                            <button type="submit" id="masukButton"
-                                                                class="btn btn-primary rounded-4 w-100">Masuk</button>
-                                                        </form>
-                                                    @endif
+                                                        @endif
+                                                        <button type="submit" id="masukButton"
+                                                            class="btn btn-primary rounded-4 w-100">Masuk</button>
+                                                    </form>
+
                                                 </div>
                                                 <div class="tab-pane" id="tabs-pulang-form">
-                                                    <form action="">
+                                                    <form action="{{ route('home.pulang') }}" method="POST">
+                                                        @csrf
                                                         <div class="mb-3">
                                                             <label class="form-label">Nomor induk</label>
                                                             <input type="text" class="form-control rounded-4"
@@ -371,12 +333,12 @@
                                                 </td>
                                                 <td>{{ $itemA->siswa->kelas }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
-                                                <td>7777</td>
+                                                <td>{{ \Carbon\Carbon::parse($itemA->jam_pulang)->format('H : i') }}</td>
                                                 <td><span class="badge bg-success me-1"></span>tepat
                                                     waktu</span></td>
                                             </tr>
                                         @else
-                                             <tr>
+                                            <tr>
                                                 <td>
                                                     {{ $itemA->tendik_id }}
                                                 </td>
@@ -385,7 +347,7 @@
                                                 </td>
                                                 <td>{{ $itemA->tendik->role }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
-                                                <td>7777</td>
+                                                <td>{{ $itemA->jam_pulang }}</td>
                                                 <td><span class="badge bg-success me-1"></span>tepat
                                                     waktu</span></td>
                                             </tr>
