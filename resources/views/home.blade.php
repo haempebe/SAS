@@ -99,38 +99,73 @@
                                         <div class="card-body">
                                             <div class="tab-content">
                                                 <div class="tab-pane active show" id="tabs-masuk-form">
-                                                    <form action="{{ route('home.masuk') }}">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Nomor induk</label>
-                                                            <input type="text" class="form-control rounded-4"
-                                                                name="noid" placeholder="Masukan NISN/NUPTK"
-                                                                value="{{ old('noid') }}" />
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Nama Peserta</label>
-                                                            <input type="text" class="form-control rounded-4"
-                                                                name="nama" placeholder="Input placeholder"
-                                                                value="{{ old('nama') }}" />
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Kelas</label>
-                                                            <input type="text" class="form-control rounded-4"
-                                                                name="kelas" placeholder="Input placeholder"
-                                                                value="{{ old('kelas') }}" />
-                                                        </div>
-                                                        @if ($errors->any())
-                                                            <div class="text-danger mb-3">
-                                                                {{ $errors->first() }}
-                                                            </div>
+                                                    @if (isset($getSiswa) || isset($getTendik))
+                                                        @if (isset($getSiswa))
+                                                            <form action="{{ route('home.masuk') }}" method="POST">
+                                                                @csrf
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Nomor induk</label>
+                                                                    <input type="text" class="form-control rounded-4"
+                                                                        name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                        value="{{ $getSiswa->nisn }}" />
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Nama Peserta</label>
+                                                                    <input type="text" class="form-control rounded-4"
+                                                                        name="nama" placeholder="Input placeholder"
+                                                                        value="{{ $getSiswa->nama }}" />
+                                                                </div>
+                                                                <button type="submit" id="masukButton"
+                                                                    class="btn btn-primary rounded-4 w-100">Masuk</button>
+                                                            </form>
                                                         @endif
-                                                        @if (session('message'))
-                                                            <div class="text-danger mb-3" role="alert">
-                                                                {{ session('message') }}
-                                                            </div>
+                                                        @if (isset($getTendik))
+                                                            <form action="{{ route('home.masuk') }}" method="POST">
+                                                                @csrf
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Nomor induk</label>
+                                                                    <input type="text" class="form-control rounded-4"
+                                                                        name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                        value="{{ $getTendik->nuptk }}" />
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Nama Peserta</label>
+                                                                    <input type="text" class="form-control rounded-4"
+                                                                        name="nama" placeholder="Input placeholder"
+                                                                        value="{{ $getTendik->nama }}" />
+                                                                </div>
+                                                                <button type="submit" id="masukButton"
+                                                                    class="btn btn-primary rounded-4 w-100">Masuk</button>
+                                                            </form>
                                                         @endif
-                                                        <button type="submit" id="masukButton"
-                                                            class="btn btn-primary rounded-4 w-100">Masuk</button>
-                                                    </form>
+                                                    @else
+                                                        <form action="{{ route('home.masuk') }}">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Nomor induk</label>
+                                                                <input type="text" class="form-control rounded-4"
+                                                                    name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                    value="{{ old('noid') }}" />
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Nama Peserta</label>
+                                                                <input type="text" class="form-control rounded-4"
+                                                                    name="nama" placeholder="Input placeholder"
+                                                                    value="{{ old('nama') }}" />
+                                                            </div>
+                                                            @if ($errors->any())
+                                                                <div class="text-danger mb-3">
+                                                                    {{ $errors->first() }}
+                                                                </div>
+                                                            @endif
+                                                            @if (session('message'))
+                                                                <div class="text-danger mb-3" role="alert">
+                                                                    {{ session('message') }}
+                                                                </div>
+                                                            @endif
+                                                            <button type="submit" id="masukButton"
+                                                                class="btn btn-primary rounded-4 w-100">Masuk</button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                                 <div class="tab-pane" id="tabs-pulang-form">
                                                     <form action="">
@@ -143,11 +178,6 @@
                                                             <label class="form-label">Nama Peserta</label>
                                                             <input type="text" class="form-control rounded-4"
                                                                 name="nama" placeholder="Input placeholder" />
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Kelas</label>
-                                                            <input type="text" class="form-control rounded-4"
-                                                                name="kelas" placeholder="Input placeholder" />
                                                         </div>
                                                         <button type="submit" id="pulangButton"
                                                             class="btn btn-primary rounded-4 w-100">Pulang</button>
@@ -330,15 +360,25 @@
                                     </tr>
                                 </thead>
                                 <tbody style="min-height: 16.5rem; max-heigth:16.5rem;overflow-y: auto;">
-                                    <tr>
-                                        <td>001401</td>
-                                        <td>Design Work</td>
-                                        <td>XII</td>
-                                        <td>87956621</td>
-                                        <td>7777</td>
-                                        <td><span class="badge bg-success me-1"></span>tepat
-                                            waktu</span></td>
-                                    </tr>
+                                    @foreach ($absensi as $itemA)
+                                        @if ($itemA->nik_id == null)
+                                            <tr>
+                                                <td>
+                                                    {{ $itemA->siswa_id }}
+                                                </td>
+                                                <td>
+                                                    {{ $itemA->siswa->nama }}
+                                                </td>
+                                                <td>{{ $itemA->siswa->kelas }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
+                                                <td>7777</td>
+                                                <td><span class="badge bg-success me-1"></span>tepat
+                                                    waktu</span></td>
+                                            </tr>
+                                        @else
+                                            {{ $itemA->nik_id }}
+                                        @endif
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -346,108 +386,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal modal-blur fade" id="modal-masuk" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('izin.perform') }}" method="POST">
-            @csrf
-            @method('POST')
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tambah Data</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <label class="form-label required">Nama</label>
-                        <div class="mb-3">
-                            <select class="form-select" name="nama">
-                                <optgroup label="Tendik">
-                                    @foreach ($tendik as $itemT)
-                                        <option value="{{ $itemT->id }}">{{ $itemT->nama }}</option>
-                                    @endforeach
-                                </optgroup>
-                                <optgroup label="Siswa">
-                                    @foreach ($siswa as $itemS)
-                                        <option value="{{ $itemS->id }}">{{ $itemS->nama }}</option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
-                            @error('nama')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
-                        </div>
-                        <label class="form-label required">Role</label>
-                        <div class="form-selectgroup-boxes row mb-3">
-                            <div class="col-lg-6">
-                                <label class="form-selectgroup-item">
-                                    <input type="radio" name="role" value="Tendik" class="form-selectgroup-input"
-                                        checked>
-                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <span class="me-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </span>
-                                        <span class="form-selectgroup-label-content">
-                                            <span class="form-selectgroup-title strong mb-1">Tendik</span>
-                                        </span>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="form-selectgroup-item">
-                                    <input type="radio" name="role" value="Siswa" class="form-selectgroup-input"
-                                        checked>
-                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <span class="me-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </span>
-                                        <span class="form-selectgroup-label-content">
-                                            <span class="form-selectgroup-title strong mb-1">Siswa</span>
-                                        </span>
-                                    </span>
-                                </label>
-                            </div>
-                            @error('role')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
-                        </div>
-                        <label class="form-label required">Jenis Izin</label>
-                        <div class="mb-3">
-                            <select class="form-select" name="jenis_izin">
-                                <option value="Izin">Izin</option>
-                                <option value="Sakit">Sakit</option>
-                                <option value="Alpa">Alpa</option>
-                                <option value="Lembur">Lembur</option>
-                            </select>
-                            @error('jenis_izin')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
-                        </div>
-                        <label class="form-label required">Keterangan</label>
-                        <div class="mb-3">
-                            <textarea rows="5" class="form-control" name="keterangan"></textarea>
-                            @error('keterangan')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                            Cancel
-                        </a>
-                        <button href="#" type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M12 5l0 14"></path>
-                                <path d="M5 12l14 0"></path>
-                            </svg>
-                            Simpan
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
     </div>
 @endsection
 @section('scripts')

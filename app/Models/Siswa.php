@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Absensi;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Siswa extends Model
 {
@@ -14,5 +15,8 @@ class Siswa extends Model
     public function izin()
     {
         return $this->hasMany('App\Models\Izin');
+    }
+    public function absensi(){
+        return $this->hasMany(Absensi::class);
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tendik', function (Blueprint $table) {
             $table->id();
-            $table->integer('nuptk');
+            $table->integer('nik')->unique();
             $table->string('nama');
             $table->string('jenis_kelamin');
             $table->string('tempat_lahir');

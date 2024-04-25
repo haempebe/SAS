@@ -17,7 +17,7 @@ class TendikController extends Controller
     {
 
         $request->validate([
-            'nuptk'          => 'required',
+            'nik'          => 'required',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
@@ -36,7 +36,7 @@ class TendikController extends Controller
 
         $tendik = new Tendik;
 
-        $tendik->nuptk          = $request->nuptk;
+        $tendik->nik          = $request->nik;
         $tendik->nama           = $request->nama;
         $tendik->jenis_kelamin  = $request->jenis_kelamin;
         $tendik->tempat_lahir   = $request->tempat_lahir;
@@ -57,7 +57,7 @@ class TendikController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nuptk'          => 'required',
+            'nik'          => 'required',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
@@ -78,7 +78,7 @@ class TendikController extends Controller
 
             $request->foto->move(public_path('img/foto'), $fotoName);
 
-            $tendik->nuptk          = $request->nuptk;
+            $tendik->nik          = $request->nik;
             $tendik->nama           = $request->nama;
             $tendik->jenis_kelamin  = $request->jenis_kelamin;
             $tendik->tempat_lahir   = $request->tempat_lahir;
@@ -93,7 +93,7 @@ class TendikController extends Controller
         } else {
             $tendik = Tendik::find($id);
 
-            $tendik->nuptk          = $request->nuptk;
+            $tendik->nik          = $request->nik;
             $tendik->nama           = $request->nama;
             $tendik->jenis_kelamin  = $request->jenis_kelamin;
             $tendik->tempat_lahir   = $request->tempat_lahir;
