@@ -71,4 +71,42 @@ class HomeController extends Controller
 
         return redirect()->back()->with('success', 'Siswa masuk');
     }
+
+    public function pulang(Request $request, $id)
+    {
+        $request->validate([
+            'noid' => 'required_without_all:nama,kelas',
+            'nama' => 'required_without_all:noid,kelas',
+        ], [
+            'required_without_all' => 'Isi setidaknya salah satu input agar data dapat dicari'
+        ]);
+
+        $getSiswa = Siswa::where('nisn', $request->noid)
+            ->orWhere('nama', $request->nama)
+            ->first();
+
+        $getTendik = Tendik::where('nik', $request->noid)
+            ->orWhere('nama', $request->nama)
+            ->first();
+
+        if (is_null($getSiswa) && is_null($getTendik)) {
+            return redirect()->back()->with('message', 'Data tidak ditemukan.');
+        }
+
+        $currentDateTime = Carbon::now();
+
+        if (is_null($getSiswa)) {
+            Absensi::updateOrCreate([
+                'tendik_id' => $request->noid,
+                'jam_pulang' => $currentDateTime,
+            ]);
+        } elseif (is_null($getTendik)) {
+            Absensi::updateOrCreate([
+                'siswa_id' => $request->noid,
+                'jam_pulang' => $currentDateTime,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Siswa masuk');
+    }
 }
