@@ -59,12 +59,12 @@ class HomeController extends Controller
 
         if (is_null($getSiswa)) {
             Absensi::create([
-                'tendik_id' => $request->noid,
+                'tendik_id' => $getTendik->nik,
                 'jam_masuk' => $currentDateTime,
             ]);
         } elseif (is_null($getTendik)) {
             Absensi::create([
-                'siswa_id' => $request->noid,
+                'siswa_id' => $getSiswa->nisn,
                 'jam_masuk' => $currentDateTime,
             ]);
         }
@@ -96,7 +96,7 @@ class HomeController extends Controller
         $currentDateTime = Carbon::now();
 
         if (is_null($getSiswa)) {
-            $absensi = Absensi::where('tendik_id', $request->noid)
+            $absensi = Absensi::where('tendik_id', $getTendik->nik)
                 ->whereNull('jam_pulang')
                 ->whereDate('jam_masuk', Carbon::today())
                 ->first();
@@ -107,7 +107,7 @@ class HomeController extends Controller
                 return redirect()->back()->with('error', 'Anda belum melakukan absen masuk.');
             }
         } elseif (is_null($getTendik)) {
-            $absensi = Absensi::where('siswa_id', $request->noid)
+            $absensi = Absensi::where('siswa_id', $getSiswa->nisn)
                 ->whereNull('jam_pulang')
                 ->whereDate('jam_masuk', Carbon::today())
                 ->first();

@@ -143,6 +143,11 @@
                                                         </div>
                                                         @if ($errors->any())
                                                             <div class="text-danger mb-3">
+                                                                {{ $errors }}
+                                                            </div>
+                                                        @endif
+                                                        @if ($errors->any())
+                                                            <div class="text-danger mb-3">
                                                                 {{ $errors->first() }}
                                                             </div>
                                                         @endif
@@ -343,11 +348,12 @@
                                                 </td>
                                                 <td>{{ $itemA->siswa->kelas }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($itemA->jam_pulang)->format('H : i') }}</td>
+                                                <td>{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : '' }}
+                                                </td>
                                                 <td><span class="badge bg-success me-1"></span>tepat
                                                     waktu</span></td>
                                             </tr>
-                                        @else
+                                        @elseif ($itemA->siswa_id == null)
                                             <tr>
                                                 <td>
                                                     {{ $itemA->tendik_id }}
@@ -357,7 +363,8 @@
                                                 </td>
                                                 <td>{{ $itemA->tendik->role }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
-                                                <td>{{ $itemA->jam_pulang }}</td>
+                                                <td>{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : '' }}
+                                                </td>
                                                 <td><span class="badge bg-success me-1"></span>tepat
                                                     waktu</span></td>
                                             </tr>
