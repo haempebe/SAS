@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreign('siswa_id')->references('nisn')->on('siswa')->onDelete('cascade');
             $table->dateTime('jam_masuk')->nullable();
             $table->dateTime('jam_pulang')->nullable();
-            $table->date('date');
             $table->timestamps();
         });
     }

@@ -141,6 +141,16 @@
                                                             <input type="text" class="form-control rounded-4"
                                                                 name="nama" placeholder="Input placeholder" />
                                                         </div>
+                                                        @if ($errors->any())
+                                                            <div class="text-danger mb-3">
+                                                                {{ $errors->first() }}
+                                                            </div>
+                                                        @endif
+                                                        @if (session('message'))
+                                                            <div class="text-danger mb-3" role="alert">
+                                                                {{ session('message') }}
+                                                            </div>
+                                                        @endif
                                                         <button type="submit" id="pulangButton"
                                                             class="btn btn-primary rounded-4 w-100">Pulang</button>
                                                     </form>

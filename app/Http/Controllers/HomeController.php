@@ -31,7 +31,7 @@ class HomeController extends Controller
     {
         $siswaCount = Siswa::count();
         $tendikCount = Tendik::count();
-        $absensi = Absensi::get();
+        $absensi = Absensi::whereDate('jam_masuk', Carbon::today())->get();
         return view('home', compact('tendikCount', 'siswaCount', 'absensi'));
     }
     public function masuk(Request $request)
@@ -60,13 +60,11 @@ class HomeController extends Controller
         if (is_null($getSiswa)) {
             Absensi::create([
                 'tendik_id' => $request->noid,
-                'date' => $currentDateTime,
                 'jam_masuk' => $currentDateTime,
             ]);
         } elseif (is_null($getTendik)) {
             Absensi::create([
                 'siswa_id' => $request->noid,
-                'date' => $currentDateTime,
                 'jam_masuk' => $currentDateTime,
             ]);
         }
@@ -100,7 +98,7 @@ class HomeController extends Controller
         if (is_null($getSiswa)) {
             $absensi = Absensi::where('tendik_id', $request->noid)
                 ->whereNull('jam_pulang')
-                ->where('date', Carbon::today())
+                ->whereDate('jam_masuk', Carbon::today())
                 ->first();
 
             if ($absensi) {
@@ -111,7 +109,7 @@ class HomeController extends Controller
         } elseif (is_null($getTendik)) {
             $absensi = Absensi::where('siswa_id', $request->noid)
                 ->whereNull('jam_pulang')
-                ->where('date', Carbon::today())
+                ->whereDate('jam_masuk', Carbon::today())
                 ->first();
 
             if ($absensi) {
