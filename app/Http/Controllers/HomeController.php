@@ -64,7 +64,7 @@ class HomeController extends Controller
             ]);
         } elseif (is_null($getTendik)) {
             Absensi::create([
-                'siswa_id' => $getSiswa->nisn,
+                'siswa_id'  => $getSiswa->nisn,
                 'jam_masuk' => $currentDateTime,
             ]);
         }
