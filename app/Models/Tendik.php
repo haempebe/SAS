@@ -9,7 +9,7 @@ class Tendik extends Model
 {
     use HasFactory;
     protected $table = 'tendik';
-    protected $fillable = ['nik', 'nama', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'role', 'nomor_whatsapp', 'foto'];
+    protected $fillable = ['nik', 'nama', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'role', 'jam_masuk', 'jam_pulang', 'nomor_whatsapp', 'foto'];
 
     public function izin()
     {

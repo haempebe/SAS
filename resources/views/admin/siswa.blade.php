@@ -4,7 +4,7 @@
     <div class="page-wrapper">
         <div class="container">
             @if (session('create'))
-                <div class="alert alert-success alert-dismissible mt-3" role="alert">
+                <div class="alert alert-important alert-success alert-dismissible mt-3" role="alert">
                     <div class="d-flex">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
@@ -22,7 +22,7 @@
                 </div>
             @endif
             @if (session('update'))
-                <div class="alert alert-info alert-dismissible mt-3" role="alert">
+                <div class="alert alert-important alert-info alert-dismissible mt-3" role="alert">
                     <div class="d-flex">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
@@ -40,7 +40,7 @@
                 </div>
             @endif
             @if (session('delete'))
-                <div class="alert alert-danger alert-dismissible mt-3" role="alert">
+                <div class="alert alert-important alert-danger alert-dismissible mt-3" role="alert">
                     <div class="d-flex">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
@@ -146,7 +146,7 @@
                                             <div class="row g-0">
                                                 <div class="col">
                                                     <button href="#" class="btn btn-success btn-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-update">
+                                                        data-bs-toggle="modal" data-bs-target="#modal-update-{{ $item->id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -409,7 +409,7 @@
 
     {{-- Form Edit --}}
     @foreach ($siswa as $item)
-        <div class="modal modal-blur fade" id="modal-update" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
             <form action="{{ route('siswa.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

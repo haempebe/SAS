@@ -25,7 +25,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
-<body class="d-flex flex-column">
+<body class="d-flex flex-column @yield('form-class')" style="@yield('form-style')">
     <script src="{{ asset('dist/js/demo-theme.min.js') }}"></script>
     <div class="page">
         @auth

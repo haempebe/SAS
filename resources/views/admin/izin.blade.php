@@ -4,7 +4,7 @@
     <div class="page-wrapper">
         <div class="container">
             @if (session('create'))
-                <div class="alert alert-success alert-dismissible mt-3" role="alert">
+                <div class="alert alert-important alert-success alert-dismissible mt-3" role="alert">
                     <div class="d-flex">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
@@ -22,7 +22,7 @@
                 </div>
             @endif
             @if (session('update'))
-                <div class="alert alert-info alert-dismissible mt-3" role="alert">
+                <div class="alert alert-important alert-info alert-dismissible mt-3" role="alert">
                     <div class="d-flex">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
@@ -40,7 +40,7 @@
                 </div>
             @endif
             @if (session('delete'))
-                <div class="alert alert-danger alert-dismissible mt-3" role="alert">
+                <div class="alert alert-important alert-danger alert-dismissible mt-3" role="alert">
                     <div class="d-flex">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"

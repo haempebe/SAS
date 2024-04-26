@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Tendik;
-use File;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class TendikController extends Controller
 {
@@ -17,12 +17,14 @@ class TendikController extends Controller
     {
 
         $request->validate([
-            'nik'          => 'required',
+            'nik'            => 'required',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
             'tanggal_lahir'  => 'required',
             'role'           => 'required',
+            'jam_masuk'      => 'required',
+            'jam_pulang'     => 'required',
             'nomor_whatsapp' => 'required',
             'foto'           => 'required|image|mimes:jpg,png,jpeg',
         ]);
@@ -42,6 +44,8 @@ class TendikController extends Controller
         $tendik->tempat_lahir   = $request->tempat_lahir;
         $tendik->tanggal_lahir  = $request->tanggal_lahir;
         $tendik->role           = $request->role;
+        $tendik->jam_masuk      = $request->jam_masuk;
+        $tendik->jam_pulang     = $request->jam_pulang;
         $tendik->nomor_whatsapp = $request->nomor_whatsapp;
         $tendik->foto           = $request->foto;
 
@@ -57,12 +61,14 @@ class TendikController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nik'          => 'required',
+            'nik'            => 'required',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
             'tanggal_lahir'  => 'required',
             'role'           => 'required',
+            'jam_masuk'      => 'required',
+            'jam_pulang'     => 'required',
             'nomor_whatsapp' => 'required',
             'foto'           => 'required|image|mimes:jpg,png,jpeg'
         ]);
@@ -84,6 +90,8 @@ class TendikController extends Controller
             $tendik->tempat_lahir   = $request->tempat_lahir;
             $tendik->tanggal_lahir  = $request->tanggal_lahir;
             $tendik->role           = $request->role;
+            $tendik->jam_masuk      = $request->jam_masuk;
+            $tendik->jam_pulang     = $request->jam_pulang;
             $tendik->nomor_whatsapp = $request->nomor_whatsapp;
             $tendik->foto           = $request->foto;
 
@@ -99,6 +107,8 @@ class TendikController extends Controller
             $tendik->tempat_lahir   = $request->tempat_lahir;
             $tendik->tanggal_lahir  = $request->tanggal_lahir;
             $tendik->role           = $request->role;
+            $tendik->jam_masuk      = $request->jam_masuk;
+            $tendik->jam_pulang     = $request->jam_pulang;
             $tendik->nomor_whatsapp = $request->nomor_whatsapp;
             $tendik->foto           = $request->foto;
 
