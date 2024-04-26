@@ -114,8 +114,8 @@
                                      <tr>
                                          <td>
                                              <div class="d-flex py-1 align-items-center">
-                                                 <img src="{{ asset('img/' . $item->foto) }}" class="avatar me-2"
-                                                     alt="" srcset="">
+                                                 <img src="{{ asset('img/foto/' . $item->foto) }}" class="avatar me-2 img-fluid"
+                                                     alt="" srcset="" style="object-fit:cover;">
                                                  <div class="flex-fill">
                                                      <div class="font-weight-medium">{{ $item->nama }}</div>
                                                      <div class="text-secondary"><a href="#"
@@ -184,7 +184,7 @@
                                      </tr>
                                  @empty
                                      <tr>
-                                         <td>
+                                         <td colspan="7" class="text-center">
                                              <p>Tidak Ada Data</p>
                                          </td>
                                      </tr>

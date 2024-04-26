@@ -47,7 +47,7 @@ class TendikController extends Controller
         $tendik->jam_masuk      = $request->jam_masuk;
         $tendik->jam_pulang     = $request->jam_pulang;
         $tendik->nomor_whatsapp = $request->nomor_whatsapp;
-        $tendik->foto           = $request->foto;
+        $tendik->foto           = $fotoName;
 
         $tendik->save();
 
@@ -70,7 +70,7 @@ class TendikController extends Controller
             'jam_masuk'      => 'required',
             'jam_pulang'     => 'required',
             'nomor_whatsapp' => 'required',
-            'foto'           => 'required|image|mimes:jpg,png,jpeg'
+            'foto'           => 'image|mimes:jpg,png,jpeg'
         ]);
 
 
@@ -93,7 +93,7 @@ class TendikController extends Controller
             $tendik->jam_masuk      = $request->jam_masuk;
             $tendik->jam_pulang     = $request->jam_pulang;
             $tendik->nomor_whatsapp = $request->nomor_whatsapp;
-            $tendik->foto           = $request->foto;
+            $tendik->foto           = $fotoName;
 
             $tendik->save();
 
@@ -110,7 +110,6 @@ class TendikController extends Controller
             $tendik->jam_masuk      = $request->jam_masuk;
             $tendik->jam_pulang     = $request->jam_pulang;
             $tendik->nomor_whatsapp = $request->nomor_whatsapp;
-            $tendik->foto           = $request->foto;
 
             $tendik->save();
 

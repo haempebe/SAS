@@ -63,7 +63,9 @@
                                         <div class="card-header">
                                             <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
                                                 <li class="nav-item">
-                                                    <a href="#tabs-masuk-form" class="nav-link active" data-bs-toggle="tab">
+                                                    <a href="#tabs-masuk-form"
+                                                        class="nav-link {{ session('error') ? '' : 'active' }}"
+                                                        data-bs-toggle="tab">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -79,7 +81,9 @@
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a href="#tabs-pulang-form" class="nav-link" data-bs-toggle="tab">
+                                                    <a href="#tabs-pulang-form"
+                                                        class="nav-link {{ session('error') ? 'active' : '' }}"
+                                                        data-bs-toggle="tab">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -98,7 +102,8 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="tab-content">
-                                                <div class="tab-pane active show" id="tabs-masuk-form">
+                                                <div class="tab-pane {{ session('error') ? '' : 'active show' }}"
+                                                    id="tabs-masuk-form">
                                                     <form action="{{ route('home.masuk') }}" method="POST">
                                                         @csrf
                                                         <div class="mb-3">
@@ -128,22 +133,23 @@
                                                     </form>
 
                                                 </div>
-                                                <div class="tab-pane" id="tabs-pulang-form">
+                                                <div class="tab-pane {{ session('error') ? 'active show' : '' }}"
+                                                    id="tabs-pulang-form">
                                                     <form action="{{ route('home.pulang') }}" method="POST">
                                                         @csrf
                                                         <div class="mb-3">
                                                             <label class="form-label">Nomor induk</label>
                                                             <input type="text" class="form-control rounded-4"
-                                                                name="noid" placeholder="Masukan NISN/NUPTK" />
+                                                                name="noid" placeholder="Masukan NISN/NUPTK" value="{{old('noid')}}"/>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Nama Peserta</label>
                                                             <input type="text" class="form-control rounded-4"
-                                                                name="nama" placeholder="Input placeholder" />
+                                                                name="nama" placeholder="Input placeholder" value="{{old('nama')}}"/>
                                                         </div>
-                                                        @if ($errors->any())
+                                                        @if (session('error'))
                                                             <div class="text-danger mb-3">
-                                                                {{ $errors }}
+                                                                {{ session('error') }}
                                                             </div>
                                                         @endif
                                                         @if ($errors->any())

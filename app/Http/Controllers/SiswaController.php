@@ -43,7 +43,7 @@ class SiswaController extends Controller
         $siswa->tanggal_lahir  = $request->tanggal_lahir;
         $siswa->role           = $request->role;
         $siswa->nomor_whatsapp = $request->nomor_whatsapp;
-        $siswa->foto           = $request->foto;
+        $siswa->foto           = $fotoName;
 
         $siswa->save();
 
@@ -65,7 +65,7 @@ class SiswaController extends Controller
             'tanggal_lahir'  => 'required',
             'role'           => 'required',
             'nomor_whatsapp' => 'required',
-            'foto'           => 'required|image|mimes:jpg,png,jpeg',
+            'foto'           => 'image|mimes:jpg,png,jpeg',
         ]);
 
 
@@ -87,7 +87,7 @@ class SiswaController extends Controller
             $siswa->tanggal_lahir  = $request->tanggal_lahir;
             $siswa->role           = $request->role;
             $siswa->nomor_whatsapp = $request->nomor_whatsapp;
-            $siswa->foto           = $request->foto;
+            $siswa->foto           = $fotoName;
 
             $siswa->save();
 
@@ -103,7 +103,6 @@ class SiswaController extends Controller
             $siswa->tanggal_lahir  = $request->tanggal_lahir;
             $siswa->role           = $request->role;
             $siswa->nomor_whatsapp = $request->nomor_whatsapp;
-            $siswa->foto           = $request->foto;
 
             $siswa->save();
 

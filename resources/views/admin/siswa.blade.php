@@ -115,7 +115,7 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex py-1 align-items-center">
-                                                <img src="{{ asset('img/' . $item->foto) }}" class="avatar me-2"
+                                                <img src="{{ asset('img/foto/' . $item->foto) }}" class="avatar me-2"
                                                     alt="" srcset="">
                                                 <div class="flex-fill">
                                                     <div class="font-weight-medium">{{ $item->nama }}</div>
@@ -146,7 +146,8 @@
                                             <div class="row g-0">
                                                 <div class="col">
                                                     <button href="#" class="btn btn-success btn-icon"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-update-{{ $item->id }}">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-update-{{ $item->id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -186,7 +187,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td>
+                                        <td colspan="8" class="text-center">
                                             <p>Tidak Ada Data</p>
                                         </td>
                                     </tr>
@@ -409,7 +410,8 @@
 
     {{-- Form Edit --}}
     @foreach ($siswa as $item)
-        <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
+            aria-hidden="true">
             <form action="{{ route('siswa.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -615,4 +617,3 @@
         </div>
     @endforeach
 @endsection
-
