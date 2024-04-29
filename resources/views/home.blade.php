@@ -59,9 +59,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="card rounded-3 border-0">
+                                    <div class="card rounded-3">
                                         <div class="card-header">
-                                            <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
+                                            <ul class="nav nav-tabs card-header-tabs nav-fill"
+                                                style="border-top-left-radius: 13px;border-top-right-radius:13px;"
+                                                data-bs-toggle="tabs">
                                                 <li class="nav-item">
                                                     <a href="#tabs-masuk-form"
                                                         class="nav-link {{ session('error') ? '' : 'active' }}"
@@ -140,12 +142,14 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Nomor induk</label>
                                                             <input type="text" class="form-control rounded-4"
-                                                                name="noid" placeholder="Masukan NISN/NUPTK" value="{{old('noid')}}"/>
+                                                                name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                value="{{ old('noid') }}" />
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Nama Peserta</label>
                                                             <input type="text" class="form-control rounded-4"
-                                                                name="nama" placeholder="Input placeholder" value="{{old('nama')}}"/>
+                                                                name="nama" placeholder="Input placeholder"
+                                                                value="{{ old('nama') }}" />
                                                         </div>
                                                         @if (session('error'))
                                                             <div class="text-danger mb-3">
@@ -293,38 +297,102 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3 gx-2">
-                        <div class="col-6">
-                            <div class="card rounded-4 p-2">
-                                <div class="card border-twitter p-2">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <div class="page-pretitle">Jam Masuk</div>
-                                            <div class="page-title">06:00</div>
+                    <div class="card rounded-4 mb-3">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs nav-fill"
+                                style="border-top-left-radius: 13px;border-top-right-radius:13px;" data-bs-toggle="tabs"
+                                role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a href="#tabs-jam-siswa" class="nav-link active" data-bs-toggle="tab"
+                                        aria-selected="true" role="tab">Jam Siswa</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a href="#tabs-jam-guru" class="nav-link" data-bs-toggle="tab" aria-selected="false"
+                                        role="tab" tabindex="-1">Jam Guru</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active show" id="tabs-jam-siswa" role="tabpanel">
+                                    <div class="row mb-3 gx-2">
+                                        <div class="col-6">
+                                            <div class="card rounded-4 p-2">
+                                                <div class="p-2">
+                                                    <div class="row align-items-center">
+                                                        <div class="col">
+                                                            <div class="page-pretitle">Jam Masuk</div>
+                                                            <div class="page-title">
+                                                                {{ $waktu->jam_masuk ? date('H : i', strtotime($waktu->jam_masuk)) : '' }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <span class="bg-twitter text-white avatar">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-7">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                                                    <path d="M12 12l-2 3" />
+                                                                    <path d="M12 7v5" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-auto">
-                                            <span class="bg-twitter text-white avatar">
-                                                <img src="{{ asset('img/svg/1.svg') }}" alt="">
-                                            </span>
+                                        <div class="col-6">
+                                            <div class="card rounded-4 p-2">
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="page-pretitle">Jam Pulang</div>
+                                                            <div class="page-title">
+                                                                {{ $waktu->jam_pulang ? date('H : i', strtotime($waktu->jam_pulang)) : '' }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <span class="bg-twitter text-white avatar">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-4">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                                                    <path d="M12 12l3 2" />
+                                                                    <path d="M12 7v5" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="text-end page-pretitle mb-2 me-2">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-edit-jam">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                <path
+                                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                <path d="M16 5l3 3" />
+                                            </svg>
+                                            Edit jam Sekolah
+                                        </a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="card rounded-4 p-2">
-                                <div class="card border-twitter p-2">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="page-pretitle">Jam Pulang</div>
-                                            <div class="page-title">16:00</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <span class="bg-twitter text-white avatar">
-                                                <img src="{{ asset('img/svg/2.svg') }}" alt="">
-                                            </span>
-                                        </div>
-                                    </div>
+                                <div class="tab-pane" id="tabs-jam-guru" role="tabpanel">
+
                                 </div>
                             </div>
                         </div>
@@ -337,8 +405,8 @@
                                         <th class="w-1">No. Induk</th>
                                         <th>Nama</th>
                                         <th>Kelas</th>
-                                        <th>In</th>
-                                        <th>Out</th>
+                                        <th>Jam Masuk</th>
+                                        <th>Jam Pulang</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -356,8 +424,14 @@
                                                 <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
                                                 <td>{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : '' }}
                                                 </td>
-                                                <td><span class="badge bg-success me-1"></span>tepat
-                                                    waktu</span></td>
+                                                <td>
+                                                    @if ($itemA->status == 'Terlambat')
+                                                        <span class="badge bg-red text-red-fg">{{ $itemA->status }}</span>
+                                                    @else
+                                                        <span
+                                                            class="badge bg-green text-green-fg">{{ $itemA->status }}</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @elseif ($itemA->siswa_id == null)
                                             <tr>
@@ -371,8 +445,14 @@
                                                 <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
                                                 <td>{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : '' }}
                                                 </td>
-                                                <td><span class="badge bg-success me-1"></span>tepat
-                                                    waktu</span></td>
+                                                <td>
+                                                    @if ($itemA->status == 'Terlambat')
+                                                        <span class="badge bg-red text-red-fg">{{ $itemA->status }}</span>
+                                                    @else
+                                                        <span
+                                                            class="badge bg-green text-green-fg">{{ $itemA->status }}</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -381,6 +461,55 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    {{-- edit jam --}}
+    <div class="modal modal-blur fade" id="modal-edit-jam" tabindex="-1" aria-modal="false" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ubah Jam Siswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('waktu.update', $waktu->id) }}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="jam_masuk">Jam Masuk</label>
+                                    <input type="text" name="jam_masuk" class="form-control" data-mask="00:00"
+                                        data-mask-visible="true" placeholder="00:00" autocomplete="off"
+                                        value="{{ $waktu->jam_masuk }}">
+                                </div>
+                                @error('jam_masuk')
+                                    <p class="text-red">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div class="col-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="jam_Pulang">Jam Pulang</label>
+                                    <input type="text" name="jam_pulang" class="form-control" data-mask="00:00"
+                                        data-mask-visible="true" placeholder="00:00" autocomplete="off"
+                                        value="{{ $waktu->jam_pulang }}">
+                                </div>
+                                @error('jam_pulang')
+                                    <p class="text-red">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Simpan</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>

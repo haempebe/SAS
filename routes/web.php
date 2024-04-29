@@ -6,8 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TendikController;
-
-
+use App\Http\Controllers\WaktuController;
 
 Auth::routes([
     'register' => false, // Registration Routes...
@@ -43,5 +42,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/izin-edit/{id}', 'edit')->name('izin.edit');
         Route::put('/izin-edit/{id}', 'update')->name('izin.update');
         Route::delete('izin/{id}', 'destroy')->name('izin.delete');
+    });
+    Route::controller(WaktuController::class)->group(function () {
+        Route::get('/waktu', 'index');
+        Route::put('/waktu-edit/{id}', 'update')->name('waktu.update');
     });
 });
