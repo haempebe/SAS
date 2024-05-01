@@ -25,6 +25,8 @@ class IzinController extends Controller
             'nama' => $request->nama,
             'role' => $request->role,
             'jenis_izin' => $request->jenis_izin,
+            'jam_mulai' => $request->jam_mulai,
+            'jam_berakhir' => $request->jam_berakhir,
             'keterangan' => $request->keterangan
         ]);
 

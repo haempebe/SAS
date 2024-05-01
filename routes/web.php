@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IzinController;
+use App\Http\Controllers\RekapAbsenSiswaController;
+use App\Http\Controllers\RekapAbsenTendikController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TendikController;
 
@@ -21,7 +23,7 @@ Route::post('/pulang', [HomeController::class, 'pulang'])->name('home.pulang');
 
 Route::middleware(['auth'])->group(function () {
     Route::controller(TendikController::class)->group(function () {
-        Route::get('/tendik', 'index');
+        Route::get('/tendik', 'index')->name('tendik');
         Route::get('/tendik-create', 'create');
         Route::post('/tendik-create', 'store')->name('tendik.perform');
         Route::get('/tendik-edit/{id}', 'edit')->name('tendik.edit');
@@ -29,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('tendik/{id}', 'destroy')->name('tendik.delete');
     });
     Route::controller(SiswaController::class)->group(function () {
-        Route::get('/siswa', 'index');
+        Route::get('/siswa', 'index')->name('siswa');
         Route::get('/siswa-create', 'create');
         Route::post('/siswa-create', 'store')->name('siswa.perform');
         Route::get('/siswa-edit/{id}', 'edit')->name('siswa.edit');
@@ -43,5 +45,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/izin-edit/{id}', 'edit')->name('izin.edit');
         Route::put('/izin-edit/{id}', 'update')->name('izin.update');
         Route::delete('izin/{id}', 'destroy')->name('izin.delete');
+    });
+    Route::controller(RekapAbsenSiswaController::class)->group(function () {
+        Route::get('/rekap-siswa', 'index')->name('rekap-siswa');
+        Route::get('/filter-siswa', 'filter');
+        Route::get('/filter-siswa/pdf', 'pdf');
+    });
+    Route::controller(RekapAbsenTendikController::class)->group(function () {
+        Route::get('/rekap-tendik', 'index')->name('rekap-tendik');
+        Route::get('/filter-tendik', 'filter');
+        Route::get('/filter-tendik/pdf', 'view_pdf');
+        Route::get('/filter-tendik/pdf', 'pdf');
     });
 });

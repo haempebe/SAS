@@ -198,7 +198,7 @@
                                     </div>
                                 @empty
                                     <tr>
-                                        <td>
+                                        <td colspan="5" class="text-center pt-4">
                                             <p>Tidak Ada Data</p>
                                         </td>
                                     </tr>
@@ -292,10 +292,35 @@
                                 <option value="Sakit">Sakit</option>
                                 <option value="Alpa">Alpa</option>
                                 <option value="Lembur">Lembur</option>
+                                <option value="Perjalanan Dinas">Perjalanan Dinas</option>
                             </select>
                             @error('jenis_izin')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
+                        </div>
+                        <div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Jam Mulai</label>
+                                        <input type="text" name="jam_mulai" class="form-control" data-mask="00:00"
+                                            data-mask-visible="true" placeholder="00:00" autocomplete="off"
+                                            fdprocessedid="ms68ld" value="{{ old('jam_mulai') }}">
+                                        @error('jam_mulai')
+                                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="form-label">Jam Berakhir</label>
+                                    <input type="text" name="jam_berakhir" class="form-control" data-mask="00:00"
+                                        data-mask-visible="true" placeholder="00:00" autocomplete="off"
+                                        fdprocessedid="ms68ld" value="{{ old('jam_berakhir') }}">
+                                    @error('jam_berakhir')
+                                        <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <label class="form-label required">Keterangan</label>
                         <div class="mb-3">
@@ -327,7 +352,6 @@
 
     {{-- Form Edit --}}
     @foreach ($izin as $item)
-        {{-- form edit --}}
         <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
             <form action="{{ route('izin.update', $item->id) }}" method="POST">
@@ -449,4 +473,33 @@
             </form>
         </div>
     @endforeach
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const jenisIzinInput = document.querySelector('select[name="jenis_izin"]');
+            const jamMulaiInput = document.querySelector('input[name="jam_mulai"]').closest('.col-lg-6');
+            const jamBerakhirInput = document.querySelector('input[name="jam_berakhir"]').closest('.col-lg-6');
+
+            function toggleJamInputs() {
+                const jenisIzinValue = jenisIzinInput.value;
+                if (jenisIzinValue === 'Lembur' || jenisIzinValue === 'Perjalanan Dinas') {
+                    jamMulaiInput.style.display = 'block';
+                    jamBerakhirInput.style.display = 'block';
+                } else {
+                    jamMulaiInput.style.display = 'none';
+                    jamBerakhirInput.style.display = 'none';
+                }
+            }
+
+            // Panggil fungsi saat halaman dimuat
+            toggleJamInputs();
+
+            // Tambahkan event listener untuk setiap perubahan pada input jenis izin
+            jenisIzinInput.addEventListener('change', function() {
+                toggleJamInputs();
+            });
+        });
+    </script>
 @endsection

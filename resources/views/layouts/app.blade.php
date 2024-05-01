@@ -79,7 +79,7 @@
                                 </a>
                             </li>
                             <li
-                                class="nav-item dropdown {{ str_contains(request()->url(), 'tendik') == true ? 'active' : '' }} {{ str_contains(request()->url(), 'siswa') == true ? 'active' : '' }}">
+                                class="nav-item dropdown {{ Route::currentRouteName() == 'tendik' ? 'active' : '' }} {{ Route::currentRouteName() == 'siswa' ? 'active' : '' }}">
                                 <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                                     data-bs-auto-close="false" role="button" aria-expanded="false">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -96,14 +96,15 @@
                                         Peserta
                                     </span>
                                 </a>
-                                <div class="dropdown-menu {{ str_contains(request()->url(), 'tendik') == true ? 'show' : '' }} {{ str_contains(request()->url(), 'siswa') == true ? 'show' : '' }}">
+                                <div
+                                    class="dropdown-menu {{ Route::currentRouteName() == 'tendik' ? 'show' : '' }} {{ Route::currentRouteName() == 'siswa' ? 'show' : '' }}">
                                     <div class="dropdown-menu-columns">
                                         <div class="dropdown-menu-column">
-                                            <a class="dropdown-item {{ str_contains(request()->url(), 'tendik') == true ? 'active' : '' }}"
+                                            <a class="dropdown-item {{ Route::currentRouteName() == 'tendik' ? 'active' : '' }}"
                                                 href="tendik">
                                                 Tendik
                                             </a>
-                                            <a class="dropdown-item {{ str_contains(request()->url(), 'siswa') == true ? 'active' : '' }}"
+                                            <a class="dropdown-item {{ Route::currentRouteName() == 'siswa' ? 'active' : '' }}"
                                                 href="siswa">
                                                 Siswa
                                             </a>
@@ -131,6 +132,50 @@
                                     </span>
                                 </a>
                             </li>
+                            <li
+                                class="nav-item dropdown {{ Route::currentRouteName() == 'rekap-tendik' ? 'active' : '' }} {{ Route::currentRouteName() == 'rekap-siswa' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter') == true ? 'active' : '' }}">
+                                <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="false" role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                            <path d="M16 3v4" />
+                                            <path d="M8 3v4" />
+                                            <path d="M4 11h16" />
+                                            <path d="M7 14h.013" />
+                                            <path d="M10.01 14h.005" />
+                                            <path d="M13.01 14h.005" />
+                                            <path d="M16.015 14h.005" />
+                                            <path d="M13.015 17h.005" />
+                                            <path d="M7.01 17h.005" />
+                                            <path d="M10.01 17h.005" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Rekap Absen
+                                    </span>
+                                </a>
+                                <div
+                                    class="dropdown-menu {{ Route::currentRouteName() == 'rekap-tendik' ? 'show' : '' }} {{ Route::currentRouteName() == 'rekap-siswa' ? 'show' : '' }} {{ str_contains(request()->url(), 'filter') == true ? 'show' : '' }}">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item {{ Route::currentRouteName() == 'rekap-tendik' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter-tendik') == true ? 'active' : '' }}"
+                                                href="rekap-tendik">
+                                                Tendik
+                                            </a>
+                                            <a class="dropdown-item {{ Route::currentRouteName() == 'rekap-siswa' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter-siswa') == true ? 'active' : '' }}"
+                                                href="rekap-siswa">
+                                                Siswa
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="./form-elements.html">
                                     <span
@@ -152,8 +197,9 @@
                                     </span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="./form-elements.html">
+                            {{-- <li
+                                class="nav-item {{ str_contains(request()->url(), 'rekap') == true ? 'active' : '' }} {{ str_contains(request()->url(), 'filter') == true ? 'active' : '' }}">
+                                <a class="nav-link" href="rekap">
                                     <span
                                         class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -179,7 +225,7 @@
                                         Rekap Absen
                                     </span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </div>
@@ -284,6 +330,44 @@
         document.addEventListener("DOMContentLoaded", function() {
             window.Litepicker && (new Litepicker({
                 element: document.getElementById('datepicker-icon'),
+                buttonText: {
+                    previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M15 6l-6 6l6 6" /></svg>`,
+                    nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 6l6 6l-6 6" /></svg>`,
+                },
+            }));
+        });
+        // @formatter:on
+    </script>
+    <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function() {
+            window.Litepicker && (new Litepicker({
+                element: document.getElementById('datepicker-icon-1'),
+                buttonText: {
+                    previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M15 6l-6 6l6 6" /></svg>`,
+                    nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 6l6 6l-6 6" /></svg>`,
+                },
+            }));
+        });
+        // @formatter:on
+    </script>
+    <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function() {
+            window.Litepicker && (new Litepicker({
+                element: document.getElementById('datepicker-icon-2'),
                 buttonText: {
                     previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
