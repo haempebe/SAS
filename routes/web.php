@@ -8,8 +8,7 @@ use App\Http\Controllers\RekapAbsenSiswaController;
 use App\Http\Controllers\RekapAbsenTendikController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TendikController;
-
-
+use App\Http\Controllers\WaktuController;
 
 Auth::routes([
     'register' => false, // Registration Routes...
@@ -54,7 +53,11 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(RekapAbsenTendikController::class)->group(function () {
         Route::get('/rekap-tendik', 'index')->name('rekap-tendik');
         Route::get('/filter-tendik', 'filter');
-        Route::get('/filter-tendik/pdf', 'view_pdf');
+        // Route::get('/filter-tendik/pdf/{start_date}/{end_date}', 'pdf');
         Route::get('/filter-tendik/pdf', 'pdf');
+    });
+    Route::controller(WaktuController::class)->group(function () {
+        Route::get('/waktu', 'index');
+        Route::put('/waktu-edit/{id}', 'update')->name('waktu.update');
     });
 });

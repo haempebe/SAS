@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Izin;
 use App\Models\Absensi;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RekapAbsenTendikController extends Controller
 {
@@ -22,23 +22,32 @@ class RekapAbsenTendikController extends Controller
     {
         $start_date = $request->start_date;
         $end_date   = $request->end_date ? $request->end_date : Carbon::today();
+        $carbonStart = Carbon::parse($start_date)->startOfMonth();
+        $carbonEnd = Carbon::parse($end_date)->endOfMonth();
 
-        $absensi = Absensi::whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date)->whereNull('siswa_id')->get();
-        $izin    = Izin::whereDate('created_at', '=', $start_date)->whereDate('created_at', '<=', $end_date)->where('role', 'tendik')->get();
+        $absensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->get();
+        $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->where('role', 'tendik')->get();
+
+        // $dates = [];
+        // $current_date = \Carbon\Carbon::parse($start_date);
+        // $end_date = \Carbon\Carbon::parse($end_date);
+
+        // while ($current_date->lte($end_date)) {
+        //     $dates[] = $current_date->copy();
+        //     $current_date->addDay();
+        // }
 
         return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date'));
     }
-    public function view_pdf()
-    {
-        return view('admin.tendikPdf');
-    }
     public function pdf(Request $request)
     {
-        $start_date = $request->start_date;
-        $end_date   = $request->end_date ? $request->end_date : Carbon::today();
+        $start_date = $request->input('start_date');
+        $end_date   = $request->input('end_date');
 
-        $absensi = Absensi::whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date)->whereNull('siswa_id')->get();
-        $izin    = Izin::whereDate('created_at', '=', $start_date)->whereDate('created_at', '<=', $end_date)->where('role', 'tendik')->get();
+        dd($start_date, $end_date);
+
+        // $absensi = Absensi::whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date)->whereNull('siswa_id')->get();
+        // $izin    = Izin::whereDate('created_at', '=', $start_date)->whereDate('created_at', '<=', $end_date)->where('role', 'tendik')->get();
 
         return view('admin.tendikPdf', compact('start_date', 'end_date', 'absensi', 'izin'));
     }

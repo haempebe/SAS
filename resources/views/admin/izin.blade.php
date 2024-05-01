@@ -303,9 +303,10 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Jam Mulai</label>
-                                        <input type="text" name="jam_mulai" class="form-control" data-mask="00:00"
+                                        <input type="dateTime" name="jam_mulai" class="form-control" data-mask="00:00"
                                             data-mask-visible="true" placeholder="00:00" autocomplete="off"
-                                            fdprocessedid="ms68ld" value="{{ old('jam_mulai') }}">
+                                            fdprocessedid="ms68ld"
+                                            value="{{ trim(\Carbon\Carbon::parse(request()->jam_mulai)->format('H:i')) }}">
                                         @error('jam_mulai')
                                             <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                         @enderror
