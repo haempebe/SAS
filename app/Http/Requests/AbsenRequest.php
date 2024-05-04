@@ -11,7 +11,7 @@ class AbsenRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +22,7 @@ class AbsenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'noid' => 'required_without_all:nama',
-            'nama' => 'required_without_all:noid',
+            'noid' => 'required',
         ];
     }
 }

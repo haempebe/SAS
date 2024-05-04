@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Absensi;
-use App\Models\Siswa;
-use Illuminate\Http\Request;
-use App\Models\Tendik;
-use App\Models\Waktu;
+use App\Http\Requests\AbsenRequest;
 use Carbon\Carbon;
-use DateTime;
-use DateTimeZone;
+use App\Models\Siswa;
+use App\Models\Waktu;
+use App\Models\Tendik;
+use App\Models\Absensi;
 
 class HomeController extends Controller
 {
@@ -36,21 +34,14 @@ class HomeController extends Controller
         $waktu = Waktu::find(1);
         return view('home', compact('tendikCount', 'siswaCount', 'absensi', 'waktu'));
     }
-    public function masuk(Request $request)
+    public function masuk(AbsenRequest $request)
     {
-        $request->validate([
-            'noid' => 'required_without_all:nama,kelas',
-            'nama' => 'required_without_all:noid,kelas',
-        ], [
-            'required_without_all' => 'Isi setidaknya salah satu input agar data dapat dicari'
-        ]);
+        $request->validated();
 
         $getSiswa = Siswa::where('nisn', $request->noid)
-            ->orWhere('nama', $request->nama)
             ->first();
 
         $getTendik = Tendik::where('nik', $request->noid)
-            ->orWhere('nama', $request->nama)
             ->first();
 
         if (is_null($getSiswa) && is_null($getTendik)) {
@@ -108,24 +99,17 @@ class HomeController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Siswa masuk');
+        return redirect()->back()->with('success', 'Berhasil melakukan absensi masuk');
     }
 
-    public function pulang(Request $request)
+    public function pulang(AbsenRequest $request)
     {
-        $request->validate([
-            'noid' => 'required_without_all:nama,kelas',
-            'nama' => 'required_without_all:noid,kelas',
-        ], [
-            'required_without_all' => 'Isi setidaknya salah satu input agar data dapat dicari'
-        ]);
+        $request->validated();
 
         $getSiswa = Siswa::where('nisn', $request->noid)
-            ->orWhere('nama', $request->nama)
             ->first();
 
         $getTendik = Tendik::where('nik', $request->noid)
-            ->orWhere('nama', $request->nama)
             ->first();
 
         if (is_null($getSiswa) && is_null($getTendik)) {
@@ -150,7 +134,7 @@ class HomeController extends Controller
             } else {
                 $jamPulangTendik =  $getTendik->jam_pulang;
             }
-            
+
             if ($absensi) {
                 if ($waktuTerkini->lessThan($jamPulangTendik)) {
                     return redirect()->back()->with('error', 'Belum Jam Pulang');
@@ -178,6 +162,6 @@ class HomeController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Siswa pulang');
+        return redirect()->back()->with('success', 'Berhasil melakukan absensi pulang');
     }
 }

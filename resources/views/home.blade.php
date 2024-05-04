@@ -46,6 +46,87 @@
                             </div>
                         </div>
                     </div>
+                    @if (session('error'))
+                        <div class="alert alert-important alert-danger alert-dismissible rounded-4" role="alert">
+                            <div class="d-flex">
+                                <div class="me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-exclamation-circle">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                        <path d="M12 9v4" />
+                                        <path d="M12 16v.01" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    {{ session('error') }}
+                                </div>
+                            </div>
+                            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                        </div>
+                    @endif
+                    @if (session('errors'))
+                        <div class="alert alert-important alert-danger alert-dismissible rounded-4" role="alert">
+                            <div class="d-flex">
+                                <div class="me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-exclamation-circle">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                        <path d="M12 9v4" />
+                                        <path d="M12 16v.01" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    {{ session('errors')->first() }}
+                                </div>
+                            </div>
+                            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                        </div>
+                    @endif
+                    @if (session('message'))
+                        <div class="alert alert-important alert-danger alert-dismissible rounded-4" role="alert">
+                            <div class="d-flex">
+                                <div class="me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-exclamation-circle">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                        <path d="M12 9v4" />
+                                        <path d="M12 16v.01" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    {{ session('message') }}
+                                </div>
+                            </div>
+                            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-important alert-success alert-dismissible mt-3 rounded-4" role="alert">
+                            <div class="d-flex">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24"
+                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M5 12l5 5l10 -10"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    {{ session('success') }}
+                                </div>
+                            </div>
+                            <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                        </div>
+                    @endif
                     <div class="card rounded-4 mb-3">
                         <div class="card-body py-5">
                             <div class="row align-items-center">
@@ -58,7 +139,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 py-5">
                                     <div class="card rounded-3">
                                         <div class="card-header">
                                             <ul class="nav nav-tabs card-header-tabs nav-fill"
@@ -108,28 +189,24 @@
                                                     id="tabs-masuk-form">
                                                     <form action="{{ route('home.masuk') }}" method="POST">
                                                         @csrf
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Nomor induk</label>
-                                                            <input type="text" class="form-control rounded-4"
-                                                                name="noid" placeholder="Masukan NISN/NUPTK"
-                                                                value="{{ old('noid') }}" />
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Nama Peserta</label>
-                                                            <input type="text" class="form-control rounded-4"
-                                                                name="nama" placeholder="Input placeholder"
-                                                                value="{{ old('nama') }}" />
-                                                        </div>
-                                                        @if ($errors->any())
-                                                            <div class="text-danger mb-3">
-                                                                {{ $errors->first() }}
+                                                        <div class="py-5">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Nomor Induk</label>
+                                                                <input type="text" class="form-control rounded-4"
+                                                                    name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                    value="{{ old('noid') }}" />
                                                             </div>
-                                                        @endif
-                                                        @if (session('message'))
-                                                            <div class="text-danger mb-3" role="alert">
-                                                                {{ session('message') }}
-                                                            </div>
-                                                        @endif
+                                                            @if ($errors->any())
+                                                                <div class="text-danger mb-3">
+                                                                    {{ $errors->first() }}
+                                                                </div>
+                                                            @endif
+                                                            @if (session('message'))
+                                                                <div class="text-danger mb-3" role="alert">
+                                                                    {{ session('message') }}
+                                                                </div>
+                                                            @endif
+                                                        </div>
                                                         <button type="submit" id="masukButton"
                                                             class="btn btn-primary rounded-4 w-100">Masuk</button>
                                                     </form>
@@ -139,33 +216,29 @@
                                                     id="tabs-pulang-form">
                                                     <form action="{{ route('home.pulang') }}" method="POST">
                                                         @csrf
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Nomor induk</label>
-                                                            <input type="text" class="form-control rounded-4"
-                                                                name="noid" placeholder="Masukan NISN/NUPTK"
-                                                                value="{{ old('noid') }}" />
+                                                        <div class="py-5">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Nomor Induk</label>
+                                                                <input type="text" class="form-control rounded-4"
+                                                                    name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                    value="{{ old('noid') }}" />
+                                                            </div>
+                                                            @if (session('error'))
+                                                                <div class="text-danger mb-3">
+                                                                    {{ session('error') }}
+                                                                </div>
+                                                            @endif
+                                                            @if ($errors->any())
+                                                                <div class="text-danger mb-3">
+                                                                    {{ $errors->first() }}
+                                                                </div>
+                                                            @endif
+                                                            @if (session('message'))
+                                                                <div class="text-danger mb-3" role="alert">
+                                                                    {{ session('message') }}
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Nama Peserta</label>
-                                                            <input type="text" class="form-control rounded-4"
-                                                                name="nama" placeholder="Input placeholder"
-                                                                value="{{ old('nama') }}" />
-                                                        </div>
-                                                        @if (session('error'))
-                                                            <div class="text-danger mb-3">
-                                                                {{ session('error') }}
-                                                            </div>
-                                                        @endif
-                                                        @if ($errors->any())
-                                                            <div class="text-danger mb-3">
-                                                                {{ $errors->first() }}
-                                                            </div>
-                                                        @endif
-                                                        @if (session('message'))
-                                                            <div class="text-danger mb-3" role="alert">
-                                                                {{ session('message') }}
-                                                            </div>
-                                                        @endif
                                                         <button type="submit" id="pulangButton"
                                                             class="btn btn-primary rounded-4 w-100">Pulang</button>
                                                     </form>
