@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('role');
             $table->string('jenis_izin');
-            $table->dateTime('jam_mulai')->nullable();
-            $table->dateTime('jam_berakhir')->nullable();
+            $table->time('jam_mulai')->nullable();
+            $table->time('jam_berakhir')->nullable();
             $table->text('keterangan');
             $table->timestamps();
         });

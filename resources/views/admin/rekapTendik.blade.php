@@ -95,7 +95,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="row row-cards">
+                {{-- <div class="row row-cards">
                     <div class="col">
                         <div class="card">
                             <div class="table-responsive">
@@ -106,9 +106,6 @@
                                             @for ($i = $start_date; $i <= $end_date; $i++)
                                                 <th>{{ \Carbon\Carbon::parse($i)->format('d') }}</th>
                                             @endfor
-                                            {{-- @foreach ($dates as $date)
-                                                <th>{{ $date->format('d') }}</th>
-                                            @endforeach --}}
 
                                         </tr>
                                     </thead>
@@ -150,77 +147,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             @endif
-            {{-- <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">People</h3>
-                </div>
-                <div class="list-group list-group-flush overflow-auto" style="max-height: 35rem">
-                    <div class="list-group-header sticky-top">A</div>
-                    <div class="list-group-item">
-                        <div class="row">
-                            <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar" style="background-image: url(./static/avatars/023f.jpg)"></span>
-                                </a>
-                            </div>
-                            <div class="col text-truncate">
-                                <a href="#" class="text-body d-block">Eva Acres</a>
-                                <div class="text-secondary text-truncate mt-n1">Change deprecated html tags to text
-                                    decoration classes (#29604)</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="list-group-header sticky-top">B</div>
-                    <div class="list-group-item">
-                        <div class="row">
-                            <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar" style="background-image: url(./static/avatars/024m.jpg)"></span>
-                                </a>
-                            </div>
-                            <div class="col text-truncate">
-                                <a href="#" class="text-body d-block">Cary Baleine</a>
-                                <div class="text-secondary text-truncate mt-n1">Set vertical-align on .form-check-input
-                                    (#29521)</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="list-group-header sticky-top">C</div>
-                    <div class="list-group-item">
-                        <div class="row">
-                            <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar" style="background-image: url(./static/avatars/015m.jpg)"></span>
-                                </a>
-                            </div>
-                            <div class="col text-truncate">
-                                <a href="#" class="text-body d-block">Delaney Cairney</a>
-                                <div class="text-secondary text-truncate mt-n1">Example shortcode: use a regex and simplify
-                                    logic.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="list-group-header sticky-top">D</div>
-                    <div class="list-group-item">
-                        <div class="row">
-                            <div class="col-auto">
-                                <a href="#">
-                                    <span class="avatar" style="background-image: url(./static/avatars/064m.jpg)"></span>
-                                </a>
-                            </div>
-                            <div class="col text-truncate">
-                                <a href="#" class="text-body d-block">Creighton Deluze</a>
-                                <div class="text-secondary text-truncate mt-n1">Add add and subtract function</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
-
     @if (strpos(url()->current(), 'filter') == true)
         <div class="row row-cards">
             <div class="col">
@@ -261,12 +191,16 @@
                                     <td>
                                         {{ $item->nama }}
                                     </td>
-                                    <td>
-                                        <span class="badge bg-green text-green-fg">{{ $item->role }}</span>
-                                    </td>
-                                    <td>
-                                        {{ $item->keterangan }}
-                                    </td>
+                                    @for ($i = $start_date; $i <= $end_date; $i++)
+                                        <?php
+                                        $updated_at = \Carbon\Carbon::parse($item->updated_at)->format('Y-m-d');
+                                        ?>
+                                        <td>
+                                            @if ($updated_at == $i)
+                                                <span class="badge bg-green text-green-fg">{{ $item->keterangan }}</span>
+                                            @endif
+                                        </td>
+                                    @endfor
                                 </tr>
                             @endforeach
                         </tbody>
@@ -280,7 +214,4 @@
             }
         </script>
     @endif
-
-
-
 @endsection
