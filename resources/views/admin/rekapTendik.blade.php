@@ -152,7 +152,9 @@
         </div>
     </div>
     @if (strpos(url()->current(), 'filter') == true)
-        <div class="row row-cards">
+        <h1>Data Absensi Tendik</h1>
+        <p><b>Tanggal : </b>{{ now()->format('d F Y') }}</p>
+        <div class="row row-cards mb-3">
             <div class="col">
                 <div class="card">
                     <table class="table table-vcenter card-table">
@@ -162,9 +164,6 @@
                                 @for ($i = $start_date; $i <= $end_date; $i++)
                                     <th>{{ \Carbon\Carbon::parse($i)->format('d') }}</th>
                                 @endfor
-                                {{-- @foreach ($dates as $date)
-                                        <th>{{ $date->format('d') }}</th>
-                                    @endforeach --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -186,21 +185,36 @@
                                 </tr>
                             @empty
                             @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cards mb-3">
+            <div class="col">
+                <div class="card">
+                    <table class="table table-vcenter card-table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Jenis Izin</th>
+                                <th>Tanggal</th>
+                                <th>Waktu Mulai</th>
+                                <th>Waktu Berakhir</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach ($izin as $item)
                                 <tr>
                                     <td>
                                         {{ $item->nama }}
                                     </td>
-                                    @for ($i = $start_date; $i <= $end_date; $i++)
-                                        <?php
-                                        $updated_at = \Carbon\Carbon::parse($item->updated_at)->format('Y-m-d');
-                                        ?>
-                                        <td>
-                                            @if ($updated_at == $i)
-                                                <span class="badge bg-green text-green-fg">{{ $item->keterangan }}</span>
-                                            @endif
-                                        </td>
-                                    @endfor
+                                    <td>{{ $item->jenis_izin }}</td>
+                                    <td>{{ $item->created_at->format('d F') }}</td>
+                                    <td>{{ $item->jam_mulai }}</td>
+                                    <td>{{ $item->jam_berakhir }}</td>
+                                    <td>{{ $item->keterangan }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -208,6 +222,9 @@
                 </div>
             </div>
         </div>
+        <p>Bogor, {{ now()->format('d F Y') }}</p>
+        <b>Kepala Sekolah</b>
+        <p>Ahmad Dahlan, S.Ag.</p>
         <script>
             window.onload = function() {
                 window.print();
