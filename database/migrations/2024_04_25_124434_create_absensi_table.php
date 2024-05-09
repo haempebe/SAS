@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('absensi', function (Blueprint $table) {
             $table->id();
             $table->string('tendik_id')->nullable();
-            $table->foreign('tendik_id')->references('nik')->on('tendik')->onDelete('cascade');
+            $table->foreign('tendik_id')->references('id')->on('tendik')->onDelete('cascade');
             $table->string('siswa_id')->nullable();
-            $table->foreign('siswa_id')->references('nisn')->on('siswa')->onDelete('cascade');
+            $table->foreign('siswa_id')->references('id')->on('siswa')->onDelete('cascade');
             $table->dateTime('jam_masuk')->nullable();
             $table->dateTime('jam_pulang')->nullable();
             $table->string('status');

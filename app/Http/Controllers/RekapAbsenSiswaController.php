@@ -24,12 +24,17 @@ class RekapAbsenSiswaController extends Controller
         $end_date   = $request->end_date ? $request->end_date : Carbon::today();
         $kelas      = $request->kelas;
 
+        $rowTableAbsensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('tendik_id')->whereHas('siswa', function ($query) use ($kelas) {
+            $query->where('kelas', $kelas);
+        })->distinct('siswa_id')->get(['siswa_id']);
+
         $absensi = Absensi::whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date)->whereNull('tendik_id')
             ->whereHas('siswa', function ($query) use ($kelas) {
                 $query->where('kelas', $kelas);
-            })->get();
+        })->get();
+
         $izin    = Izin::whereDate('created_at', '=', $start_date)->whereDate('created_at', '<=', $end_date)->where('role', 'siswa')->get();
 
-        return view('admin.rekapSiswa', compact('absensi', 'izin', 'start_date', 'end_date'));
+        return view('admin.rekapSiswa', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'total_jam_lembur'));
     }
 }

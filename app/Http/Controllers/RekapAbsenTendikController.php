@@ -25,30 +25,27 @@ class RekapAbsenTendikController extends Controller
         $carbonStart = Carbon::parse($start_date)->startOfMonth();
         $carbonEnd = Carbon::parse($end_date)->endOfMonth();
 
-        $absensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->get();
+        $rowTableAbsensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->distinct('tendik_id')->get(['tendik_id']);
+
+        $absensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->get();
         $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->where('role', 'tendik')->get();
 
-        // $dates = [];
-        // $current_date = \Carbon\Carbon::parse($start_date);
-        // $end_date = \Carbon\Carbon::parse($end_date);
+        $totalJamPerTendik = [];
 
-        // while ($current_date->lte($end_date)) {
-        //     $dates[] = $current_date->copy();
-        //     $current_date->addDay();
-        // }
+        // Loop melalui setiap entri izin
+        foreach ($izin as $izinTotal) {
+            // Hitung selisih jam_mulai dan jam_berakhir dalam format jam
+            $jam_mulai = Carbon::parse($izinTotal->jam_mulai);
+            $jam_berakhir = Carbon::parse($izinTotal->jam_berakhir);
+            $selisihJam = $jam_berakhir->diffInHours($jam_mulai);
 
-        return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date'));
-    }
-    public function pdf(Request $request)
-    {
-        $start_date = $request->input('start_date');
-        $end_date   = $request->input('end_date');
+            // Tambahkan total jam ke dalam array totalJamPerTendik berdasarkan tendik_id
+            if (!isset($totalJamPerTendik[$izinTotal->tendik_id])) {
+                $totalJamPerTendik[$izinTotal->tendik_id] = 0;
+            }
+            $totalJamPerTendik[$izinTotal->tendik_id] += $selisihJam;
+        }
 
-        dd($start_date, $end_date);
-
-        // $absensi = Absensi::whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date)->whereNull('siswa_id')->get();
-        // $izin    = Izin::whereDate('created_at', '=', $start_date)->whereDate('created_at', '<=', $end_date)->where('role', 'tendik')->get();
-
-        return view('admin.tendikPdf', compact('start_date', 'end_date', 'absensi', 'izin'));
+        return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'totalJamPerTendik'));
     }
 }
