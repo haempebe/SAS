@@ -32,18 +32,18 @@ class RekapAbsenTendikController extends Controller
 
         $totalJamPerTendik = [];
 
-        // Loop melalui setiap entri izin
         foreach ($izin as $izinTotal) {
             // Hitung selisih jam_mulai dan jam_berakhir dalam format jam
             $jam_mulai = Carbon::parse($izinTotal->jam_mulai);
             $jam_berakhir = Carbon::parse($izinTotal->jam_berakhir);
-            $selisihJam = $jam_berakhir->diffInHours($jam_mulai);
+            $selisihJam = $jam_mulai->diffInHours($jam_berakhir);
 
             // Tambahkan total jam ke dalam array totalJamPerTendik berdasarkan tendik_id
-            if (!isset($totalJamPerTendik[$izinTotal->tendik_id])) {
-                $totalJamPerTendik[$izinTotal->tendik_id] = 0;
+            if (!isset($totalJamPerTendik[$izinTotal->id])) {
+                $totalJamPerTendik[$izinTotal->id] = 0;
             }
-            $totalJamPerTendik[$izinTotal->tendik_id] += $selisihJam;
+
+            $totalJamPerTendik[$izinTotal->id] += $selisihJam;
         }
 
         return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'totalJamPerTendik'));
