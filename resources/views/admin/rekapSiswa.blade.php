@@ -126,7 +126,7 @@
         <p><b>Tanggal : </b>{{ now()->format('d F Y') }}</p>
         <div class="card">
             <table class="table table-vcenter card-table">
-                <thead>
+                <thead class="border-1">
                     <tr>
                         <th>Nama</th>
                         @for ($i = $start_date; $i <= $end_date; $i++)
@@ -134,6 +134,10 @@
                                 {{ \Carbon\Carbon::parse($i)->format('d') }}
                             </th>
                         @endfor
+                        <th class="text-center"><span class="badge bg-green text-green-fg">M</span></th>
+                        <th class="text-center"><span class="badge bg-blue text-blue-fg">I</span></th>
+                        <th class="text-center"><span class="badge bg-orange text-orange-fg">S</span></th>
+                        <th class="text-center"><span class="badge bg-red text-red-fg">A</span></th>
                     </tr>
                 </thead>
                 {{-- <tbody>
@@ -156,33 +160,73 @@
                     @endforelse
                 </tbody> --}}
                 <tbody>
+                    @php
+                        $totalM = 0;
+                        $totalI = 0;
+                        $totalS = 0;
+                        $totalA = 0;
+                    @endphp
                     @forelse ($rowTableAbsensi as $item)
-                    <tr>
-                        <td>
-                            {{ $item->siswa->nama }}
-                        </td>
-                        @php
-                            $absensiDates = [];
-                        @endphp
-                        @foreach($absensi as $itemA)
-                            @if ($itemA->siswa_id == $item->siswa_id)
-                                @php
-                                    $absensiDates[] = \Carbon\Carbon::parse($itemA->jam_masuk)->format('Y-m-d');
-                                @endphp
-                            @endif
-                        @endforeach
-                        @php
-                            $absensiDates = array_unique($absensiDates);
-                        @endphp
-                        @for ($i = $start_date; $i <= $end_date; $i++)
-                            <td class="text-center">
-                                @if (in_array($i, $absensiDates))
-                                    <span class="badge bg-green text-green-fg">M</span>
-                                @endif
+                        <tr>
+                            <td>
+                                {{ $item->siswa->nama }}
                             </td>
-                        @endfor
-                    </tr>
-                    @empty
+                            @php
+                                $absensiDates = [];
+                                $izinDates = [];
+                            @endphp
+                            @foreach($absensi as $itemA)
+                                @if ($itemA->siswa_id == $item->siswa_id)
+                                    @php
+                                        $absensiDates[] = \Carbon\Carbon::parse($itemA->jam_masuk)->format('Y-m-d');
+                                    @endphp
+                                @endif
+                            @endforeach
+                            @foreach($izin as $itemI)
+                                @if ($itemI->nama == $item->siswa->nama)
+                                    @php
+                                        $izinDates[] = \Carbon\Carbon::parse($itemI->created_at)->format('Y-m-d');
+                                        $jenisIzin = $itemI->jenis_izin;
+                                    @endphp
+                                @endif
+                            @endforeach
+                            @php
+                                $absensiDates = array_unique($absensiDates);
+                                $izinDates = array_unique($izinDates);
+                            @endphp
+                            @for ($i = $start_date; $i <= $end_date; $i++)
+                                <td class="text-center">
+                                    @if ($izinDates != null && in_array($i, $izinDates))
+                                        @if ($jenisIzin == 'Izin')
+                                            <span class="badge bg-azure text-azure-fg">I</span>
+                                            @php $totalI++; @endphp
+                                        @elseif ($jenisIzin == 'Sakit')
+                                            <span class="badge bg-orange text-orange-fg">S</span>
+                                            @php $totalS++; @endphp
+                                        @else
+                                            <span class="badge bg-red text-red-fg">A</span>
+                                            @php $totalA++; @endphp 
+                                        @endif
+                                    @else
+                                        @if (in_array($i, $absensiDates))
+                                            <span class="badge bg-green text-green-fg">M</span>
+                                            @php $totalM++; @endphp
+                                        @endif
+                                    @endif
+                                </td>
+                            @endfor
+                            <td class="text-center">{{ $totalM }}</td>
+                            <td class="text-center">{{ $totalI }}</td>
+                            <td class="text-center">{{ $totalS }}</td>
+                            <td class="text-center">{{ $totalA }}</td>
+                        </tr>
+                        @php
+                            $totalM = 0;
+                            $totalI = 0;
+                            $totalS = 0;
+                            $totalA = 0;
+                        @endphp
+                        @empty
                     <tr>
                         <td 
                         @for ($i = $start_date; $i <= $end_date; $i++)
@@ -199,10 +243,10 @@
     </div>
 </div>
 <div class="row row-cards mb-3">
-    <div class="col">
+    <div class="col-10">
         <div class="card">
             <table class="table table-vcenter card-table">
-                <thead>
+                <thead class="border-1">
                     <tr>
                         <th>Nama</th>
                         <th>Jenis Izin</th>
@@ -225,7 +269,54 @@
             </table>
         </div>
     </div>
+    <div class="col-2">
+        <div class="card">
+            <table class="table table-vcenter card-table">
+                <thead class="border-1">
+                    <tr>
+                        <th>Icon</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="badge bg-green text-green-fg">M</span>
+                        </td>
+                        <td>
+                            Masuk
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-azure text-azure-fg">I</span>
+                        </td>
+                        <td>
+                            Izin
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-orange text-orange-fg">S</span>
+                        </td>
+                        <td>
+                            Sakit
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-red text-red-fg">A</span>
+                        </td>
+                        <td>
+                            Alpa
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+<p>SMK TI BAZMA Islamic Boarding School</p>
 <p>Bogor, {{ now()->format('d F Y') }}</p>
 <b>Kepala Sekolah</b>
 <p>Ahmad Dahlan, S.Ag.</p>

@@ -122,7 +122,7 @@
                             </th>
                         @endfor
                         <th><span class="badge bg-green text-green-fg">M</span></th>
-                        <th><span class="badge bg-blue text-blue-fg">I</span></th>
+                        <th><span class="badge bg-azure text-azure-fg">I</span></th>
                         <th><span class="badge bg-orange text-orange-fg">S</span></th>
                         <th><span class="badge bg-red text-red-fg">A</span></th>
                         <th><span class="badge bg-blue text-blue-fg">L</span></th>
@@ -147,7 +147,6 @@
                                 $absensiDates = [];
                                 $izinDates = [];
                             @endphp
-    
                             @foreach($absensi as $itemA)
                                 @if ($itemA->tendik_id == $item->tendik_id)
                                     @php
@@ -155,20 +154,18 @@
                                     @endphp
                                 @endif
                             @endforeach
-    
                             @foreach($izin as $itemI)
                                 @if ($itemI->nama == $item->tendik->nama)
                                     @php
-                                        $izinDates[] = \Carbon\Carbon::parse($itemI->jam_masuk)->format('Y-m-d');
+                                        $izinDates[] = \Carbon\Carbon::parse($itemI->created_at)->format('Y-m-d');
                                         $jenisIzin = $itemI->jenis_izin;
                                     @endphp
                                 @endif
                             @endforeach
-    
                             @php
                                 $absensiDates = array_unique($absensiDates);
+                                $izinDates = array_unique($izinDates);
                             @endphp
-    
                             @for ($i = $start_date; $i <= $end_date; $i++)
                                 <td class="text-center">
                                     @if ($izinDates != null && in_array($i, $izinDates))
@@ -196,8 +193,6 @@
                                     @endif
                                 </td>
                             @endfor
-    
-                            {{-- Menampilkan total untuk setiap jenis absensi --}}
                             <td class="text-center">{{ $totalM }}</td>
                             <td class="text-center">{{ $totalI }}</td>
                             <td class="text-center">{{ $totalS }}</td>
@@ -205,7 +200,6 @@
                             <td class="text-center">{{ $totalL }}</td>
                             <td class="text-center">{{ $totalP }}</td>
                         </tr>
-                        {{-- Setel ulang total setiap kali selesai mengolah satu baris --}}
                         @php
                             $totalM = 0;
                             $totalI = 0;
@@ -216,7 +210,11 @@
                         @endphp
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">
+                            <td 
+                            @for ($i = $start_date; $i <= $end_date; $i++)
+                            colspan="{{$i}}" 
+                            @endfor
+                            class="text-center">
                                 Tidak Ada Data
                             </td>
                         </tr>
@@ -274,7 +272,7 @@
             </table>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-2">
         <div class="card">
             <table class="table table-vcenter card-table">
                 <thead class="border-1">
@@ -305,14 +303,73 @@
             </table>
         </div>
     </div>
-</div>
-<footer class="">
-    <div>
-        <p>Bogor, {{ now()->format('d F Y') }}</p>
-        <b>Kepala Sekolah</b>
-        <p>Ahmad Dahlan, S.Ag.</p>
+    <div class="col-2">
+        <div class="card">
+            <table class="table table-vcenter card-table">
+                <thead class="border-1">
+                    <tr>
+                        <th>Icon</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="badge bg-green text-green-fg">M</span>
+                        </td>
+                        <td>
+                            Masuk
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-azure text-azure-fg">I</span>
+                        </td>
+                        <td>
+                            Izin
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-orange text-orange-fg">S</span>
+                        </td>
+                        <td>
+                            Sakit
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-red text-red-fg">A</span>
+                        </td>
+                        <td>
+                            Alpa
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-blue text-blue-fg">L</span>
+                        </td>
+                        <td>
+                            Lembur
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-indigo text-indigo-fg">P</span>
+                        </td>
+                        <td>
+                            Perjalanan Dinas
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</footer>
+</div>
+<p>SMK TI BAZMA Islamic Boarding School</p>
+<p>Bogor, {{ now()->format('d F Y') }}</p>
+<b>Kepala Sekolah</b>
+<p>Ahmad Dahlan, S.Ag.</p>
 <script>
     window.onload = function() {
         window.print();

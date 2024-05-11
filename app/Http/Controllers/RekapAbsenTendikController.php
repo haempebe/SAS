@@ -24,9 +24,7 @@ class RekapAbsenTendikController extends Controller
         $end_date   = $request->end_date ? $request->end_date : Carbon::today();
         $carbonStart = Carbon::parse($start_date)->startOfMonth();
         $carbonEnd = Carbon::parse($end_date)->endOfMonth();
-
         $rowTableAbsensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->distinct('tendik_id')->get(['tendik_id']);
-
         $absensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->get();
         $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->where('role', 'tendik')->get();
 

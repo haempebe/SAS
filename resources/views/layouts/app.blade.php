@@ -112,32 +112,9 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item {{ str_contains(request()->url(), 'waktu') == true ? 'active' : '' }}">
-                            <a class="nav-link" href="waktu">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-clock-24">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M3 12a9 9 0 0 0 5.998 8.485m12.002 -8.485a9 9 0 1 0 -18 0" />
-                                        <path d="M12 7v5" />
-                                        <path
-                                            d="M12 15h2a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-1a1 1 0 0 0 -1 1v1a1 1 0 0 0 1 1h2" />
-                                        <path d="M18 15v2a1 1 0 0 0 1 1h1" />
-                                        <path d="M21 15v6" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Waktu
-                                </span>
-                            </a>
-                        </li>
                         <li class="nav-item {{ str_contains(request()->url(), 'izin') == true ? 'active' : '' }}">
                             <a class="nav-link" href="izin">
                                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -153,6 +130,45 @@
                                     Izin
                                 </span>
                             </a>
+                        </li>
+                        <li
+                            class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
+                                data-bs-auto-close="false" role="button" aria-expanded="false">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-stretching">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M16 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                                        <path d="M5 20l5 -.5l1 -2" />
+                                        <path d="M18 20v-5h-5.5l2.5 -6.5l-5.5 1l1.5 2" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-title">
+                                    Ekstrakulikuler
+                                </span>
+                            </a>
+                            <div
+                                class="dropdown-menu">
+                                <div class="dropdown-menu-columns">
+                                    <div class="dropdown-menu-column">
+                                        <a class="dropdown-item"
+                                            href="#">
+                                            Silat
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="#">
+                                            Futsal
+                                        </a>
+                                        <a class="dropdown-item"
+                                            href="#">
+                                            Pramuka
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                         <li
                             class="nav-item dropdown {{ Route::currentRouteName() == 'rekap-tendik' ? 'active' : '' }} {{ Route::currentRouteName() == 'rekap-siswa' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter') == true ? 'active' : '' }}">
@@ -198,56 +214,6 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./form-elements.html">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-desk">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M3 6h18" />
-                                        <path d="M4 6v13" />
-                                        <path d="M20 19v-13" />
-                                        <path d="M4 10h16" />
-                                        <path d="M15 6v8a2 2 0 0 0 2 2h3" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Kelas
-                                </span>
-                            </a>
-                        </li>
-                        {{-- <li
-                            class="nav-item {{ str_contains(request()->url(), 'rekap') == true ? 'active' : '' }} {{ str_contains(request()->url(), 'filter') == true ? 'active' : '' }}">
-                            <a class="nav-link" href="rekap">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M7 14h.013" />
-                                        <path d="M10.01 14h.005" />
-                                        <path d="M13.01 14h.005" />
-                                        <path d="M16.015 14h.005" />
-                                        <path d="M13.015 17h.005" />
-                                        <path d="M7.01 17h.005" />
-                                        <path d="M10.01 17h.005" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Rekap Absen
-                                </span>
-                            </a>
-                        </li> --}}
                     </ul>
                 </div>
             </div>
