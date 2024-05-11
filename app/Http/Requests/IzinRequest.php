@@ -30,4 +30,13 @@ class IzinRequest extends FormRequest
             'keterangan'     => 'required',
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'nama.required' => 'Nama harus diisi',
+            'role.required' => 'Role harus diisi',
+            'jenis_izin.required' => 'Jenis izin harus diisi',
+            'keterangan.required' => 'Keterangan harus diisi',
+        ];
+    }
 }

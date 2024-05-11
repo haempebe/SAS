@@ -254,7 +254,7 @@
                         <div class="col-lg-4">
                             <div class="card bg-twitter rounded-4">
                                 <div class="p-2 text-white">
-                                    <strong>On Time</strong>
+                                    <strong>Tepat Waktu</strong>
                                 </div>
                             </div>
                         </div>
@@ -465,7 +465,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tabs-jam-guru" role="tabpanel">
-
+                                    <a href="/tendik" class="btn btn-blue w-100 my-5 rounded-4">Edit Jam Guru</a>
                                 </div>
                             </div>
                         </div>

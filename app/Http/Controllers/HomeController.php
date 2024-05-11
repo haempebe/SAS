@@ -8,6 +8,7 @@ use App\Models\Siswa;
 use App\Models\Waktu;
 use App\Models\Tendik;
 use App\Models\Absensi;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -63,7 +64,6 @@ class HomeController extends Controller
         }
 
         $waktu = Waktu::find(1);
-
         $waktuTerkini = Carbon::now();
 
         if (is_null($getSiswa)) {
@@ -81,6 +81,24 @@ class HomeController extends Controller
                 'jam_masuk' => $waktuTerkini,
                 'status'    => $status
             ]);
+            // $singkatNamaGuru = ucwords(substr($getTendik->nama,0,27));
+            Http::post('http://localhost:3000/waapi', [
+                'token' => 'shjdksahlsakjdkaqijdsajhda',
+                'nohp' => $getTendik->nomor_whatsapp,
+                'pesan' =>
+'*SMK TI BAZMA*
+Presensi : '. $waktuTerkini->isoFormat('dddd, D MMMM Y') .'
+
+Nama           : *'.$getTendik->nama.'*
+No.Induk      : '.$getTendik->nik.'
+Presensi       : *'.'Masuk'.'*
+Role               : '.'Tendik'.'
+Jam Absen  : '.$waktuTerkini->format('H:i').'
+keterangan  : *'.$status.'*
+
+Notification sent by the system
+*E-Absensi Digital SMK TI BAZMA*',
+            ]);
         } elseif (is_null($getTendik)) {
             $status = '';
 
@@ -96,6 +114,24 @@ class HomeController extends Controller
                 'siswa_id'  => $getSiswa->nisn,
                 'jam_masuk' => $waktuTerkini,
                 'status'    => $status
+            ]);
+            $singkatNamaSiswa = ucwords(substr($getSiswa->nama,0,27));
+            Http::post('http://localhost:3000/waapi', [
+                'token' => 'shjdksahlsakjdkaqijdsajhda',
+                'nohp' => $getSiswa->nomor_whatsapp,
+                'pesan' =>
+'*SMK TI BAZMA*
+Presensi : '. $waktuTerkini->isoFormat('dddd, D MMMM Y') .'
+
+Nama           : *'.$singkatNamaSiswa.'*
+No.Induk      : '.$getSiswa->nisn.'
+Presensi       : *'.'Masuk'.'*
+Kelas            : '.$getSiswa->kelas.'
+Jam Absen  : '.$waktuTerkini->format('H:i').'
+keterangan  : *'.$status.'*
+
+Notification sent by the system
+*E-Absensi Digital SMK TI BAZMA*',
             ]);
         }
 

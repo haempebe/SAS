@@ -25,4 +25,10 @@ class AbsenRequest extends FormRequest
             'noid' => 'required',
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'noid.required' => 'NIK atau NISN harus diisi',
+        ];
+    }
 }
