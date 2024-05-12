@@ -29,9 +29,6 @@ class TendikController extends Controller
             'foto'           => 'required|image|mimes:jpg,png,jpeg',
         ]);
 
-
-
-
         $fotoName = time() . '.' . $request->foto->extension();
 
         $request->foto->move(public_path('img/foto'), $fotoName);

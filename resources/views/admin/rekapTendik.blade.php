@@ -146,6 +146,7 @@
                             @php
                                 $absensiDates = [];
                                 $izinDates = [];
+                                $lastIzin = [];
                             @endphp
                             @foreach($absensi as $itemA)
                                 @if ($itemA->tendik_id == $item->tendik_id)
@@ -158,27 +159,29 @@
                                 @if ($itemI->nama == $item->tendik->nama)
                                     @php
                                         $izinDates[] = \Carbon\Carbon::parse($itemI->created_at)->format('Y-m-d');
-                                        $jenisIzin = $itemI->jenis_izin;
+                                        $lastIzin[$itemI->created_at->format('Y-m-d')] = $itemI->jenis_izin;
                                     @endphp
                                 @endif
                             @endforeach
                             @php
                                 $absensiDates = array_unique($absensiDates);
-                                $izinDates = array_unique($izinDates);
                             @endphp
                             @for ($i = $start_date; $i <= $end_date; $i++)
                                 <td class="text-center">
-                                    @if ($izinDates != null && in_array($i, $izinDates))
-                                        @if ($jenisIzin == 'Izin')
+                                    @if (in_array($i, $izinDates))
+                                        @php
+                                            $jenisIzin = $lastIzin[$i] ?? null; // Mendapatkan jenis izin terakhir untuk tanggal ini, jika ada
+                                        @endphp
+                                        @if ($jenisIzin === 'Izin')
                                             <span class="badge bg-azure text-azure-fg">I</span>
                                             @php $totalI++; @endphp
-                                        @elseif ($jenisIzin == 'Sakit')
+                                        @elseif ($jenisIzin === 'Sakit')
                                             <span class="badge bg-orange text-orange-fg">S</span>
                                             @php $totalS++; @endphp
-                                        @elseif ($jenisIzin == 'Alpa')
+                                        @elseif ($jenisIzin === 'Alpa')
                                             <span class="badge bg-red text-red-fg">A</span>
                                             @php $totalA++; @endphp
-                                        @elseif ($jenisIzin == 'Lembur')
+                                        @elseif ($jenisIzin === 'Lembur')
                                             <span class="badge bg-blue text-blue-fg">L</span>
                                             @php $totalL++; @endphp
                                         @else
@@ -226,17 +229,18 @@
     
 </div>
 <div class="row row-cards mb-3">
-    <div class="col-8">
+    <div class="col-10">
         <div class="card">
             <table class="table table-vcenter card-table">
                 <thead class="border-1">
                     <tr>
                         <th>Nama</th>
                         <th>Jenis Izin</th>
+                        <th>Keterangan</th>
                         <th>Tanggal</th>
                         <th>Waktu Mulai</th>
                         <th>Waktu Berakhir</th>
-                        <th>Keterangan</th>
+                        <th>Total Jam Lembur</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -256,10 +260,14 @@
                         @else
                         <td><span class="badge bg-indigo text-indigo-fg">{{ $item->jenis_izin }}</span></td>
                         @endif
+                        <td>{{ $item->keterangan }}</td>
                         <td>{{ $item->created_at->format('d F') }}</td>
                         <td>{{ $item->jam_mulai }}</td>
                         <td>{{ $item->jam_berakhir }}</td>
-                        <td>{{ $item->keterangan }}</td>
+                        @php
+                        $totalJam = isset($totalJamPerTendik[$item->id]) ? min($totalJamPerTendik[$item->id], 8 ) : 0 ;
+                        @endphp
+                        <td>{{ $totalJam }} Jam</td>
                     </tr>
                     @empty
                     <tr>
@@ -272,7 +280,7 @@
             </table>
         </div>
     </div>
-    <div class="col-2">
+    {{-- <div class="col-2">
         <div class="card">
             <table class="table table-vcenter card-table">
                 <thead class="border-1">
@@ -302,7 +310,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> --}}
     <div class="col-2">
         <div class="card">
             <table class="table table-vcenter card-table">

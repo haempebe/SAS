@@ -174,6 +174,7 @@
                             @php
                                 $absensiDates = [];
                                 $izinDates = [];
+                                $lastIzin = [];
                             @endphp
                             @foreach($absensi as $itemA)
                                 @if ($itemA->siswa_id == $item->siswa_id)
@@ -186,7 +187,7 @@
                                 @if ($itemI->nama == $item->siswa->nama)
                                     @php
                                         $izinDates[] = \Carbon\Carbon::parse($itemI->created_at)->format('Y-m-d');
-                                        $jenisIzin = $itemI->jenis_izin;
+                                        $lastIzin[$itemI->created_at->format('Y-m-d')] = $itemI->jenis_izin;
                                     @endphp
                                 @endif
                             @endforeach
@@ -196,16 +197,19 @@
                             @endphp
                             @for ($i = $start_date; $i <= $end_date; $i++)
                                 <td class="text-center">
-                                    @if ($izinDates != null && in_array($i, $izinDates))
-                                        @if ($jenisIzin == 'Izin')
+                                    @if (in_array($i, $izinDates))
+                                        @php
+                                            $jenisIzin = $lastIzin[$i] ?? null; // Mendapatkan jenis izin terakhir untuk tanggal ini, jika ada
+                                        @endphp
+                                        @if ($jenisIzin === 'Izin')
                                             <span class="badge bg-azure text-azure-fg">I</span>
                                             @php $totalI++; @endphp
-                                        @elseif ($jenisIzin == 'Sakit')
+                                        @elseif ($jenisIzin === 'Sakit')
                                             <span class="badge bg-orange text-orange-fg">S</span>
                                             @php $totalS++; @endphp
                                         @else
                                             <span class="badge bg-red text-red-fg">A</span>
-                                            @php $totalA++; @endphp 
+                                            @php $totalA++; @endphp
                                         @endif
                                     @else
                                         @if (in_array($i, $absensiDates))
@@ -260,7 +264,13 @@
                         <td>
                             {{ $item->nama }}
                         </td>
-                        <td>{{ $item->jenis_izin }}</td>
+                        @if ($item->jenis_izin == 'Izin')
+                        <td><span class="badge bg-azure text-azure-fg">{{ $item->jenis_izin }}</span></td>
+                        @elseif ($item->jenis_izin == 'Sakit')
+                        <td><span class="badge bg-orange text-orange-fg">{{ $item->jenis_izin }}</span></td>
+                        @else
+                        <td><span class="badge bg-red text-red-fg">{{ $item->jenis_izin }}</span></td>
+                        @endif
                         <td>{{ $item->created_at->format('d F') }}</td>
                         <td>{{ $item->keterangan }}</td>
                     </tr>

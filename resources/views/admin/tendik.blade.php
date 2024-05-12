@@ -155,27 +155,64 @@
                                         </button>
                                     </div>
                                     <div class="col">
-                                        <form action="{{ route('tendik.delete', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button href="#" class="btn btn-danger btn-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M4 7l16 0" />
-                                                    <path d="M10 11l0 6" />
-                                                    <path d="M14 11l0 6" />
-                                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                </svg>
-                                            </button>
-                                        </form>
+                                        <button href="#" class="btn btn-danger btn-icon" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $item->id }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M4 7l16 0" />
+                                                <path d="M10 11l0 6" />
+                                                <path d="M14 11l0 6" />
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                             </td>
                         </tr>
+                        {{-- Form Delete --}}
+                        <div class="modal modal-blur fade" id="modal-delete-{{ $item->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <form action="{{ route('tendik.delete', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-status bg-danger"></div>
+                                        <div class="modal-body text-center py-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M12 9v4"></path>
+                                                <path
+                                                    d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z">
+                                                </path>
+                                                <path d="M12 16h.01"></path>
+                                            </svg>
+                                            <h3>Apakah Anda Yakin?</h3>
+                                            <div class="text-secondary">Apakah Anda benar-benar ingin menghapus data ini? Apa yang telah Anda
+                                                lakukan tidak dapat dibatalkan.</div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="w-100">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                                            TIDAK
+                                                        </a>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button class="btn btn-danger w-100" data-bs-dismiss="modal" type="submit">
+                                                            YA
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         @empty
                         <tr>
                             <td colspan="7" class="text-center pt-4">
@@ -200,9 +237,9 @@
         </div>
     </div>
 </div>
-{{-- Form Create --}}
-<div class="modal modal-blur fade {{ session('errors') ? 'show' : '' }}" id="modal-create" tabindex="-1" role="dialog"
-    aria-hidden="true" style="{{ session('errors') ? 'display: block;' : 'display: none;' }}">
+{{-- Form Create  {{ session('create_errors') ? 'show' : '' }}  style="{{ session('create_errors') ? 'display: block;' : 'display: none;' }}" --}}
+<div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog"
+    aria-hidden="true">
     <form action="{{ route('tendik.perform') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-dialog modal-lg" role="document">
@@ -344,18 +381,6 @@
                     <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                         Cancel
                     </a>
-                    {{-- <a href="#modal-create">
-                        <button type="submit" class="btn btn-primary ms-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 5l0 14" />
-                                <path d="M5 12l14 0" />
-                            </svg>
-                            Simpan
-                        </button>
-                    </a> --}}
                     <button href="#" type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -516,18 +541,6 @@
                     <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                         Cancel
                     </a>
-                    {{-- <a href="#modal-create">
-                        <button type="submit" class="btn btn-primary ms-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 5l0 14" />
-                                <path d="M5 12l14 0" />
-                            </svg>
-                            Simpan
-                        </button>
-                    </a> --}}
                     <button href="#" type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                             stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -547,9 +560,11 @@
 @endsection
 
 @section('form-class')
-{{ session('errors') ? 'modal-open' : '' }}
+{{ session('create_errors') ? 'modal-open' : '' }}
+{{ session('edit_errors') ? 'modal-open' : '' }}
 @endsection
 
 @section('form-style')
-{{ session('errors') ? 'overflow: hidden; padding-right: 0px;' : '' }}
+{{ session('create_errors') ? 'overflow: hidden; padding-right: 0px;' : '' }}
+{{ session('edit_errors') ? 'overflow: hidden; padding-right: 0px;' : '' }}
 @endsection

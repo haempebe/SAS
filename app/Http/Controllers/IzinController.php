@@ -30,7 +30,7 @@ class IzinController extends Controller
             'keterangan' => $request->keterangan
         ]);
 
-        return redirect()->to('/izin')->with('status', 'Data Izin Berhasil Dibuat');
+        return redirect()->to('/izin')->with('create', 'Data Izin Berhasil Dibuat');
     }
     public function edit($id)
     {
