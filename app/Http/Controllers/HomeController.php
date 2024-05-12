@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AbsenRequest;
 use Carbon\Carbon;
+use App\Models\Izin;
 use App\Models\Siswa;
 use App\Models\Waktu;
 use App\Models\Tendik;
 use App\Models\Absensi;
+use App\Http\Requests\AbsenRequest;
 use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
@@ -32,8 +33,46 @@ class HomeController extends Controller
         $siswaCount = Siswa::count();
         $tendikCount = Tendik::count();
         $absensi = Absensi::whereDate('jam_masuk', Carbon::today())->get();
+        $totalTerlambat = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('tendik_id')->where('status', 'Terlambat')->count();
+        $totalOntime = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('tendik_id')->where('status',  'Tepat Waktu')->count();
         $waktu = Waktu::find(1);
-        return view('home', compact('tendikCount', 'siswaCount', 'absensi', 'waktu'));
+
+        $belumMasuk = Siswa::leftJoin('absensi', function ($join) {
+            $join->on('nisn', '=', 'absensi.siswa_id')
+                ->whereDate('absensi.jam_masuk', Carbon::today());
+        })
+            ->whereNull('absensi.siswa_id')
+            ->count();
+
+        $belumMasuk10 = Siswa::leftJoin('absensi', function ($join) {
+            $join->on('nisn', '=', 'absensi.siswa_id')
+                ->whereDate('absensi.jam_masuk', Carbon::today());
+        })
+            ->whereNull('absensi.siswa_id')
+            ->where('kelas', 'Kelas 10')
+            ->count();
+
+        $belumMasuk11 = Siswa::leftJoin('absensi', function ($join) {
+            $join->on('nisn', '=', 'absensi.siswa_id')
+                ->whereDate('absensi.jam_masuk', Carbon::today());
+        })
+            ->whereNull('absensi.siswa_id')
+            ->where('kelas', 'Kelas 11')
+            ->count();
+
+        $belumMasuk12 = Siswa::leftJoin('absensi', function ($join) {
+            $join->on('nisn', '=', 'absensi.siswa_id')
+                ->whereDate('absensi.jam_masuk', Carbon::today());
+        })
+            ->whereNull('absensi.siswa_id')
+            ->where('kelas', 'Kelas 12')
+            ->count();
+
+        $totalIzin = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Izin')->where('role', 'Siswa')->count();
+        $totalSakit = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Sakit')->where('role', 'Siswa')->count();
+        $totalAlpa = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Alpa')->where('role', 'Siswa')->count();
+
+        return view('home', compact('tendikCount', 'siswaCount', 'absensi', 'waktu', 'totalOntime', 'totalTerlambat', 'belumMasuk', 'belumMasuk10', 'belumMasuk11', 'belumMasuk12', 'totalIzin', 'totalSakit', 'totalAlpa'));
     }
     public function masuk(AbsenRequest $request)
     {
@@ -86,15 +125,15 @@ class HomeController extends Controller
                 'token' => 'shjdksahlsakjdkaqijdsajhda',
                 'nohp' => $getTendik->nomor_whatsapp,
                 'pesan' =>
-'*SMK TI BAZMA*
-Presensi : '. $waktuTerkini->isoFormat('dddd, D MMMM Y') .'
+                '*SMK TI BAZMA*
+Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
-Nama           : *'.$getTendik->nama.'*
-No.Induk      : '.$getTendik->nik.'
-Presensi       : *'.'Masuk'.'*
-Role               : '.'Tendik'.'
-Jam Absen  : '.$waktuTerkini->format('H:i').'
-keterangan  : *'.$status.'*
+Nama           : *' . $getTendik->nama . '*
+No.Induk      : ' . $getTendik->nik . '
+Presensi       : *' . 'Masuk' . '*
+Role               : ' . 'Tendik' . '
+Jam Absen  : ' . $waktuTerkini->format('H:i') . '
+keterangan  : *' . $status . '*
 
 Notification sent by the system
 *E-Absensi Digital SMK TI BAZMA*',
@@ -115,20 +154,20 @@ Notification sent by the system
                 'jam_masuk' => $waktuTerkini,
                 'status'    => $status
             ]);
-            $singkatNamaSiswa = ucwords(substr($getSiswa->nama,0,27));
+            $singkatNamaSiswa = ucwords(substr($getSiswa->nama, 0, 27));
             Http::post('http://localhost:3000/waapi', [
                 'token' => 'shjdksahlsakjdkaqijdsajhda',
                 'nohp' => $getSiswa->nomor_whatsapp,
                 'pesan' =>
-'*SMK TI BAZMA*
-Presensi : '. $waktuTerkini->isoFormat('dddd, D MMMM Y') .'
+                '*SMK TI BAZMA*
+Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
-Nama           : *'.$singkatNamaSiswa.'*
-No.Induk      : '.$getSiswa->nisn.'
-Presensi       : *'.'Masuk'.'*
-Kelas            : '.$getSiswa->kelas.'
-Jam Absen  : '.$waktuTerkini->format('H:i').'
-keterangan  : *'.$status.'*
+Nama           : *' . $singkatNamaSiswa . '*
+No.Induk      : ' . $getSiswa->nisn . '
+Presensi       : *' . 'Masuk' . '*
+Kelas            : ' . $getSiswa->kelas . '
+Jam Absen  : ' . $waktuTerkini->format('H:i') . '
+keterangan  : *' . $status . '*
 
 Notification sent by the system
 *E-Absensi Digital SMK TI BAZMA*',

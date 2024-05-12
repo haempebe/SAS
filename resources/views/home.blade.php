@@ -3,16 +3,23 @@
     <style>
         .glass {
             background: rgba(255, 255, 255, 0.17);
-            border-radius: 16px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
+        .radius {
+            border-radius: 16px;
+        }
+
         .bg-gradient-orange {
             background: rgb(255, 114, 0);
             background: linear-gradient(335deg, rgba(255, 114, 0, 1) 0%, rgba(255, 172, 4, 1) 90%, rgba(252, 179, 88, 1) 100%);
+        }
+
+        .bg-transparent {
+            background-color: transparent !important;
         }
     </style>
 @endsection
@@ -36,11 +43,12 @@
                                             SMK TI Bazma
                                         </h2>
                                     </div>
-                                    <div class="col-auto ms-auto d-print-none">
+                                    <div class="col-auto ms-auto d-print-none" style="text-align: end">
                                         <h2 class="page-title">
                                             <div id="jam"></div>
                                         </h2>
-                                        <p class="mb-0 page-pretitle">{{ $time = now()->isoFormat('dddd, D MMMM Y') }}</p>
+                                        <p class="mb-0 page-pretitle" style="font-size: 12px;">
+                                            {{ $time = now()->isoFormat('dddd, D MMMM Y') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -250,37 +258,192 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row gx-2">
-                        <div class="col-lg-4">
-                            <div class="card bg-twitter rounded-4">
-                                <div class="p-2 text-white">
-                                    <strong>Tepat Waktu</strong>
+                    <div class="row gx-2" data-masonry='{"percentPosition": true }'>
+                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
+                            <div class="card bg-twitter rounded-4 p-2">
+                                <div class="card glass radius">
+                                    <div class="card-header glass pb-2"
+                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
+                                        <div class="h3 m-0 text-white">Siswa Tepat Waktu</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row row-cols-lg-2 align-items-center">
+                                            <img src="{{ asset('img/bahan/ontime.png') }}" style="width: 85px;"
+                                                class="img-fluid mx-3" alt="">
+                                            <div class="p-2 text-white ms-auto">
+                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                    {{ $totalOntime }}<span class="page-pretitle text-white">
+                                                        siswa</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="card bg-pink rounded-4">
-                                <div class="p-2 text-white">
-                                    <strong>Terlambat</strong>
+                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
+                            <div class="card bg-pink rounded-4 p-2">
+                                <div class="card glass radius">
+                                    <div class="card-header glass pb-2"
+                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
+                                        <div class="h3 m-0 text-white">Siswa Terlambat</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row row-cols-lg-2 align-items-center">
+                                            <img src="{{ asset('img/bahan/terlambat.png') }}" style="width: 85px;"
+                                                class="img-fluid mx-3" alt="">
+                                            <div class="p-2 text-white ms-auto">
+                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                    {{ $totalTerlambat }}<span class="page-pretitle text-white">
+                                                        siswa</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
                             <div class="card bg-gradient-orange border-0 rounded-4">
                                 <div class="p-2">
-                                    <div class="row gx-2 ">
-                                        <div class="col-6">
-                                            <div class="card glass">
-                                                <div class="p-2 text-white mx-auto text-center">
-                                                    <strong>Belum Masuk</strong>
+                                    <div class="card glass radius">
+                                        <div class="card-header bg-transparent">
+                                            <ul class="nav nav-tabs card-header-tabs nav-fill bg-transparent text-white glass"
+                                                style="border-top-left-radius: 13px; border-top-right-radius: 13px;"
+                                                data-bs-toggle="tabs" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="#tabs-kelas10" class="nav-link page-pretitle"
+                                                        data-bs-toggle="tab" aria-selected="false" role="tab"
+                                                        tabindex="-1">Kelas 10</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="#tabs-kelas11" class="nav-link page-pretitle"
+                                                        data-bs-toggle="tab" aria-selected="false" role="tab"
+                                                        tabindex="-1">Kelas 11</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="#tabs-kelas12" class="nav-link page-pretitle"
+                                                        data-bs-toggle="tab" aria-selected="false" role="tab"
+                                                        tabindex="-1">Kelas 12</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="#tabs-semuaKelas" class="nav-link page-pretitle active"
+                                                        data-bs-toggle="tab" aria-selected="true" role="tab">Semua
+                                                        Kelas</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="tab-content">
+                                                <div class="tab-pane" id="tabs-kelas10" role="tabpanel">
+                                                    <div class="row row-cols-lg-2 align-items-center">
+                                                        <img src="{{ asset('img/bahan/belum.png') }}"
+                                                            style="width: 85px;" class="img-fluid mx-3" alt="">
+                                                        <div class="p-2 text-white ms-auto">
+                                                            <strong>Belum Absen</strong>
+                                                            <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                                {{ $belumMasuk10 }}<span class="page-pretitle text-white">
+                                                                    siswa</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tabs-kelas11" role="tabpanel">
+                                                    <div class="row row-cols-lg-2 align-items-center">
+                                                        <img src="{{ asset('img/bahan/belum.png') }}"
+                                                            style="width: 85px;" class="img-fluid mx-3" alt="">
+                                                        <div class="p-2 text-white ms-auto">
+                                                            <strong>Belum Absen</strong>
+                                                            <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                                {{ $belumMasuk11 }}<span class="page-pretitle text-white">
+                                                                    siswa</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tabs-kelas12" role="tabpanel">
+                                                    <div class="row row-cols-lg-2 align-items-center">
+                                                        <img src="{{ asset('img/bahan/belum.png') }}"
+                                                            style="width: 85px;" class="img-fluid mx-3" alt="">
+                                                        <div class="p-2 text-white ms-auto">
+                                                            <strong>Belum Absen</strong>
+                                                            <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                                {{ $belumMasuk12 }}<span class="page-pretitle text-white">
+                                                                    siswa</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane active show" id="tabs-semuaKelas" role="tabpanel">
+                                                    <div class="row row-cols-lg-2 align-items-center">
+                                                        <img src="{{ asset('img/bahan/belum.png') }}"
+                                                            style="width: 85px;" class="img-fluid mx-3" alt="">
+                                                        <div class="p-2 text-white ms-auto">
+                                                            <strong>Belum Absen</strong>
+                                                            <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                                {{ $belumMasuk }}<span class="page-pretitle text-white">
+                                                                    siswa</span></p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="card glass">
-                                                <div class="p-2 text-white  mx-auto text-center">
-                                                    <strong>Belum Pulang</strong>
-                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
+                            <div class="card bg-orange rounded-4 p-2">
+                                <div class="card glass radius">
+                                    <div class="card-header glass pb-2"
+                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
+                                        <div class="h3 m-0 text-white">Siswa Sakit</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row row-cols-lg-2 align-items-center">
+                                            <img src="{{ asset('img/bahan/sakit.png') }}" style="width: 85px;"
+                                                class="img-fluid mx-3" alt="">
+                                            <div class="p-2 text-white ms-auto">
+                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                    {{ $totalSakit }}<span class="page-pretitle text-white">
+                                                        siswa</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
+                            <div class="card bg-azure rounded-4 p-2">
+                                <div class="card glass radius">
+                                    <div class="card-header glass pb-2"
+                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
+                                        <div class="h3 m-0 text-white">Siswa Izin</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row row-cols-lg-2 align-items-center">
+                                            <img src="{{ asset('img/bahan/izin.png') }}" style="width: 85px;"
+                                                class="img-fluid mx-3" alt="">
+                                            <div class="p-2 text-white ms-auto">
+                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                    {{ $totalIzin }}<span class="page-pretitle text-white">
+                                                        siswa</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
+                            <div class="card bg-red rounded-4 p-2">
+                                <div class="card glass radius">
+                                    <div class="card-header glass pb-2"
+                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
+                                        <div class="h3 m-0 text-white">Siswa Alpa</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row row-cols-lg-2 align-items-center">
+                                            <img src="{{ asset('img/bahan/alpa.png') }}" style="width: 85px;"
+                                                class="img-fluid mx-3" alt="">
+                                            <div class="p-2 text-white ms-auto">
+                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                    {{ $totalAlpa }}<span class="page-pretitle text-white">
+                                                        siswa</span></p>
                                             </div>
                                         </div>
                                     </div>
