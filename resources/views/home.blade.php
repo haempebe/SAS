@@ -200,7 +200,7 @@
                                                         <div class="py-5">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Nomor Induk</label>
-                                                                <input type="text" class="form-control rounded-4"
+                                                                <input autocomplete="off" type="text" class="form-control rounded-4"
                                                                     name="noid" placeholder="Masukan NISN/NUPTK"
                                                                     value="{{ old('noid') }}" />
                                                             </div>
@@ -227,7 +227,7 @@
                                                         <div class="py-5">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Nomor Induk</label>
-                                                                <input type="text" class="form-control rounded-4"
+                                                                <input autocomplete="off" type="text" class="form-control rounded-4"
                                                                     name="noid" placeholder="Masukan NISN/NUPTK"
                                                                     value="{{ old('noid') }}" />
                                                             </div>
@@ -716,7 +716,7 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="jam_masuk">Jam Masuk</label>
-                                    <input type="text" name="jam_masuk" class="form-control" data-mask="00:00"
+                                    <input autocomplete="off" type="text" name="jam_masuk" class="form-control" data-mask="00:00"
                                         data-mask-visible="true" placeholder="00:00" autocomplete="off"
                                         value="{{ $waktu->jam_masuk }}">
                                 </div>
@@ -729,7 +729,7 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="jam_Pulang">Jam Pulang</label>
-                                    <input type="text" name="jam_pulang" class="form-control" data-mask="00:00"
+                                    <input autocomplete="off" type="text" name="jam_pulang" class="form-control" data-mask="00:00"
                                         data-mask-visible="true" placeholder="00:00" autocomplete="off"
                                         value="{{ $waktu->jam_pulang }}">
                                 </div>
