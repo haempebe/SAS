@@ -20,8 +20,8 @@ class RekapAbsenSiswaController extends Controller
     }
     public function filter(Request $request)
     {
-        $start_date = $request->start_date;
-        $end_date   = $request->end_date ? $request->end_date : Carbon::today();
+        $start_date = Carbon::parse($request->input('start_date'));
+        $end_date   = Carbon::parse($request->input('end_date'));
         $kelas      = $request->kelas;
         $rowTableAbsensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('tendik_id')->whereHas('siswa', function ($query) use ($kelas) {
             $query->where('kelas', $kelas);
@@ -29,9 +29,19 @@ class RekapAbsenSiswaController extends Controller
         $absensi = Absensi::whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date)->whereNull('tendik_id')
             ->whereHas('siswa', function ($query) use ($kelas) {
                 $query->where('kelas', $kelas);
-        })->get();
-        $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->where('role', 'siswa')->get();
+            })->get();
+        $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->where('role', 'siswa')->where('kelas', $kelas)->get();
+        $loopTanggal = [];
+        $currentDate = $start_date->copy();
+        while ($currentDate <= $end_date) {
+            $loopTanggal[] = [
+                'date' => $currentDate->copy()->toDateString(),
+                'day' => $currentDate->copy()->format('d'),
+                'name_siswa' => $absensi->pluck('siswa.nama')->unique()->toArray()
+            ];
+            $currentDate->addDay();
+        }
 
-        return view('admin.rekapSiswa', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi'));
+        return view('admin.rekapSiswa', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'loopTanggal'));
     }
 }

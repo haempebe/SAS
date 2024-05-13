@@ -13,34 +13,6 @@
                             Absen Tendik
                         </h2>
                     </div>
-                    {{-- <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                    <a href="/filter-tendik/pdf" class="btn btn-primary d-none d-sm-inline-block">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                            <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" />
-                            <path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" />
-                            <path d="M17 18h2" />
-                            <path d="M20 15h-3v6" />
-                            <path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1z" />
-                        </svg>
-                        Export PDF
-                    </a>
-                    <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                        data-bs-target="#modal-report">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M12 5l0 14"></path>
-                            <path d="M5 12l14 0"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div> --}}
                 </div>
             </div>
             <form action="/filter-tendik" id="filter" method="GET">
@@ -71,7 +43,6 @@
                             <input class="form-control" name="end_date" placeholder="{{ request('end_date') }}"
                                 id="datepicker-icon-2" value="" fdprocessedid="m75zlq" autocomplete="off">
                             <span class="input-icon-addon">
-                                <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -120,17 +91,16 @@
                             <tr>
                                 <th>Nama</th>
 
-
                                 @foreach ($loopTanggal as $tanggal)
-                                    <th>{{ htmlspecialchars($tanggal['day']) }}</th>
+                                    <th class="text-center">{{ htmlspecialchars($tanggal['day']) }}</th>
                                 @endforeach
 
-                                <th><span class="badge bg-green text-green-fg">M</span></th>
-                                <th><span class="badge bg-azure text-azure-fg">I</span></th>
-                                <th><span class="badge bg-orange text-orange-fg">S</span></th>
-                                <th><span class="badge bg-red text-red-fg">A</span></th>
-                                <th><span class="badge bg-blue text-blue-fg">L</span></th>
-                                <th><span class="badge bg-indigo text-indigo-fg">P</span></th>
+                                <th class="text-center"><span class="badge bg-green text-green-fg">M</span></th>
+                                <th class="text-center"><span class="badge bg-azure text-azure-fg">I</span></th>
+                                <th class="text-center"><span class="badge bg-orange text-orange-fg">S</span></th>
+                                <th class="text-center"><span class="badge bg-red text-red-fg">A</span></th>
+                                <th class="text-center"><span class="badge bg-blue text-blue-fg">L</span></th>
+                                <th class="text-center"><span class="badge bg-indigo text-indigo-fg">P</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -178,7 +148,7 @@
                                         <td class="text-center">
                                             @if (in_array($tanggal['date'], $izinDates))
                                                 @php
-                                                    $jenisIzin = $lastIzin[$tanggal['date']] ?? null; // Mendapatkan jenis izin terakhir untuk tanggal ini, jika ada
+                                                    $jenisIzin = $lastIzin[$tanggal['date']] ?? null;
                                                 @endphp
                                                 @if ($jenisIzin === 'Izin')
                                                     <span class="badge bg-azure text-azure-fg">I</span>
@@ -209,14 +179,6 @@
                                     <td class="text-center">{{ $totalA }}</td>
                                     <td class="text-center">{{ $totalL }}</td>
                                     <td class="text-center">{{ $totalP }}</td>
-                                    @php
-                                        $totalM = 0;
-                                        $totalI = 0;
-                                        $totalS = 0;
-                                        $totalA = 0;
-                                        $totalL = 0;
-                                        $totalP = 0;
-                                    @endphp
                                 </tr>
 
                             @empty
@@ -224,8 +186,7 @@
                                     @php
                                         $n = 1;
                                     @endphp
-                                    <td @foreach ($loopTanggal as $tanggal)
-                                    {{ $n++ }} @endforeach
+                                    <td @foreach ($loopTanggal as $tanggal) {{ $n++ }} @endforeach
                                         colspan="{{ $n += 6 }}" class="text-center">
                                         Tidak Ada Data
                                     </td>
@@ -244,12 +205,12 @@
                         <thead class="border-1">
                             <tr>
                                 <th>Nama</th>
-                                <th>Jenis Izin</th>
-                                <th>Keterangan</th>
-                                <th>Tanggal</th>
-                                <th>Waktu Mulai</th>
-                                <th>Waktu Berakhir</th>
-                                <th>Total Jam Lembur</th>
+                                <th class="text-center">Jenis Izin</th>
+                                <th class="text-center">Keterangan</th>
+                                <th class="text-center">Tanggal</th>
+                                <th class="text-center">Waktu Mulai</th>
+                                <th class="text-center">Waktu Berakhir</th>
+                                <th class="text-center">Total Jam Lembur</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -259,32 +220,37 @@
                                         {{ $item->nama }}
                                     </td>
                                     @if ($item->jenis_izin == 'Izin')
-                                        <td><span class="badge bg-azure text-azure-fg">{{ $item->jenis_izin }}</span></td>
+                                        <td class="text-center"><span
+                                                class="badge bg-azure text-azure-fg">{{ $item->jenis_izin }}</span></td>
                                     @elseif ($item->jenis_izin == 'Sakit')
-                                        <td><span class="badge bg-orange text-orange-fg">{{ $item->jenis_izin }}</span>
+                                        <td class="text-center"><span
+                                                class="badge bg-orange text-orange-fg">{{ $item->jenis_izin }}</span>
                                         </td>
                                     @elseif ($item->jenis_izin == 'Alpa')
-                                        <td><span class="badge bg-red text-red-fg">{{ $item->jenis_izin }}</span></td>
+                                        <td class="text-center"><span
+                                                class="badge bg-red text-red-fg">{{ $item->jenis_izin }}</span></td>
                                     @elseif ($item->jenis_izin == 'Lembur')
-                                        <td><span class="badge bg-blue text-blue-fg">{{ $item->jenis_izin }}</span></td>
+                                        <td class="text-center"><span
+                                                class="badge bg-blue text-blue-fg">{{ $item->jenis_izin }}</span></td>
                                     @else
-                                        <td><span class="badge bg-indigo text-indigo-fg">{{ $item->jenis_izin }}</span>
+                                        <td class="text-center"><span
+                                                class="badge bg-indigo text-indigo-fg">{{ $item->jenis_izin }}</span>
                                         </td>
                                     @endif
-                                    <td>{{ $item->keterangan }}</td>
-                                    <td>{{ $item->created_at->format('d F') }}</td>
-                                    <td>
+                                    <td class="text-center">{{ $item->keterangan }}</td>
+                                    <td class="text-center">{{ $item->created_at->format('d F') }}</td>
+                                    <td class="text-center">
                                         @if ($item->jam_mulai == '00:00:00' && $item->jam_berakhir == '00:00:00')
                                             -
                                         @else
-                                            {{ $item->jam_mulai }}
+                                            {{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }}
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         @if ($item->jam_mulai == '00:00:00' && $item->jam_berakhir == '00:00:00')
                                             -
                                         @else
-                                            {{ $item->jam_berakhir }}
+                                            {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}
                                         @endif
                                     </td>
                                     @php
@@ -292,7 +258,7 @@
                                             ? min($totalJamPerTendik[$item->id], 8)
                                             : 0;
                                     @endphp
-                                    <td>{{ $totalJam }} Jam</td>
+                                    <td class="text-center">{{ $totalJam }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -305,37 +271,6 @@
                     </table>
                 </div>
             </div>
-            {{-- <div class="col-2">
-        <div class="card">
-            <table class="table table-vcenter table-bordered table-striped card-table">
-                <thead class="border-1">
-                    <tr>
-                        <th>Nama</th>
-                        <th class="text-center">Total Jam Lembur</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($izin as $item)
-                    <tr>
-                        <td>
-                            {{ $item->nama }}
-                        </td>
-                        @php
-                        $totalJam = isset($totalJamPerTendik[$item->id]) ? min($totalJamPerTendik[$item->id], 8 ) : 0 ;
-                        @endphp
-                        <td class="text-center">{{ $totalJam }}</td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-center">
-                            Tidak Ada Data
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div> --}}
             <div class="col-2">
                 <div class="card">
                     <table class="table table-vcenter table-bordered table-striped card-table">

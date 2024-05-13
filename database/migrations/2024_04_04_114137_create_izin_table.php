@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('role');
+            $table->string('kelas')->nullable();
             $table->string('jenis_izin');
             $table->time('jam_mulai')->nullable();
             $table->time('jam_berakhir')->nullable();

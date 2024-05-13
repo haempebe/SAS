@@ -24,6 +24,7 @@ class IzinController extends Controller
         Izin::create([
             'nama' => $request->nama,
             'role' => $request->role,
+            'kelas' => $request->kelas,
             'jenis_izin' => $request->jenis_izin,
             'jam_mulai' => $request->jam_mulai,
             'jam_berakhir' => $request->jam_berakhir,
@@ -44,6 +45,7 @@ class IzinController extends Controller
         Izin::findOrFail($id)->update([
             'nama' => $request->nama,
             'role' => $request->role,
+            'kelas' => $request->kelas,
             'jenis_izin' => $request->jenis_izin,
             'jam_mulai' => $request->jam_mulai,
             'jam_berakhir' => $request->jam_berakhir,

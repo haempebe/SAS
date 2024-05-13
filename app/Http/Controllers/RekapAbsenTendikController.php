@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Models\Izin;
 use App\Models\Absensi;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class RekapAbsenTendikController extends Controller
 {
@@ -36,24 +35,31 @@ class RekapAbsenTendikController extends Controller
             $currentDate->addDay();
         }
 
-        // dd($loopTanggal);
-
-
-
         $totalJamPerTendik = [];
 
         foreach ($izin as $izinTotal) {
-            // Hitung selisih jam_mulai dan jam_berakhir dalam format jam
             $jam_mulai = Carbon::parse($izinTotal->jam_mulai);
             $jam_berakhir = Carbon::parse($izinTotal->jam_berakhir);
-            $selisihJam = $jam_mulai->diffInHours($jam_berakhir);
+            $selisihJam = $jam_mulai->floatDiffInHours($jam_berakhir);
 
-            // Tambahkan total jam ke dalam array totalJamPerTendik berdasarkan tendik_id
             if (!isset($totalJamPerTendik[$izinTotal->id])) {
                 $totalJamPerTendik[$izinTotal->id] = 0;
             }
 
             $totalJamPerTendik[$izinTotal->id] += $selisihJam;
+        }
+
+        foreach ($totalJamPerTendik as $key => $value) {
+            $hours = floor($value);
+            $minutes = ($value - $hours) * 60;
+
+            if ($hours > 0 && $minutes > 0) {
+                $totalJamPerTendik[$key] = "$hours jam $minutes menit";
+            } elseif ($hours > 0) {
+                $totalJamPerTendik[$key] = "$hours jam";
+            } else {
+                $totalJamPerTendik[$key] = "$minutes menit";
+            }
         }
 
         return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'totalJamPerTendik', 'loopTanggal'));

@@ -24,6 +24,7 @@ class IzinRequest extends FormRequest
         return [
             'nama'           => 'required',
             'role'           => 'required',
+            'kelas'          => 'nullable',
             'jenis_izin'     => 'required',
             'jam_mulai'      => 'nullable',
             'jam_berakhir'   => 'nullable',
