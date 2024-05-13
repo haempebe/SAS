@@ -20,13 +20,25 @@ class RekapAbsenTendikController extends Controller
     }
     public function filter(Request $request)
     {
-        $start_date = $request->start_date;
-        $end_date   = $request->end_date ? $request->end_date : Carbon::today();
-        $carbonStart = Carbon::parse($start_date)->startOfMonth();
-        $carbonEnd = Carbon::parse($end_date)->endOfMonth();
+        $start_date = Carbon::parse($request->input('start_date'));
+        $end_date = Carbon::parse($request->input('end_date'));
         $rowTableAbsensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->distinct('tendik_id')->get(['tendik_id']);
-        $absensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->get();
+        $absensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->with('tendik')->get();
         $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->where('role', 'tendik')->get();
+        $loopTanggal = [];
+        $currentDate = $start_date->copy();
+        while ($currentDate <= $end_date) {
+            $loopTanggal[] = [
+                'date' => $currentDate->copy()->toDateString(),
+                'day' => $currentDate->copy()->format('d'),
+                'name_tendik' => $absensi->pluck('tendik.nama')->unique()->toArray()
+            ];
+            $currentDate->addDay();
+        }
+
+        // dd($loopTanggal);
+
+
 
         $totalJamPerTendik = [];
 
@@ -44,6 +56,6 @@ class RekapAbsenTendikController extends Controller
             $totalJamPerTendik[$izinTotal->id] += $selisihJam;
         }
 
-        return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'totalJamPerTendik'));
+        return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'totalJamPerTendik', 'loopTanggal'));
     }
 }

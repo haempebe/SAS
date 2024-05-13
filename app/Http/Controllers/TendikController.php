@@ -46,6 +46,8 @@ class TendikController extends Controller
         $tendik->nomor_whatsapp = $request->nomor_whatsapp;
         $tendik->foto           = $fotoName;
 
+        dd($tendik);
+
         $tendik->save();
 
         return redirect('/tendik')->with('create', 'Data Tendik Berhasil Dibuat');
