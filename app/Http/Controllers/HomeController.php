@@ -91,9 +91,9 @@ class HomeController extends Controller
         $absenExist = Absensi::whereDate('jam_masuk', '=', Carbon::today())
             ->where(function ($query) use ($getSiswa, $getTendik) {
                 if ($getSiswa) {
-                    $query->where('siswa_id', $getSiswa->nisn);
+                    $query->where('siswa_id', $getSiswa->id);
                 } else {
-                    $query->where('tendik_id', $getTendik->nik);
+                    $query->where('tendik_id', $getTendik->id);
                 }
             })
             ->first();
@@ -116,7 +116,7 @@ class HomeController extends Controller
                 $status = 'Tepat Waktu';
             }
             Absensi::create([
-                'tendik_id' => $getTendik->nik,
+                'tendik_id' => $getTendik->id,
                 'jam_masuk' => $waktuTerkini,
                 'status'    => $status
             ]);
@@ -150,7 +150,7 @@ Notification sent by the system
             }
 
             Absensi::create([
-                'siswa_id'  => $getSiswa->nisn,
+                'siswa_id'  => $getSiswa->id,
                 'jam_masuk' => $waktuTerkini,
                 'status'    => $status
             ]);
@@ -195,7 +195,7 @@ Notification sent by the system
         $waktuTerkini = Carbon::now();
 
         if (is_null($getSiswa)) {
-            $absensi = Absensi::where('tendik_id', $getTendik->nik)
+            $absensi = Absensi::where('tendik_id', $getTendik->id)
                 ->whereNull('jam_pulang')
                 ->whereDate('jam_masuk', Carbon::today())
                 ->first();
@@ -220,7 +220,7 @@ Notification sent by the system
                 return redirect()->back()->with('error', 'Belum melakukan absen masuk.');
             }
         } elseif (is_null($getTendik)) {
-            $absensi = Absensi::where('siswa_id', $getSiswa->nisn)
+            $absensi = Absensi::where('siswa_id', $getSiswa->id)
                 ->whereNull('jam_pulang')
                 ->whereDate('jam_masuk', Carbon::today())
                 ->first();

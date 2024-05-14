@@ -297,7 +297,6 @@
                                     <input class="form-control" placeholder="" id="datepicker-icon" name="tanggal_lahir"
                                         value="{{ old('tanggal_lahir') }}">
                                     <span class="input-icon-addon">
-                                        <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                             stroke-linecap="round" stroke-linejoin="round">
@@ -435,7 +434,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">NIK</label>
-                        <input type="number" class="form-control" name="nik" value="{{ $item->nik }}">
+                        <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" class="form-control" name="nik" value="{{ $item->nik }}">
                         @error('nik')
                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                         @enderror

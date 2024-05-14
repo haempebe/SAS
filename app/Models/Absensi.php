@@ -15,10 +15,10 @@ class Absensi extends Model
 
     public function siswa()
     {
-        return $this->belongsTo(Siswa::class, 'siswa_id', 'nisn');
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
     }
     public function tendik()
     {
-        return $this->belongsTo(Tendik::class, 'tendik_id', 'nik');
+        return $this->belongsTo(Tendik::class, 'tendik_id', 'id');
     }
 }

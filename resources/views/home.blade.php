@@ -200,8 +200,10 @@
                                                         <div class="py-5">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Nomor Induk</label>
-                                                                <input autocomplete="off" type="text" class="form-control rounded-4"
-                                                                    name="noid" placeholder="Masukan NISN/NUPTK" oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                                                                <input autocomplete="off" type="text"
+                                                                    class="form-control rounded-4" name="noid"
+                                                                    placeholder="Masukan NISN/NUPTK"
+                                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
                                                                     value="{{ old('noid') }}" />
                                                             </div>
                                                             @if ($errors->any())
@@ -227,8 +229,10 @@
                                                         <div class="py-5">
                                                             <div class="mb-3">
                                                                 <label class="form-label">Nomor Induk</label>
-                                                                <input autocomplete="off" type="text" class="form-control rounded-4"
-                                                                    name="noid" placeholder="Masukan NISN/NUPTK" oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                                                                <input autocomplete="off" type="text"
+                                                                    class="form-control rounded-4" name="noid"
+                                                                    placeholder="Masukan NISN/NUPTK"
+                                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
                                                                     value="{{ old('noid') }}" />
                                                             </div>
                                                             @if (session('error'))
@@ -559,7 +563,7 @@
                                                         <div class="col">
                                                             <div class="page-pretitle">Jam Masuk</div>
                                                             <div class="page-title">
-                                                                {{ $waktu->jam_masuk ? date('H : i', strtotime($waktu->jam_masuk)) : '' }}
+                                                                {{ $waktu->jam_masuk ? date('H : i', strtotime($waktu->jam_masuk)) : null }}
                                                             </div>
                                                         </div>
                                                         <div class="col-auto">
@@ -638,56 +642,58 @@
                             <table class="table card-table rounded-4 table-vcenter text-nowrap datatable">
                                 <thead class="sticky-top">
                                     <tr>
-                                        <th class="w-1">No. Induk</th>
-                                        <th>Nama</th>
-                                        <th>Kelas</th>
-                                        <th>Jam Masuk</th>
-                                        <th>Jam Pulang</th>
-                                        <th>Status</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">No. Induk</th>
+                                        <th class="text-center">Nama</th>
+                                        <th class="text-center">Kelas</th>
+                                        <th class="text-center">Jam Masuk</th>
+                                        <th class="text-center">Jam Pulang</th>
                                     </tr>
                                 </thead>
                                 <tbody style="min-height: 16.5rem; max-heigth:16.5rem;overflow-y: auto;">
                                     @foreach ($absensi as $itemA)
                                         @if ($itemA->tendik_id == null)
                                             <tr>
-                                                <td>
-                                                    {{ $itemA->siswa_id }}
-                                                </td>
-                                                <td>
-                                                    {{ $itemA->siswa->nama }}
-                                                </td>
-                                                <td>{{ $itemA->siswa->kelas }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
-                                                <td>{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : '' }}
-                                                </td>
-                                                <td>
+                                                <td class="text-center">
                                                     @if ($itemA->status == 'Terlambat')
                                                         <span class="badge bg-red text-red-fg">{{ $itemA->status }}</span>
                                                     @else
                                                         <span
                                                             class="badge bg-green text-green-fg">{{ $itemA->status }}</span>
                                                     @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ $itemA->siswa->nisn }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ $itemA->siswa->nama }}
+                                                </td>
+                                                <td class="text-center">{{ $itemA->siswa->kelas }}</td>
+                                                <td class="text-center">{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') ?? null }}
+                                                </td>
+                                                <td class="text-center">{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : null }}
                                                 </td>
                                             </tr>
                                         @elseif ($itemA->siswa_id == null)
                                             <tr>
-                                                <td>
-                                                    {{ $itemA->tendik_id }}
-                                                </td>
-                                                <td>
-                                                    {{ $itemA->tendik->nama }}
-                                                </td>
-                                                <td>{{ $itemA->tendik->role }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') }}</td>
-                                                <td>{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : '' }}
-                                                </td>
-                                                <td>
+                                                <td class="text-center">
                                                     @if ($itemA->status == 'Terlambat')
                                                         <span class="badge bg-red text-red-fg">{{ $itemA->status }}</span>
                                                     @else
                                                         <span
                                                             class="badge bg-green text-green-fg">{{ $itemA->status }}</span>
                                                     @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ $itemA->tendik->nik }}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ $itemA->tendik->nama }}
+                                                </td>
+                                                <td class="text-center">{{ $itemA->tendik->role }}</td>
+                                                <td class="text-center">{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') ?? null }}
+                                                </td>
+                                                <td class="text-center">{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : null }}
                                                 </td>
                                             </tr>
                                         @endif
@@ -716,9 +722,9 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="jam_masuk">Jam Masuk</label>
-                                    <input autocomplete="off" type="text" name="jam_masuk" class="form-control" data-mask="00:00"
-                                        data-mask-visible="true" placeholder="00:00" autocomplete="off"
-                                        value="{{ $waktu->jam_masuk }}">
+                                    <input autocomplete="off" type="text" name="jam_masuk" class="form-control"
+                                        data-mask="00:00" data-mask-visible="true" placeholder="00:00"
+                                        autocomplete="off" value="{{ $waktu->jam_masuk }}">
                                 </div>
                                 @error('jam_masuk')
                                     <p class="text-red">
@@ -729,9 +735,9 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="jam_Pulang">Jam Pulang</label>
-                                    <input autocomplete="off" type="text" name="jam_pulang" class="form-control" data-mask="00:00"
-                                        data-mask-visible="true" placeholder="00:00" autocomplete="off"
-                                        value="{{ $waktu->jam_pulang }}">
+                                    <input autocomplete="off" type="text" name="jam_pulang" class="form-control"
+                                        data-mask="00:00" data-mask-visible="true" placeholder="00:00"
+                                        autocomplete="off" value="{{ $waktu->jam_pulang }}">
                                 </div>
                                 @error('jam_pulang')
                                     <p class="text-red">
