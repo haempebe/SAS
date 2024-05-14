@@ -201,7 +201,7 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label">Nomor Induk</label>
                                                                 <input autocomplete="off" type="text" class="form-control rounded-4"
-                                                                    name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                    name="noid" placeholder="Masukan NISN/NUPTK" oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
                                                                     value="{{ old('noid') }}" />
                                                             </div>
                                                             @if ($errors->any())
@@ -228,7 +228,7 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label">Nomor Induk</label>
                                                                 <input autocomplete="off" type="text" class="form-control rounded-4"
-                                                                    name="noid" placeholder="Masukan NISN/NUPTK"
+                                                                    name="noid" placeholder="Masukan NISN/NUPTK" oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
                                                                     value="{{ old('noid') }}" />
                                                             </div>
                                                             @if (session('error'))

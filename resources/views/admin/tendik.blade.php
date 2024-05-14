@@ -274,7 +274,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">NIK</label>
-                        <input type="number" class="form-control" name="nik" value="{{ old('nik') }}">
+                        <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '')" class="form-control" name="nik" value="{{ old('nik') }}">
                         @error('nik')
                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                         @enderror

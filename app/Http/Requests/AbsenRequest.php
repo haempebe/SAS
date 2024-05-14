@@ -22,7 +22,7 @@ class AbsenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'noid' => 'required',
+            'noid' => 'required|regex:/^[0-9.]+$/',
         ];
     }
     public function messages(): array

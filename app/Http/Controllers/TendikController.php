@@ -17,7 +17,7 @@ class TendikController extends Controller
     {
 
         $request->validate([
-            'nik'            => 'required',
+            'nik'            => 'required|regex:/^[0-9.]+$/',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
@@ -35,7 +35,7 @@ class TendikController extends Controller
 
         $tendik = new Tendik;
 
-        $tendik->nik          = $request->nik;
+        $tendik->nik            = $request->nik;
         $tendik->nama           = $request->nama;
         $tendik->jenis_kelamin  = $request->jenis_kelamin;
         $tendik->tempat_lahir   = $request->tempat_lahir;
@@ -45,8 +45,6 @@ class TendikController extends Controller
         $tendik->jam_pulang     = $request->jam_pulang;
         $tendik->nomor_whatsapp = $request->nomor_whatsapp;
         $tendik->foto           = $fotoName;
-
-        dd($tendik);
 
         $tendik->save();
 
@@ -60,7 +58,7 @@ class TendikController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nik'            => 'required',
+            'nik'            => 'required|regex:/^[0-9.]+$/',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
@@ -83,7 +81,7 @@ class TendikController extends Controller
 
             $request->foto->move(public_path('img/foto'), $fotoName);
 
-            $tendik->nik          = $request->nik;
+            $tendik->nik            = $request->nik;
             $tendik->nama           = $request->nama;
             $tendik->jenis_kelamin  = $request->jenis_kelamin;
             $tendik->tempat_lahir   = $request->tempat_lahir;
@@ -100,7 +98,7 @@ class TendikController extends Controller
         } else {
             $tendik = Tendik::find($id);
 
-            $tendik->nik          = $request->nik;
+            $tendik->nik            = $request->nik;
             $tendik->nama           = $request->nama;
             $tendik->jenis_kelamin  = $request->jenis_kelamin;
             $tendik->tempat_lahir   = $request->tempat_lahir;
