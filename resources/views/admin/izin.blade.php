@@ -108,68 +108,138 @@
                         </thead>
                         <tbody>
                             @forelse ($izin as $item)
-                                <tr>
-                                    <td>
-                                        <div>{{ $item->nama }}</div>
-                                    </td>
-                                    <td>
-                                        <div>{{ $item->role }}</div>
-                                    </td>
-                                    <td>
-                                        @if ($item->jenis_izin === 'Izin')
-                                            <span class="badge bg-azure text-azure-fg">Izin</span>
-                                        @elseif ($item->jenis_izin === 'Sakit')
-                                            <span class="badge bg-orange text-orange-fg">Sakit</span>
-                                        @elseif ($item->jenis_izin === 'Alpa')
-                                            <span class="badge bg-red text-red-fg">Alpa</span>
-                                        @elseif ($item->jenis_izin === 'Lembur')
-                                            <span class="badge bg-blue text-blue-fg">Lembur</span>
-                                        @else
-                                            <span class="badge bg-indigo text-indigo-fg">Perjalanan Dinas</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div>{{ $item->keterangan }}</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="row g-0">
-                                            <div class="col">
-                                                <button href="#" class="btn btn-success btn-icon"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modal-update-{{ $item->id }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path
-                                                            d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                                                        <path
-                                                            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                                                        <path d="M16 5l3 3" />
-                                                    </svg>
-                                                </button>
+                                @if ($item->tendik_id == null)
+                                    <tr>
+                                        <td>
+                                            <div>{{ $item->siswa->nama }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->siswa->role }} <span
+                                                    class="text-muted">({{ $item->siswa->kelas }})</span></div>
+                                        </td>
+                                        <td>
+                                            @if ($item->jenis_izin === 'Izin')
+                                                <span class="badge bg-azure text-azure-fg">Izin</span>
+                                            @elseif ($item->jenis_izin === 'Sakit')
+                                                <span class="badge bg-orange text-orange-fg">Sakit</span>
+                                            @elseif ($item->jenis_izin === 'Alpa')
+                                                <span class="badge bg-red text-red-fg">Alpa</span>
+                                            @elseif ($item->jenis_izin === 'Lembur')
+                                                <span class="badge bg-blue text-blue-fg">Lembur</span>
+                                            @else
+                                                <span class="badge bg-indigo text-indigo-fg">Perjalanan Dinas</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->keterangan }}</div>
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="row g-0">
+                                                <div class="col">
+                                                    <button href="#" class="btn btn-success btn-icon"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-update-{{ $item->id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                            <path
+                                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                            <path d="M16 5l3 3" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button href="#" class="btn btn-danger btn-icon"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-delete-{{ $item->id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M4 7l16 0" />
+                                                            <path d="M10 11l0 6" />
+                                                            <path d="M14 11l0 6" />
+                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="col">
-                                                <button href="#" class="btn btn-danger btn-icon"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modal-delete-{{ $item->id }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path d="M4 7l16 0" />
-                                                        <path d="M10 11l0 6" />
-                                                        <path d="M14 11l0 6" />
-                                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                    </svg>
-                                                </button>
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>
+                                            <div>{{ $item->tendik->nama }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->tendik->role }}</div>
+                                        </td>
+                                        <td>
+                                            @if ($item->jenis_izin === 'Izin')
+                                                <span class="badge bg-azure text-azure-fg">Izin</span>
+                                            @elseif ($item->jenis_izin === 'Sakit')
+                                                <span class="badge bg-orange text-orange-fg">Sakit</span>
+                                            @elseif ($item->jenis_izin === 'Alpa')
+                                                <span class="badge bg-red text-red-fg">Alpa</span>
+                                            @elseif ($item->jenis_izin === 'Lembur')
+                                                <span class="badge bg-blue text-blue-fg">Lembur</span>
+                                            @else
+                                                <span class="badge bg-indigo text-indigo-fg">Perjalanan Dinas</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->keterangan }}</div>
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="row g-0">
+                                                <div class="col">
+                                                    <button href="#" class="btn btn-success btn-icon"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-update-{{ $item->id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                            <path
+                                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                            <path d="M16 5l3 3" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button href="#" class="btn btn-danger btn-icon"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-delete-{{ $item->id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M4 7l16 0" />
+                                                            <path d="M10 11l0 6" />
+                                                            <path d="M14 11l0 6" />
+                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endif
                                 {{-- Form Delete --}}
                                 <div class="modal modal-blur fade" id="modal-delete-{{ $item->id }}" tabindex="-1"
                                     role="dialog" aria-hidden="true">
@@ -261,107 +331,18 @@
                             <select class="form-select" name="nama">
                                 <optgroup label="Tendik">
                                     @foreach ($tendik as $itemT)
-                                        <option value="{{ $itemT->nama }}">{{ $itemT->nama }}</option>
+                                        <option value="{{ $itemT->nik }}">{{ $itemT->nama }}</option>
                                     @endforeach
                                 </optgroup>
                                 <optgroup label="Siswa">
                                     @foreach ($siswa as $itemS)
-                                        <option value="{{ $itemS->nama }}">{{ $itemS->nama }}</option>
+                                        <option value="{{ $itemS->nisn }}">{{ $itemS->nama }}</option>
                                     @endforeach
                                 </optgroup>
                             </select>
                             @error('nama')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
-                        </div>
-                        <label class="form-label required">Role</label>
-                        <div class="form-selectgroup-boxes row mb-3">
-                            <div class="col-lg-6">
-                                <label class="form-selectgroup-item">
-                                    <input type="radio" name="role" value="Tendik" class="form-selectgroup-input"
-                                        checked>
-                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <span class="me-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </span>
-                                        <span class="form-selectgroup-label-content">
-                                            <span class="form-selectgroup-title strong mb-1">Tendik</span>
-                                        </span>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="form-selectgroup-item">
-                                    <input type="radio" name="role" value="Siswa" class="form-selectgroup-input"
-                                        checked>
-                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                        <span class="me-3">
-                                            <span class="form-selectgroup-check"></span>
-                                        </span>
-                                        <span class="form-selectgroup-label-content">
-                                            <span class="form-selectgroup-title strong mb-1">Siswa</span>
-                                        </span>
-                                    </span>
-                                </label>
-                            </div>
-                            @error('role')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
-                        </div>
-                        <div class="kelas">
-                            <label class="form-label">Kelas</label>
-                            <div class="form-selectgroup-boxes row mb-3">
-                                <div class="col-lg-4">
-                                    <label class="form-selectgroup-item">
-                                        <input type="radio" name="kelas" value="Kelas 10"
-                                            class="form-selectgroup-input" checked>
-                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                            <span class="me-3">
-                                                <span class="form-selectgroup-check"></span>
-                                            </span>
-                                            <span class="form-selectgroup-label-content">
-                                                <span class="form-selectgroup-title strong mb-1">Kelas 10</span>
-                                                <span class="d-block text-secondary">Pengem Perangkat Lunak & Game</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label class="form-selectgroup-item">
-                                        <input type="radio" name="kelas" value="Kelas 11"
-                                            class="form-selectgroup-input" checked>
-                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                            <span class="me-3">
-                                                <span class="form-selectgroup-check"></span>
-                                            </span>
-                                            <span class="form-selectgroup-label-content">
-                                                <span class="form-selectgroup-title strong mb-1">Kelas 11</span>
-                                                <span class="d-block text-secondary">Sistem Infomasi Jaringan &
-                                                    Aplikasi</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label class="form-selectgroup-item">
-                                        <input type="radio" name="kelas" value="Kelas 12"
-                                            class="form-selectgroup-input" checked>
-                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                            <span class="me-3">
-                                                <span class="form-selectgroup-check"></span>
-                                            </span>
-                                            <span class="form-selectgroup-label-content">
-                                                <span class="form-selectgroup-title strong mb-1">Kelas 12</span>
-                                                <span class="d-block text-secondary">Sistem Infomasi Jaringan &
-                                                    Aplikasi</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                </div>
-                                @error('kelas')
-                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                @enderror
-                            </div>
                         </div>
                         <label class="form-label required">Jenis Izin</label>
                         <div class="mb-3">
@@ -445,18 +426,26 @@
                         <div class="modal-body">
                             <label class="form-label required">Nama</label>
                             <div class="mb-3">
-                                <select class="form-select" name="nama" value="{{ $item->nama }}">
-                                    <option value="{{ $item->nama }}" selected>
-                                        {{ $item->nama }}</option>
+                                <select class="form-select" name="nama"
+                                    value="@if ($item->tendik_id == null) {{ $item->siswa->nama }} @else {{ $item->tendik->nama }} @endif">
+                                    <option
+                                        value="@if ($item->tendik_id == null) {{ $item->siswa->nama }} @else {{ $item->tendik->nama }} @endif"
+                                        selected>
+                                        @if ($item->tendik_id == null)
+                                            {{ $item->siswa->nama }}
+                                        @else
+                                            {{ $item->tendik->nama }}
+                                        @endif
+                                    </option>
                                     <optgroup label="Tendik">
                                         @foreach ($tendik as $itemT)
-                                            <option value="{{ $itemT->nama }}">
+                                            <option value="{{ $itemT->nik }}">
                                                 {{ $itemT->nama }}</option>
                                         @endforeach
                                     </optgroup>
                                     <optgroup label="Siswa">
                                         @foreach ($siswa as $itemS)
-                                            <option value="{{ $itemS->nama }}">
+                                            <option value="{{ $itemS->nisn }}">
                                                 {{ $itemS->nama }}</option>
                                         @endforeach
                                     </optgroup>
@@ -466,46 +455,9 @@
                                     </p>
                                 @enderror
                             </div>
-                            <label class="form-label required">Role</label>
-                            <div class="form-selectgroup-boxes row mb-3">
-                                <div class="col-lg-6">
-                                    <label class="form-selectgroup-item">
-                                        <input type="radio" name="role" value="Tendik"
-                                            class="form-selectgroup-input"
-                                            @if ($item->role == 'Tendik') checked @endif>
-                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                            <span class="me-3">
-                                                <span class="form-selectgroup-check"></span>
-                                            </span>
-                                            <span class="form-selectgroup-label-content">
-                                                <span class="form-selectgroup-title strong mb-1">Tendik</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label class="form-selectgroup-item">
-                                        <input type="radio" name="role" value="Siswa"
-                                            class="form-selectgroup-input"
-                                            @if ($item->role == 'Siswa') checked @endif>
-                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                            <span class="me-3">
-                                                <span class="form-selectgroup-check"></span>
-                                            </span>
-                                            <span class="form-selectgroup-label-content">
-                                                <span class="form-selectgroup-title strong mb-1">Siswa</span>
-                                            </span>
-                                        </span>
-                                    </label>
-                                </div>
-                                @error('role')
-                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
                             <label class="form-label required">Jenis Izin</label>
                             <div class="mb-3">
-                                <select class="form-select" name="jenis_izin">
+                                <select class="form-select" name="jenis_izin" id="jenis_izin_{{ $item->id }}">
                                     <option value="Izin" @if ($item->jenis_izin == 'Izin') selected @endif>Izin
                                     </option>
                                     <option value="Sakit" @if ($item->jenis_izin == 'Sakit') selected @endif>Sakit
@@ -523,34 +475,31 @@
                                     </p>
                                 @enderror
                             </div>
-                            @if ($item->jenis_izin == 'Lembur' || $item->jenis_izin == 'Perjalanan Dinas')
-                                <div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Jam Mulai</label>
-                                                <input type="dateTime" name="jam_mulai" class="form-control"
-                                                    data-mask="00:00" data-mask-visible="true" placeholder="00:00"
-                                                    autocomplete="off" fdprocessedid="ms68ld"
-                                                    value="{{ $item->jam_mulai }}">
-                                                @error('jam_mulai')
-                                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label class="form-label">Jam Berakhir</label>
-                                            <input type="text" name="jam_berakhir" class="form-control"
+                            <div>
+                                <div class="row">
+                                    <div class="col-lg-6" id="jam_mulai_{{ $item->id }}">
+                                        <div class="mb-3">
+                                            <label class="form-label">Jam Mulai</label>
+                                            <input type="dateTime" name="jam_mulai" class="form-control"
                                                 data-mask="00:00" data-mask-visible="true" placeholder="00:00"
                                                 autocomplete="off" fdprocessedid="ms68ld"
-                                                value="{{ $item->jam_berakhir }}">
-                                            @error('jam_berakhir')
+                                                value="{{ $item->jam_mulai }}">
+                                            @error('jam_mulai')
                                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-lg-6" id="jam_berakhir_{{ $item->id }}">
+                                        <label class="form-label">Jam Berakhir</label>
+                                        <input type="text" name="jam_berakhir" class="form-control" data-mask="00:00"
+                                            data-mask-visible="true" placeholder="00:00" autocomplete="off"
+                                            fdprocessedid="ms68ld" value="{{ $item->jam_berakhir }}">
+                                        @error('jam_berakhir')
+                                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                        @enderror
+                                    </div>
                                 </div>
-                            @endif
+                            </div>
                             <label class="form-label required">Keterangan</label>
                             <div class="mb-3">
                                 <textarea rows="5" class="form-control" name="keterangan">{{ $item->keterangan }}</textarea>
@@ -609,29 +558,35 @@
             });
         });
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const roleInputs = document.querySelectorAll('input[name="role"]');
-            const kelasElement = document.querySelector('.kelas');
+    @foreach ($izin as $item)
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const jenisIzinInput_{{ $item->id }} = document.getElementById(
+                    'jenis_izin_' + {{ $item->id }});
+                const jamMulaiInput_{{ $item->id }} = document.getElementById(
+                    'jam_mulai_' + {{ $item->id }});
+                const jamBerakhirInput_{{ $item->id }} = document.getElementById(
+                    'jam_berakhir_' + {{ $item->id }});
 
-            function toggleKelasInputs() {
-                const checkedRole = document.querySelector('input[name="role"]:checked').value;
-                if (checkedRole === 'Siswa') {
-                    kelasElement.style.display = 'block';
-                } else {
-                    kelasElement.style.display = 'none';
+                function toggleJamInputs_{{ $item->id }}() {
+                    const jenisIzinValue_{{ $item->id }} = jenisIzinInput_{{ $item->id }}.value;
+                    if (jenisIzinValue_{{ $item->id }} === 'Lembur' || jenisIzinValue_{{ $item->id }} ===
+                        'Perjalanan Dinas') {
+                        jamMulaiInput_{{ $item->id }}.style.display = 'block';
+                        jamBerakhirInput_{{ $item->id }}.style.display = 'block';
+                    } else {
+                        jamMulaiInput_{{ $item->id }}.style.display = 'none';
+                        jamBerakhirInput_{{ $item->id }}.style.display = 'none';
+                    }
                 }
-            }
 
-            // Panggil fungsi toggleKelasInputs() untuk menetapkan tampilan awal
-            toggleKelasInputs();
+                toggleJamInputs_{{ $item->id }}();
 
-            // Tambahkan event listener untuk setiap input role
-            roleInputs.forEach(function(input) {
-                input.addEventListener('change', function() {
-                    toggleKelasInputs();
+                jenisIzinInput_{{ $item->id }}.addEventListener('change', function() {
+                    toggleJamInputs_{{ $item->id }}();
                 });
             });
-        });
-    </script>
+        </script>
+    @endforeach
+    {{-- Place this at the end of your HTML body or use DOMContentLoaded event --}}
 @endsection

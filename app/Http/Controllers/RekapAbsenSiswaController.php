@@ -14,8 +14,11 @@ class RekapAbsenSiswaController extends Controller
         $start_date = '';
         $end_date = '';
         $kelas = '';
-        $absensi = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('tendik_id')->get();
-        $izin = Izin::whereDate('updated_at', Carbon::today())->where('role', 'siswa')->get();
+        $role = 'Siswa';
+        $absensi = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('tendik_id')->whereHas('siswa', function ($query) use ($role) {
+            $query->where('role', $role);
+        })->get();
+        $izin = Izin::whereDate('updated_at', Carbon::today())->get();
         return view('admin.rekapSiswa', compact('absensi', 'izin', 'start_date', 'end_date', 'kelas'));
     }
     public function filter(Request $request)
@@ -23,6 +26,7 @@ class RekapAbsenSiswaController extends Controller
         $start_date = Carbon::parse($request->input('start_date'));
         $end_date   = Carbon::parse($request->input('end_date'));
         $kelas      = $request->kelas;
+        $role       = 'Siswa';
         $rowTableAbsensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('tendik_id')->whereHas('siswa', function ($query) use ($kelas) {
             $query->where('kelas', $kelas);
         })->distinct('siswa_id')->get(['siswa_id']);
@@ -30,7 +34,11 @@ class RekapAbsenSiswaController extends Controller
             ->whereHas('siswa', function ($query) use ($kelas) {
                 $query->where('kelas', $kelas);
             })->get();
-        $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->where('role', 'siswa')->where('kelas', $kelas)->get();
+        $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->whereHas('siswa', function ($query) use ($role) {
+            $query->where('role', $role);
+        })->whereHas('siswa', function ($query) use ($kelas) {
+            $query->where('kelas', $kelas);
+        })->get();
         $loopTanggal = [];
         $currentDate = $start_date->copy();
         while ($currentDate <= $end_date) {
@@ -42,6 +50,6 @@ class RekapAbsenSiswaController extends Controller
             $currentDate->addDay();
         }
 
-        return view('admin.rekapSiswa', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'loopTanggal'));
+        return view('admin.rekapSiswa', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'loopTanggal', 'kelas'));
     }
 }

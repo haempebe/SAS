@@ -94,187 +94,195 @@
         @endif
     </div>
     @if (strpos(url()->current(), 'filter') == true)
-        <div class="row row-cards mb-3">
-            <div class="col">
-                <h1>Data Absensi Siswa</h1>
-                <p><b>Tanggal : </b>{{ now()->format('d F Y') }}</p>
-                <div class="card">
-                    <table class="table table-vcenter table-bordered table-striped card-table">
-                        <thead class="border-1">
-                            <tr>
-                                <th>Nama</th>
-                                @foreach ($loopTanggal as $tanggal)
-                                    <th class="text-center">{{ htmlspecialchars($tanggal['day']) }}</th>
-                                @endforeach
-                                <th class="text-center"><span class="badge bg-green text-green-fg">M</span></th>
-                                <th class="text-center"><span class="badge bg-blue text-blue-fg">I</span></th>
-                                <th class="text-center"><span class="badge bg-orange text-orange-fg">S</span></th>
-                                <th class="text-center"><span class="badge bg-red text-red-fg">A</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $totalM = 0;
-                                $totalI = 0;
-                                $totalS = 0;
-                                $totalA = 0;
-                            @endphp
-                            @forelse ($rowTableAbsensi as $item)
+        <div style="min-height: 80vh">
+            <div class="row row-cards mb-3">
+                <div class="col">
+                    <h1>Data Absensi Siswa</h1>
+                    <p><b>Tanggal : </b>{{ now()->format('d F Y') }}</p>
+                    <p><b>Kelas : </b>{{ $kelas }}</p>
+                    <div class="card">
+                        <table class="table table-vcenter table-bordered table-striped card-table">
+                            <thead class="border-1">
                                 <tr>
-                                    <td>
-                                        {{ $item->siswa->nama }}
-                                    </td>
-                                    @php
-                                        $absensiDates = [];
-                                        $izinDates = [];
-                                        $lastIzin = [];
-                                    @endphp
-                                    @foreach ($absensi as $itemA)
-                                        @if ($itemA->siswa_id == $item->siswa_id)
-                                            @php
-                                                $absensiDates[] = \Carbon\Carbon::parse($itemA->jam_masuk)->format(
-                                                    'Y-m-d',
-                                                );
-                                            @endphp
-                                        @endif
-                                    @endforeach
-                                    @foreach ($izin as $itemI)
-                                        @if ($itemI->nama == $item->siswa->nama)
-                                            @php
-                                                $izinDates[] = \Carbon\Carbon::parse($itemI->created_at)->format(
-                                                    'Y-m-d',
-                                                );
-                                                $lastIzin[$itemI->created_at->format('Y-m-d')] = $itemI->jenis_izin;
-                                            @endphp
-                                        @endif
-                                    @endforeach
-                                    @php
-                                        $absensiDates = array_unique($absensiDates);
-                                    @endphp
+                                    <th>Nama</th>
                                     @foreach ($loopTanggal as $tanggal)
-                                        <td class="text-center">
-                                            @if (in_array($tanggal['date'], $izinDates))
-                                                @php
-                                                    $jenisIzin = $lastIzin[$tanggal['date']] ?? null;
-                                                @endphp
-                                                @if ($jenisIzin === 'Izin')
-                                                    <span class="badge bg-azure text-azure-fg">I</span>
-                                                    @php $totalI++; @endphp
-                                                @elseif ($jenisIzin === 'Sakit')
-                                                    <span class="badge bg-orange text-orange-fg">S</span>
-                                                    @php $totalS++; @endphp
-                                                @else
-                                                    <span class="badge bg-red text-red-fg">A</span>
-                                                    @php $totalA++; @endphp
-                                                @endif
-                                            @else
-                                                @if (in_array($tanggal['date'], $absensiDates))
-                                                    <span class="badge bg-green text-green-fg">M</span>
-                                                    @php $totalM++; @endphp
-                                                @endif
-                                            @endif
+                                        <th class="text-center">{{ htmlspecialchars($tanggal['day']) }}</th>
                                     @endforeach
-                                    <td class="text-center">{{ $totalM }}</td>
-                                    <td class="text-center">{{ $totalI }}</td>
-                                    <td class="text-center">{{ $totalS }}</td>
-                                    <td class="text-center">{{ $totalA }}</td>
+                                    <th class="text-center"><span class="badge bg-green text-green-fg">M</span></th>
+                                    <th class="text-center"><span class="badge bg-blue text-blue-fg">I</span></th>
+                                    <th class="text-center"><span class="badge bg-orange text-orange-fg">S</span></th>
+                                    <th class="text-center"><span class="badge bg-red text-red-fg">A</span></th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    @php
-                                        $n = 1;
-                                    @endphp
-                                    <td @foreach ($loopTanggal as $tanggal) {{ $n++ }} @endforeach
-                                        colspan="{{ $n += 6 }}" class="text-center">
-                                        Tidak Ada Data
-                                    </td>
-                                </tr>
-                            @endforelse
+                            </thead>
+                            <tbody>
+                                @php
+                                    $totalM = 0;
+                                    $totalI = 0;
+                                    $totalS = 0;
+                                    $totalA = 0;
+                                @endphp
+                                @forelse ($rowTableAbsensi as $item)
+                                    <tr>
+                                        <td>
+                                            {{ $item->siswa->nama }}
+                                        </td>
+                                        @php
+                                            $absensiDates = [];
+                                            $izinDates = [];
+                                            $lastIzin = [];
+                                        @endphp
+                                        @foreach ($absensi as $itemA)
+                                            @if ($itemA->siswa_id == $item->siswa_id)
+                                                @php
+                                                    $absensiDates[] = \Carbon\Carbon::parse($itemA->jam_masuk)->format(
+                                                        'Y-m-d',
+                                                    );
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                        @foreach ($izin as $itemI)
+                                            @if ($itemI->siswa->nama == $item->siswa->nama)
+                                                @php
+                                                    $izinDates[] = \Carbon\Carbon::parse($itemI->created_at)->format(
+                                                        'Y-m-d',
+                                                    );
+                                                    $lastIzin[$itemI->created_at->format('Y-m-d')] = $itemI->jenis_izin;
+                                                @endphp
+                                            @endif
+                                        @endforeach
+                                        @php
+                                            $absensiDates = array_unique($absensiDates);
+                                        @endphp
+                                        @foreach ($loopTanggal as $tanggal)
+                                            <td class="text-center">
+                                                @if (in_array($tanggal['date'], $izinDates))
+                                                    @php
+                                                        $jenisIzin = $lastIzin[$tanggal['date']] ?? null;
+                                                    @endphp
+                                                    @if ($jenisIzin === 'Izin')
+                                                        <span class="badge bg-azure text-azure-fg">I</span>
+                                                        @php $totalI++; @endphp
+                                                    @elseif ($jenisIzin === 'Sakit')
+                                                        <span class="badge bg-orange text-orange-fg">S</span>
+                                                        @php $totalS++; @endphp
+                                                    @else
+                                                        <span class="badge bg-red text-red-fg">A</span>
+                                                        @php $totalA++; @endphp
+                                                    @endif
+                                                @else
+                                                    @if (in_array($tanggal['date'], $absensiDates))
+                                                        <span class="badge bg-green text-green-fg">M</span>
+                                                        @php $totalM++; @endphp
+                                                    @endif
+                                                @endif
+                                        @endforeach
+                                        <td class="text-center">{{ $totalM }}</td>
+                                        <td class="text-center">{{ $totalI }}</td>
+                                        <td class="text-center">{{ $totalS }}</td>
+                                        <td class="text-center">{{ $totalA }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        @php
+                                            $n = 1;
+                                        @endphp
+                                        <td @foreach ($loopTanggal as $tanggal) {{ $n++ }} @endforeach
+                                            colspan="{{ $n += 6 }}" class="text-center">
+                                            Tidak Ada Data
+                                        </td>
+                                    </tr>
+                                @endforelse
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row row-cards mb-3">
-            <div class="col-10">
-                <div class="card">
-                    <table class="table table-vcenter table-bordered table-striped card-table">
-                        <thead class="border-1">
-                            <tr>
-                                <th>Nama</th>
-                                <th>Jenis Izin</th>
-                                <th>Tanggal</th>
-                                <th>Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($izin as $item)
+            <div class="row row-cards mb-3">
+                <div class="col-10">
+                    <div class="card">
+                        <table class="table table-vcenter table-bordered table-striped card-table">
+                            <thead class="border-1">
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Jenis Izin</th>
+                                    <th>Tanggal</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($izin as $item)
+                                    @if ($item->tendik_id == null)
+                                        <tr>
+                                            <td>
+                                                {{ $item->siswa->nama }}
+                                            </td>
+                                            @if ($item->jenis_izin == 'Izin')
+                                                <td><span
+                                                        class="badge bg-azure text-azure-fg">{{ $item->jenis_izin }}</span>
+                                                </td>
+                                            @elseif ($item->jenis_izin == 'Sakit')
+                                                <td><span
+                                                        class="badge bg-orange text-orange-fg">{{ $item->jenis_izin }}</span>
+                                                </td>
+                                            @else
+                                                <td><span class="badge bg-red text-red-fg">{{ $item->jenis_izin }}</span>
+                                                </td>
+                                            @endif
+                                            <td>{{ $item->created_at->format('d F') }}</td>
+                                            <td>{{ $item->keterangan }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="card">
+                        <table class="table table-vcenter table-bordered table-striped card-table">
+                            <thead class="border-1">
+                                <tr>
+                                    <th>Icon</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <tr>
                                     <td>
-                                        {{ $item->nama }}
+                                        <span class="badge bg-green text-green-fg">M</span>
                                     </td>
-                                    @if ($item->jenis_izin == 'Izin')
-                                        <td><span class="badge bg-azure text-azure-fg">{{ $item->jenis_izin }}</span>
-                                        </td>
-                                    @elseif ($item->jenis_izin == 'Sakit')
-                                        <td><span class="badge bg-orange text-orange-fg">{{ $item->jenis_izin }}</span>
-                                        </td>
-                                    @else
-                                        <td><span class="badge bg-red text-red-fg">{{ $item->jenis_izin }}</span></td>
-                                    @endif
-                                    <td>{{ $item->created_at->format('d F') }}</td>
-                                    <td>{{ $item->keterangan }}</td>
+                                    <td>
+                                        Masuk
+                                    </td>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card">
-                    <table class="table table-vcenter table-bordered table-striped card-table">
-                        <thead class="border-1">
-                            <tr>
-                                <th>Icon</th>
-                                <th>Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span class="badge bg-green text-green-fg">M</span>
-                                </td>
-                                <td>
-                                    Masuk
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="badge bg-azure text-azure-fg">I</span>
-                                </td>
-                                <td>
-                                    Izin
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="badge bg-orange text-orange-fg">S</span>
-                                </td>
-                                <td>
-                                    Sakit
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="badge bg-red text-red-fg">A</span>
-                                </td>
-                                <td>
-                                    Alpa
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-azure text-azure-fg">I</span>
+                                    </td>
+                                    <td>
+                                        Izin
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-orange text-orange-fg">S</span>
+                                    </td>
+                                    <td>
+                                        Sakit
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-red text-red-fg">A</span>
+                                    </td>
+                                    <td>
+                                        Alpa
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

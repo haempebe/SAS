@@ -13,17 +13,23 @@ class RekapAbsenTendikController extends Controller
     {
         $start_date = '';
         $end_date = '';
+        $role = 'Tendik';
         $absensi = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('siswa_id')->get();
-        $izin = Izin::whereDate('updated_at', Carbon::today())->where('role', 'tendik')->get();
+        $izin = Izin::whereDate('updated_at', Carbon::today())->whereHas('tendik', function ($query) use ($role) {
+            $query->where('role', $role);
+        })->get();
         return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date'));
     }
     public function filter(Request $request)
     {
         $start_date = Carbon::parse($request->input('start_date'));
         $end_date = Carbon::parse($request->input('end_date'));
+        $role = 'Tendik';
         $rowTableAbsensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->distinct('tendik_id')->get(['tendik_id']);
         $absensi = Absensi::whereBetween('created_at', [$start_date, $end_date])->whereNull('siswa_id')->with('tendik')->get();
-        $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->where('role', 'tendik')->get();
+        $izin = Izin::whereBetween('created_at', [$start_date, $end_date])->whereHas('tendik', function ($query) use ($role) {
+            $query->where('role', $role);
+        })->get();
         $loopTanggal = [];
         $currentDate = $start_date->copy();
         while ($currentDate <= $end_date) {

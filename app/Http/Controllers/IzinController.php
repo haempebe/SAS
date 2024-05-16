@@ -20,16 +20,7 @@ class IzinController extends Controller
     public function store(IzinRequest $request)
     {
         $request->validated();
-
-        Izin::create([
-            'nama' => $request->nama,
-            'role' => $request->role,
-            'kelas' => $request->kelas,
-            'jenis_izin' => $request->jenis_izin,
-            'jam_mulai' => $request->jam_mulai,
-            'jam_berakhir' => $request->jam_berakhir,
-            'keterangan' => $request->keterangan
-        ]);
+        $this->cari($request);
 
         return redirect()->to('/izin')->with('create', 'Data Izin Berhasil Dibuat');
     }
@@ -43,9 +34,7 @@ class IzinController extends Controller
         $request->validated();
 
         Izin::findOrFail($id)->update([
-            'nama' => $request->nama,
-            'role' => $request->role,
-            'kelas' => $request->kelas,
+            'siswa_id' => $request->nama,
             'jenis_izin' => $request->jenis_izin,
             'jam_mulai' => $request->jam_mulai,
             'jam_berakhir' => $request->jam_berakhir,
@@ -58,5 +47,33 @@ class IzinController extends Controller
     {
         Izin::findOrFail($id)->delete();
         return redirect()->to('/izin')->with('delete', 'Data Izin Berhasil Dihapus');
+    }
+    private function cari($request)
+    {
+        $getSiswa = Siswa::where('nisn', $request->nama)
+            ->first();
+
+        $getTendik = Tendik::where('nik', $request->nama)
+            ->first();
+
+        if (is_null($getSiswa)) {
+            Izin::create([
+                'tendik_id' => $getTendik->id,
+                'jenis_izin' => $request->jenis_izin,
+                'jam_mulai' => $request->jam_mulai,
+                'jam_berakhir' => $request->jam_berakhir,
+                'keterangan' => $request->keterangan
+            ]);
+        }
+        
+        if (is_null($getTendik)) {
+            Izin::create([
+                'siswa_id' => $getSiswa->id,
+                'jenis_izin' => $request->jenis_izin,
+                'jam_mulai' => $request->jam_mulai,
+                'jam_berakhir' => $request->jam_berakhir,
+                'keterangan' => $request->keterangan
+            ]);
+        }
     }
 }

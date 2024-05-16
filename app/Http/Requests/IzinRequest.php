@@ -22,9 +22,8 @@ class IzinRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama'           => 'required',
-            'role'           => 'required',
-            'kelas'          => 'nullable',
+            'tendik_id'      => 'nullable',
+            'siswa_id'      => 'nullable',
             'jenis_izin'     => 'required',
             'jam_mulai'      => 'nullable',
             'jam_berakhir'   => 'nullable',
@@ -34,8 +33,6 @@ class IzinRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nama.required' => 'Nama harus diisi',
-            'role.required' => 'Role harus diisi',
             'jenis_izin.required' => 'Jenis izin harus diisi',
             'keterangan.required' => 'Keterangan harus diisi',
         ];
