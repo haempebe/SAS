@@ -68,9 +68,16 @@ class HomeController extends Controller
             ->where('kelas', 'Kelas 12')
             ->count();
 
-        $totalIzin = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Izin')->count();
-        $totalSakit = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Sakit')->count();
-        $totalAlpa = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Alpa')->count();
+        $role = 'Siswa';
+        $totalIzin = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Izin')->whereHas('siswa', function ($query) use ($role) {
+            $query->where('role', $role);
+        })->count();
+        $totalSakit = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Sakit')->whereHas('siswa', function ($query) use ($role) {
+            $query->where('role', $role);
+        })->count();
+        $totalAlpa = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Alpa')->whereHas('siswa', function ($query) use ($role) {
+            $query->where('role', $role);
+        })->count();
 
         return view('home', compact('tendikCount', 'siswaCount', 'absensi', 'waktu', 'totalOntime', 'totalTerlambat', 'belumMasuk', 'belumMasuk10', 'belumMasuk11', 'belumMasuk12', 'totalIzin', 'totalSakit', 'totalAlpa'));
     }

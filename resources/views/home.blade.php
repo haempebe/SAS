@@ -135,254 +135,123 @@
                             <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
                         </div>
                     @endif
-                    <div class="card rounded-4 mb-3">
-                        <div class="card-body py-5">
-                            <div class="row align-items-center">
-                                <div class="col-md-6">
-                                    <div class="align-items-center">
-                                        <div class="text-center">
-                                            <img src="{{ asset('img/gif/6.gif') }}" alt=""
-                                                style="max-height: 250px;">
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6 py-5">
-                                    <div class="card rounded-3">
-                                        <div class="card-header">
-                                            <ul class="nav nav-tabs card-header-tabs nav-fill"
-                                                style="border-top-left-radius: 13px;border-top-right-radius:13px;"
-                                                data-bs-toggle="tabs">
-                                                <li class="nav-item">
-                                                    <a href="#tabs-masuk-form"
-                                                        class="nav-link {{ session('error') ? '' : 'active' }}"
-                                                        data-bs-toggle="tab">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                                                            <path d="M3 12h13l-3 -3" />
-                                                            <path d="M13 15l3 -3" />
-                                                        </svg>
-                                                        <span class="ms-1"></span>Masuk
-                                                    </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#tabs-pulang-form"
-                                                        class="nav-link {{ session('error') ? 'active' : '' }}"
-                                                        data-bs-toggle="tab">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path
-                                                                d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                                                            <path d="M15 12h-12l3 -3" />
-                                                            <path d="M6 15l-3 -3" />
-                                                        </svg>
-                                                        <span class="ms-1"></span>Pulang
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="tab-content">
-                                                <div class="tab-pane {{ session('error') ? '' : 'active show' }}"
-                                                    id="tabs-masuk-form">
-                                                    <form action="{{ route('home.masuk') }}" method="POST">
-                                                        @csrf
-                                                        <div class="py-5">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Nomor Induk</label>
-                                                                <input autocomplete="off" type="text"
-                                                                    class="form-control rounded-4" name="noid"
-                                                                    placeholder="Masukan NISN/NUPTK"
-                                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
-                                                                    value="{{ old('noid') }}" />
+                    {{-- HOME --}}
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <div class="row g-2 align-items-center mb-3" data-masonry='{"percentPosition": true }'>
+                                <div class="col-6">
+                                    <div class="card bg-twitter rounded-4 p-2">
+                                        <div class="card glass radius" style="min-height: 230px">
+                                            <div class="card-header bg-transparent" >
+                                                <ul class="nav nav-tabs card-header-tabs nav-fill bg-transparent text-white glass"
+                                                    style="border-top-left-radius: 13px; border-top-right-radius: 13px;"
+                                                    data-bs-toggle="tabs" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <a href="#tabs-ontime" class="nav-link page-pretitle active"
+                                                            data-bs-toggle="tab" aria-selected="false" role="tab"
+                                                            tabindex="-1">Tepat Waktu</a>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <a href="#tabs-terlambat" class="nav-link page-pretitle"
+                                                            data-bs-toggle="tab" aria-selected="false" role="tab"
+                                                            tabindex="-1">Terlambat</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="card-body py-5">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active show" id="tabs-ontime" role="tabpanel">
+                                                        <div class="row row-cols-lg-2 align-items-center">
+                                                            <img src="{{ asset('img/bahan/ontime.png') }}"
+                                                                style="width: 85px;" class="img-fluid mx-3"
+                                                                alt="">
+                                                            <div class="p-2 text-white ms-auto">
+                                                                <strong>Tepat Waktu</strong>
+                                                                <p style="font-size: 40px; font-weight:600"
+                                                                    class="mb-0">
+                                                                    {{ $totalOntime }}<span
+                                                                        class="page-pretitle text-white">
+                                                                        siswa</span></p>
                                                             </div>
-                                                            @if ($errors->any())
-                                                                <div class="text-danger mb-3">
-                                                                    {{ $errors->first() }}
-                                                                </div>
-                                                            @endif
-                                                            @if (session('message'))
-                                                                <div class="text-danger mb-3" role="alert">
-                                                                    {{ session('message') }}
-                                                                </div>
-                                                            @endif
                                                         </div>
-                                                        <button type="submit" id="masukButton"
-                                                            class="btn btn-primary rounded-4 w-100">Masuk</button>
-                                                    </form>
-
-                                                </div>
-                                                <div class="tab-pane {{ session('error') ? 'active show' : '' }}"
-                                                    id="tabs-pulang-form">
-                                                    <form action="{{ route('home.pulang') }}" method="POST">
-                                                        @csrf
-                                                        <div class="py-5">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Nomor Induk</label>
-                                                                <input autocomplete="off" type="text"
-                                                                    class="form-control rounded-4" name="noid"
-                                                                    placeholder="Masukan NISN/NUPTK"
-                                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
-                                                                    value="{{ old('noid') }}" />
+                                                    </div>
+                                                    <div class="tab-pane" id="tabs-terlambat" role="tabpanel">
+                                                        <div class="row row-cols-lg-2 align-items-center">
+                                                            <img src="{{ asset('img/bahan/terlambat.png') }}"
+                                                                style="width: 85px;" class="img-fluid mx-3"
+                                                                alt="">
+                                                            <div class="p-2 text-white ms-auto">
+                                                                <strong>Terlambat</strong>
+                                                                <p style="font-size: 40px; font-weight:600"
+                                                                    class="mb-0">
+                                                                    {{ $totalTerlambat }}<span
+                                                                        class="page-pretitle text-white">
+                                                                        siswa</span></p>
                                                             </div>
-                                                            @if (session('error'))
-                                                                <div class="text-danger mb-3">
-                                                                    {{ session('error') }}
-                                                                </div>
-                                                            @endif
-                                                            @if ($errors->any())
-                                                                <div class="text-danger mb-3">
-                                                                    {{ $errors->first() }}
-                                                                </div>
-                                                            @endif
-                                                            @if (session('message'))
-                                                                <div class="text-danger mb-3" role="alert">
-                                                                    {{ session('message') }}
-                                                                </div>
-                                                            @endif
                                                         </div>
-                                                        <button type="submit" id="pulangButton"
-                                                            class="btn btn-primary rounded-4 w-100">Pulang</button>
-                                                    </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row gx-2" data-masonry='{"percentPosition": true }'>
-                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
-                            <div class="card bg-twitter rounded-4 p-2">
-                                <div class="card glass radius">
-                                    <div class="card-header glass pb-2"
-                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
-                                        <div class="h3 m-0 text-white">Siswa Tepat Waktu</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row row-cols-lg-2 align-items-center">
-                                            <img src="{{ asset('img/bahan/ontime.png') }}" style="width: 85px;"
-                                                class="img-fluid mx-3" alt="">
-                                            <div class="p-2 text-white ms-auto">
-                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                    {{ $totalOntime }}<span class="page-pretitle text-white">
-                                                        siswa</span></p>
+                                <div class="col-6" >
+                                    <div class="card bg-orange rounded-4 p-2">
+                                        <div class="card glass radius" style="min-height: 230px">
+                                            <div class="card-header glass pb-2"
+                                                style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
+                                                <div class="h3 m-0 text-white">Siswa Sakit</div>
+                                            </div>
+                                            <div class="card-body py-5">
+                                                <div class="row row-cols-lg-2 align-items-center">
+                                                    <img src="{{ asset('img/bahan/sakit.png') }}" style="width: 85px;"
+                                                        class="img-fluid mx-3" alt="">
+                                                    <div class="p-2 text-white ms-auto">
+                                                        <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                            {{ $totalSakit }}<span class="page-pretitle text-white">
+                                                                siswa</span></p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
-                            <div class="card bg-pink rounded-4 p-2">
-                                <div class="card glass radius">
-                                    <div class="card-header glass pb-2"
-                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
-                                        <div class="h3 m-0 text-white">Siswa Terlambat</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row row-cols-lg-2 align-items-center">
-                                            <img src="{{ asset('img/bahan/terlambat.png') }}" style="width: 85px;"
-                                                class="img-fluid mx-3" alt="">
-                                            <div class="p-2 text-white ms-auto">
-                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                    {{ $totalTerlambat }}<span class="page-pretitle text-white">
-                                                        siswa</span></p>
+                                <div class="col-6">
+                                    <div class="card bg-azure rounded-4 p-2">
+                                        <div class="card glass radius" style="min-height: 230px">
+                                            <div class="card-header glass pb-2"
+                                                style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
+                                                <div class="h3 m-0 text-white">Siswa Izin</div>
+                                            </div>
+                                            <div class="card-body py-5">
+                                                <div class="row row-cols-lg-2 align-items-center">
+                                                    <img src="{{ asset('img/bahan/izin.png') }}" style="width: 85px;"
+                                                        class="img-fluid mx-3" alt="">
+                                                    <div class="p-2 text-white ms-auto">
+                                                        <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                            {{ $totalIzin }}<span class="page-pretitle text-white">
+                                                                siswa</span></p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
-                            <div class="card bg-gradient-orange border-0 rounded-4">
-                                <div class="p-2">
-                                    <div class="card glass radius">
-                                        <div class="card-header bg-transparent">
-                                            <ul class="nav nav-tabs card-header-tabs nav-fill bg-transparent text-white glass"
-                                                style="border-top-left-radius: 13px; border-top-right-radius: 13px;"
-                                                data-bs-toggle="tabs" role="tablist">
-                                                <li class="nav-item" role="presentation">
-                                                    <a href="#tabs-kelas10" class="nav-link page-pretitle"
-                                                        data-bs-toggle="tab" aria-selected="false" role="tab"
-                                                        tabindex="-1">Kelas 10</a>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <a href="#tabs-kelas11" class="nav-link page-pretitle"
-                                                        data-bs-toggle="tab" aria-selected="false" role="tab"
-                                                        tabindex="-1">Kelas 11</a>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <a href="#tabs-kelas12" class="nav-link page-pretitle"
-                                                        data-bs-toggle="tab" aria-selected="false" role="tab"
-                                                        tabindex="-1">Kelas 12</a>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <a href="#tabs-semuaKelas" class="nav-link page-pretitle active"
-                                                        data-bs-toggle="tab" aria-selected="true" role="tab">Semua
-                                                        Kelas</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="tab-content">
-                                                <div class="tab-pane" id="tabs-kelas10" role="tabpanel">
-                                                    <div class="row row-cols-lg-2 align-items-center">
-                                                        <img src="{{ asset('img/bahan/belum.png') }}"
-                                                            style="width: 85px;" class="img-fluid mx-3" alt="">
-                                                        <div class="p-2 text-white ms-auto">
-                                                            <strong>Belum Absen</strong>
-                                                            <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                                {{ $belumMasuk10 }}<span class="page-pretitle text-white">
-                                                                    siswa</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane" id="tabs-kelas11" role="tabpanel">
-                                                    <div class="row row-cols-lg-2 align-items-center">
-                                                        <img src="{{ asset('img/bahan/belum.png') }}"
-                                                            style="width: 85px;" class="img-fluid mx-3" alt="">
-                                                        <div class="p-2 text-white ms-auto">
-                                                            <strong>Belum Absen</strong>
-                                                            <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                                {{ $belumMasuk11 }}<span class="page-pretitle text-white">
-                                                                    siswa</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane" id="tabs-kelas12" role="tabpanel">
-                                                    <div class="row row-cols-lg-2 align-items-center">
-                                                        <img src="{{ asset('img/bahan/belum.png') }}"
-                                                            style="width: 85px;" class="img-fluid mx-3" alt="">
-                                                        <div class="p-2 text-white ms-auto">
-                                                            <strong>Belum Absen</strong>
-                                                            <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                                {{ $belumMasuk12 }}<span class="page-pretitle text-white">
-                                                                    siswa</span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane active show" id="tabs-semuaKelas" role="tabpanel">
-                                                    <div class="row row-cols-lg-2 align-items-center">
-                                                        <img src="{{ asset('img/bahan/belum.png') }}"
-                                                            style="width: 85px;" class="img-fluid mx-3" alt="">
-                                                        <div class="p-2 text-white ms-auto">
-                                                            <strong>Belum Absen</strong>
-                                                            <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                                {{ $belumMasuk }}<span class="page-pretitle text-white">
-                                                                    siswa</span></p>
-                                                        </div>
+                                <div class="col-6">
+                                    <div class="card bg-red rounded-4 p-2">
+                                        <div class="card glass radius" style="min-height: 230px">
+                                            <div class="card-header glass pb-2"
+                                                style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
+                                                <div class="h3 m-0 text-white">Siswa Alpa</div>
+                                            </div>
+                                            <div class="card-body py-5">
+                                                <div class="row row-cols-lg-2 align-items-center">
+                                                    <img src="{{ asset('img/bahan/alpa.png') }}" style="width: 85px;"
+                                                        class="img-fluid mx-3" alt="">
+                                                    <div class="p-2 text-white ms-auto">
+                                                        <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                            {{ $totalAlpa }}<span class="page-pretitle text-white">
+                                                                siswa</span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -391,64 +260,123 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
-                            <div class="card bg-orange rounded-4 p-2">
-                                <div class="card glass radius">
-                                    <div class="card-header glass pb-2"
-                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
-                                        <div class="h3 m-0 text-white">Siswa Sakit</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row row-cols-lg-2 align-items-center">
-                                            <img src="{{ asset('img/bahan/sakit.png') }}" style="width: 85px;"
-                                                class="img-fluid mx-3" alt="">
-                                            <div class="p-2 text-white ms-auto">
-                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                    {{ $totalSakit }}<span class="page-pretitle text-white">
-                                                        siswa</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="col-xl-4">
+                            <div class="card rounded-3  ">
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs nav-fill"
+                                        style="border-top-left-radius: 13px;border-top-right-radius:13px;"
+                                        data-bs-toggle="tabs">
+                                        <li class="nav-item">
+                                            <a href="#tabs-masuk-form"
+                                                class="nav-link {{ session('error') ? '' : 'active' }}"
+                                                data-bs-toggle="tab">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                                                    <path d="M3 12h13l-3 -3" />
+                                                    <path d="M13 15l3 -3" />
+                                                </svg>
+                                                <span class="ms-1"></span>Masuk
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-pulang-form"
+                                                class="nav-link {{ session('error') ? 'active' : '' }}"
+                                                data-bs-toggle="tab">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                                                    <path d="M15 12h-12l3 -3" />
+                                                    <path d="M6 15l-3 -3" />
+                                                </svg>
+                                                <span class="ms-1"></span>Pulang
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
-                            <div class="card bg-azure rounded-4 p-2">
-                                <div class="card glass radius">
-                                    <div class="card-header glass pb-2"
-                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
-                                        <div class="h3 m-0 text-white">Siswa Izin</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row row-cols-lg-2 align-items-center">
-                                            <img src="{{ asset('img/bahan/izin.png') }}" style="width: 85px;"
-                                                class="img-fluid mx-3" alt="">
-                                            <div class="p-2 text-white ms-auto">
-                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                    {{ $totalIzin }}<span class="page-pretitle text-white">
-                                                        siswa</span></p>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane {{ session('error') ? '' : 'active show' }}"
+                                            id="tabs-masuk-form">
+                                            <div class="align-items-center">
+                                                <div class="text-center">
+                                                    <img src="{{ asset('img/gif/6.gif') }}" alt=""
+                                                        style="max-height: 250px;">
+                                                </div>
                                             </div>
+                                            <form action="{{ route('home.masuk') }}" method="POST">
+                                                @csrf
+                                                <div class="py-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Nomor Induk</label>
+                                                        <input autocomplete="off" type="text"
+                                                            class="form-control rounded-4" name="noid"
+                                                            placeholder="Masukan NISN/NUPTK"
+                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                                                            value="{{ old('noid') }}" />
+                                                    </div>
+                                                    @if ($errors->any())
+                                                        <div class="text-danger mb-3">
+                                                            {{ $errors->first() }}
+                                                        </div>
+                                                    @endif
+                                                    @if (session('message'))
+                                                        <div class="text-danger mb-3" role="alert">
+                                                            {{ session('message') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <button type="submit" id="masukButton"
+                                                    class="btn btn-primary rounded-4 w-100">Masuk</button>
+                                            </form>
+
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-6 mb-3" style="min-height: 188px">
-                            <div class="card bg-red rounded-4 p-2">
-                                <div class="card glass radius">
-                                    <div class="card-header glass pb-2"
-                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;">
-                                        <div class="h3 m-0 text-white">Siswa Alpa</div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row row-cols-lg-2 align-items-center">
-                                            <img src="{{ asset('img/bahan/alpa.png') }}" style="width: 85px;"
-                                                class="img-fluid mx-3" alt="">
-                                            <div class="p-2 text-white ms-auto">
-                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
-                                                    {{ $totalAlpa }}<span class="page-pretitle text-white">
-                                                        siswa</span></p>
+                                        <div class="tab-pane {{ session('error') ? 'active show' : '' }}"
+                                            id="tabs-pulang-form">
+                                            <div class="align-items-center">
+                                                <div class="text-center">
+                                                    <img src="{{ asset('img/gif/pulang-2.gif') }}" alt=""
+                                                        style="max-height: 250px;">
+                                                </div>
                                             </div>
+                                            <form action="{{ route('home.pulang') }}" method="POST">
+                                                @csrf
+                                                <div class="py-5">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Nomor Induk</label>
+                                                        <input autocomplete="off" type="text"
+                                                            class="form-control rounded-4" name="noid"
+                                                            placeholder="Masukan NISN/NUPTK"
+                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                                                            value="{{ old('noid') }}" />
+                                                    </div>
+                                                    @if (session('error'))
+                                                        <div class="text-danger mb-3">
+                                                            {{ session('error') }}
+                                                        </div>
+                                                    @endif
+                                                    @if ($errors->any())
+                                                        <div class="text-danger mb-3">
+                                                            {{ $errors->first() }}
+                                                        </div>
+                                                    @endif
+                                                    @if (session('message'))
+                                                        <div class="text-danger mb-3" role="alert">
+                                                            {{ session('message') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <button type="submit" id="pulangButton"
+                                                    class="btn btn-primary rounded-4 w-100">Pulang</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -669,9 +597,11 @@
                                                     {{ $itemA->siswa->nama }}
                                                 </td>
                                                 <td class="text-center">{{ $itemA->siswa->kelas }}</td>
-                                                <td class="text-center">{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') ?? null }}
+                                                <td class="text-center">
+                                                    {{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') ?? null }}
                                                 </td>
-                                                <td class="text-center">{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : null }}
+                                                <td class="text-center">
+                                                    {{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : null }}
                                                 </td>
                                             </tr>
                                         @elseif ($itemA->siswa_id == null)
@@ -691,15 +621,98 @@
                                                     {{ $itemA->tendik->nama }}
                                                 </td>
                                                 <td class="text-center">{{ $itemA->tendik->role }}</td>
-                                                <td class="text-center">{{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') ?? null }}
+                                                <td class="text-center">
+                                                    {{ \Carbon\Carbon::parse($itemA->jam_masuk)->format('H : i') ?? null }}
                                                 </td>
-                                                <td class="text-center">{{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : null }}
+                                                <td class="text-center">
+                                                    {{ $itemA->jam_pulang ? date('H : i', strtotime($itemA->jam_pulang)) : null }}
                                                 </td>
                                             </tr>
                                         @endif
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="card bg-gradient-orange border-0 rounded-4" style="min-height: 188px">
+                        <div class="p-2">
+                            <div class="card glass radius">
+                                <div class="card-header bg-transparent">
+                                    <ul class="nav nav-tabs card-header-tabs nav-fill bg-transparent text-white glass"
+                                        style="border-top-left-radius: 13px; border-top-right-radius: 13px;"
+                                        data-bs-toggle="tabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <a href="#tabs-kelas10" class="nav-link page-pretitle" data-bs-toggle="tab"
+                                                aria-selected="false" role="tab" tabindex="-1">Kelas 10</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a href="#tabs-kelas11" class="nav-link page-pretitle" data-bs-toggle="tab"
+                                                aria-selected="false" role="tab" tabindex="-1">Kelas 11</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a href="#tabs-kelas12" class="nav-link page-pretitle" data-bs-toggle="tab"
+                                                aria-selected="false" role="tab" tabindex="-1">Kelas 12</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a href="#tabs-semuaKelas" class="nav-link page-pretitle active"
+                                                data-bs-toggle="tab" aria-selected="true" role="tab">Semua
+                                                Kelas</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane" id="tabs-kelas10" role="tabpanel">
+                                            <div class="row row-cols-lg-2 align-items-center">
+                                                <img src="{{ asset('img/bahan/belum.png') }}" style="width: 85px;"
+                                                    class="img-fluid mx-3" alt="">
+                                                <div class="p-2 text-white ms-auto">
+                                                    <strong>Belum Absen</strong>
+                                                    <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                        {{ $belumMasuk10 }}<span class="page-pretitle text-white">
+                                                            siswa</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tabs-kelas11" role="tabpanel">
+                                            <div class="row row-cols-lg-2 align-items-center">
+                                                <img src="{{ asset('img/bahan/belum.png') }}" style="width: 85px;"
+                                                    class="img-fluid mx-3" alt="">
+                                                <div class="p-2 text-white ms-auto">
+                                                    <strong>Belum Absen</strong>
+                                                    <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                        {{ $belumMasuk11 }}<span class="page-pretitle text-white">
+                                                            siswa</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tabs-kelas12" role="tabpanel">
+                                            <div class="row row-cols-lg-2 align-items-center">
+                                                <img src="{{ asset('img/bahan/belum.png') }}" style="width: 85px;"
+                                                    class="img-fluid mx-3" alt="">
+                                                <div class="p-2 text-white ms-auto">
+                                                    <strong>Belum Absen</strong>
+                                                    <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                        {{ $belumMasuk12 }}<span class="page-pretitle text-white">
+                                                            siswa</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane active show" id="tabs-semuaKelas" role="tabpanel">
+                                            <div class="row row-cols-lg-2 align-items-center">
+                                                <img src="{{ asset('img/bahan/belum.png') }}" style="width: 85px;"
+                                                    class="img-fluid mx-3" alt="">
+                                                <div class="p-2 text-white ms-auto">
+                                                    <strong>Belum Absen</strong>
+                                                    <p style="font-size: 40px; font-weight:600" class="mb-0">
+                                                        {{ $belumMasuk }}<span class="page-pretitle text-white">
+                                                            siswa</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
