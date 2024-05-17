@@ -271,7 +271,8 @@
                             <div class="col-lg-8">
                                 <div class="mb-3">
                                     <label class="form-label">Nama</label>
-                                    <input type="text" class="form-control" name="nama">
+                                    <input type="text" class="form-control" name="nama"
+                                        value="{{ old('nama') }}">
                                     @error('nama')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
@@ -280,8 +281,8 @@
                             <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label class="form-label">Jenis Kelamin</label>
-                                    <select class="form-select" name="jenis_kelamin">
-                                        <option value="Laki-Laki">Laki-Laki</option>
+                                    <select class="form-select" name="jenis_kelamin" value="{{ old('jenis_kelamin') }}">
+                                        <option value="Laki-Laki" selected>Laki-Laki</option>
                                         <option value="Perempuan">Perempuan</option>
                                     </select>
                                     @error('jenis_kelamin')
@@ -295,7 +296,7 @@
                             <div class="col-lg-4">
                                 <label class="form-selectgroup-item">
                                     <input type="radio" name="kelas" value="Kelas 10" class="form-selectgroup-input"
-                                        checked>
+                                        @if (old('kelas') == 'Kelas 10') checked @endif>
                                     <span class="form-selectgroup-label d-flex align-items-center p-3">
                                         <span class="me-3">
                                             <span class="form-selectgroup-check"></span>
@@ -310,7 +311,7 @@
                             <div class="col-lg-4">
                                 <label class="form-selectgroup-item">
                                     <input type="radio" name="kelas" value="Kelas 11" class="form-selectgroup-input"
-                                        checked>
+                                        @if (old('kelas') == 'Kelas 11') checked @endif>
                                     <span class="form-selectgroup-label d-flex align-items-center p-3">
                                         <span class="me-3">
                                             <span class="form-selectgroup-check"></span>
@@ -325,7 +326,7 @@
                             <div class="col-lg-4">
                                 <label class="form-selectgroup-item">
                                     <input type="radio" name="kelas" value="Kelas 12" class="form-selectgroup-input"
-                                        checked>
+                                        @if (old('kelas') == 'Kelas 12') checked @endif>
                                     <span class="form-selectgroup-label d-flex align-items-center p-3">
                                         <span class="me-3">
                                             <span class="form-selectgroup-check"></span>
@@ -343,7 +344,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">NISN</label>
-                            <input type="number" class="form-control" name="nisn">
+                            <input type="number" class="form-control" name="nisn" value="{{ old('nisn') }}">
                             @error('nisn')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
@@ -353,7 +354,8 @@
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Tempat Lahir</label>
-                                        <input type="text" class="form-control" name="tempat_lahir">
+                                        <input type="text" class="form-control" name="tempat_lahir"
+                                            value="{{ old('tempat_lahir') }}">
                                         @error('tempat_lahir')
                                             <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                         @enderror
@@ -363,9 +365,8 @@
                                     <label class="form-label">Tanggal Lahir</label>
                                     <div class="input-icon">
                                         <input class="form-control" placeholder="" id="datepicker-icon"
-                                            name="tanggal_lahir">
+                                            name="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
                                         <span class="input-icon-addon">
-                                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                                 height="24" viewBox="0 0 24 24" stroke-width="2"
                                                 stroke="currentColor" fill="none" stroke-linecap="round"
@@ -408,7 +409,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nomor Whastapp</label>
-                            <input type="number" class="form-control" name="nomor_whatsapp">
+                            <input type="number" class="form-control" name="nomor_whatsapp"
+                                value="{{ old('nomor_whatsapp') }}">
                             @error('nomor_whatsapp')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
@@ -417,40 +419,29 @@
                     <div class="modal-body">
                         <div class="form-label">Foto</div>
                         <input accept="image/*" type="file" class="form-control" name="foto"
-                            onchange="previewImage()">
-                        @error('foto')
+                            onchange="previewImage()" value="{{ old('foto') }}"
+                            @error('foto')
                             <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                         @enderror
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                            Cancel
-                        </a>
-                        {{-- <a href="#modal-create">
-                        <button type="submit" class="btn btn-primary ms-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 5l0 14" />
-                                <path d="M5 12l14 0" />
-                            </svg>
-                            Simpan
-                        </button>
-                    </a> --}}
-                        <button href="#" type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M12 5l0 14"></path>
-                                <path d="M5 12l14 0"></path>
-                            </svg>
-                            Simpan
-                        </button>
+                            </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </a>
+                            <button href="#" type="submit" class="btn btn-primary ms-auto"
+                                data-bs-dismiss="modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M12 5l0 14"></path>
+                                    <path d="M5 12l14 0"></path>
+                                </svg>
+                                Simpan
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
         </form>
     </div>
 

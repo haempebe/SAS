@@ -19,5 +19,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@sas.com',
             'password' => bcrypt('secret')
         ]);
+        DB::table('waktu')->insert([
+            'jam_masuk' => '07:00',
+            'jam_pulang' => '15:00'
+        ]);
     }
 }

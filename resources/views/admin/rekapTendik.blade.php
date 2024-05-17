@@ -133,7 +133,7 @@
                                             @endif
                                         @endforeach
                                         @foreach ($izin as $itemI)
-                                            @if ($itemI->nama == $item->tendik->nama)
+                                            @if ($itemI->tendik->nama == $item->tendik->nama)
                                                 @php
                                                     $izinDates[] = \Carbon\Carbon::parse($itemI->created_at)->format(
                                                         'Y-m-d',
@@ -174,7 +174,7 @@
                                                     @endif
                                                 @endif
                                         @endforeach
-                                        <td class="text-center">{{ $totalM }}</td>
+                                        <td class="text-center">{{ count($absensiDates) }}</td>
                                         <td class="text-center">{{ $totalI }}</td>
                                         <td class="text-center">{{ $totalS }}</td>
                                         <td class="text-center">{{ $totalA }}</td>
@@ -258,12 +258,7 @@
                                                     {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}
                                                 @endif
                                             </td>
-                                            @php
-                                                $totalJam = isset($totalJamPerTendik[$item->id])
-                                                    ? min($totalJamPerTendik[$item->id], 8)
-                                                    : 0;
-                                            @endphp
-                                            <td class="text-center">{{ $totalJam }}</td>
+                                            <td class="text-center">{{ $totalJamPerTendik[$item->id] }}</td>
                                         </tr>
                                     @endif
                                 @empty

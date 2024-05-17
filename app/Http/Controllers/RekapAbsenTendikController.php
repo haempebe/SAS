@@ -59,6 +59,11 @@ class RekapAbsenTendikController extends Controller
             $hours = floor($value);
             $minutes = ($value - $hours) * 60;
 
+            if ($hours > 8) {
+                $hours = 8;
+                $minutes = 0;
+            }
+
             if ($hours > 0 && $minutes > 0) {
                 $totalJamPerTendik[$key] = "$hours jam $minutes menit";
             } elseif ($hours > 0) {

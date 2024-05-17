@@ -176,11 +176,17 @@
                                                     @endif
                                                 @endif
                                         @endforeach
-                                        <td class="text-center">{{ $totalM }}</td>
+                                        <td class="text-center">{{ count($absensiDates) }}</td>
                                         <td class="text-center">{{ $totalI }}</td>
                                         <td class="text-center">{{ $totalS }}</td>
                                         <td class="text-center">{{ $totalA }}</td>
                                     </tr>
+                                    @php
+                                        $totalM = 0;
+                                        $totalI = 0;
+                                        $totalS = 0;
+                                        $totalA = 0;
+                                    @endphp
                                 @empty
                                     <tr>
                                         @php
@@ -192,7 +198,6 @@
                                         </td>
                                     </tr>
                                 @endforelse
-
                             </tbody>
                         </table>
                     </div>
