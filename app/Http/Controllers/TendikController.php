@@ -70,6 +70,20 @@ class TendikController extends Controller
             'foto'           => 'image|mimes:jpg,png,jpeg'
         ]);
 
+        // try {
+        //     DB::transaction(function($request, $id){
+        //         $tendik = Tendik::findOrFail($id);
+        //         if(!$tendik){
+        //             dd('gagal');
+        //         }
+        //         Tendik::create([
+        //             'nik'            => $request->nik,
+        //         ]);
+        //     });
+        // } catch (\Throwable $th) {
+        //    DB::rollBack();
+        // }
+
 
         if ($request->has('foto')) {
             $tendik = Tendik::find($id);
@@ -121,7 +135,7 @@ class TendikController extends Controller
         File::delete($path . $tendik->cover);
         $tendik->delete();
 
-        return redirect('/tendik')->with('delete', 'Data Tendik Berhasil Dihapus');
+        return redirect('/tendik')->with('delete', 'Data ' . $tendik->nama .' Berhasil Dihapus');
     }
     public function show($id)
     {

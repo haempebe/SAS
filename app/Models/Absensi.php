@@ -21,4 +21,8 @@ class Absensi extends Model
     {
         return $this->belongsTo(Tendik::class, 'tendik_id', 'id');
     }
+
+    public function scopeIsNullSiswa(){
+        return $this->whereNull('siswa_id');
+    }
 }

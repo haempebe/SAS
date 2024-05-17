@@ -14,7 +14,7 @@ class RekapAbsenTendikController extends Controller
         $start_date = '';
         $end_date = '';
         $role = 'Tendik';
-        $absensi = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('siswa_id')->get();
+        $absensi = Absensi::whereDate('jam_masuk', Carbon::today())->isNullSiswa()->get();
         $izin = Izin::whereDate('updated_at', Carbon::today())->whereHas('tendik', function ($query) use ($role) {
             $query->where('role', $role);
         })->get();
