@@ -14,7 +14,7 @@
                         </svg>
                     </div>
                     <div>
-                        {{ session('create') }}
+                        {{ session('success') }}
                     </div>
                 </div>
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>

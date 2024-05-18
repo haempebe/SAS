@@ -158,8 +158,11 @@ class SiswaController extends Controller
     }
     public function importSiswa(Request $request)
     {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx' 
+        ]);
         Excel::import(new SiswaImport, $request->file('excel_file'));
 
-        return redirect()->back()->with('success','Menambahkan data berhasil');
+        return redirect()->back()->with('success', 'Menambahkan data berhasil');
     }
 }

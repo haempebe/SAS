@@ -121,6 +121,9 @@ class TendikController extends Controller
     }
     public function importTendik(Request $request)
     {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
         Excel::import(new TendikImport, $request->file('excel_file'));
 
         return redirect()->back()->with('success','Menambahkan data berhasil');
