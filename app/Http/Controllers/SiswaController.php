@@ -47,7 +47,7 @@ class SiswaController extends Controller
 
                 $siswa->save();
             });
-            return redirect('/siswa')->with('create', 'Data Siswa Berhasil Dibuat');
+            return redirect('/siswa')->with('success', 'Data Siswa Berhasil Dibuat');
         } catch (\Throwable $th) {
             report($th);
             return redirect('/siswa')->with('error', 'Terjadi kesalahan saat menyimpan data');
@@ -92,7 +92,7 @@ class SiswaController extends Controller
 
             DB::commit();
 
-            return redirect('/siswa')->with('update', 'Data Siswa Berhasil Diperbarui');
+            return redirect('/siswa')->with('success', 'Data Siswa Berhasil Diperbarui');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect('/siswa')->with('error', 'Terjadi kesalahan saat memperbarui data Siswa: ' . $th->getMessage());
@@ -136,7 +136,7 @@ class SiswaController extends Controller
 
             $siswa->save();
 
-            return redirect('/siswa')->with('update', 'Data Siswa Berhasil Diperbarui');
+            return redirect('/siswa')->with('success', 'Data Siswa Berhasil Diperbarui');
         }
     }
     public function destroy($id)
@@ -147,7 +147,7 @@ class SiswaController extends Controller
         File::delete($path . $siswa->cover);
         $siswa->delete();
 
-        return redirect('/siswa')->with('delete', 'Data Siswa Berhasil Dihapus');
+        return redirect('/siswa')->with('success', 'Data Siswa Berhasil Dihapus');
     }
     public function show($id)
     {

@@ -102,6 +102,7 @@
                                     <th class="text-center"><span class="badge bg-red text-red-fg">A</span></th>
                                     <th class="text-center"><span class="badge bg-blue text-blue-fg">L</span></th>
                                     <th class="text-center"><span class="badge bg-indigo text-indigo-fg">P</span></th>
+                                    <th class="text-center"><span class="badge bg-red text-red-fg">T</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,6 +113,7 @@
                                     $totalA = 0;
                                     $totalL = 0;
                                     $totalP = 0;
+                                    $totalT = 0;
                                 @endphp
                                 @forelse ($rowTableAbsensi as $item)
                                     <tr>
@@ -122,6 +124,7 @@
                                             $absensiDates = [];
                                             $izinDates = [];
                                             $lastIzin = [];
+                                            $terlambatDates = [];
                                         @endphp
                                         @foreach ($absensi as $itemA)
                                             @if ($itemA->tendik_id == $item->tendik_id)
@@ -129,6 +132,11 @@
                                                     $absensiDates[] = \Carbon\Carbon::parse($itemA->jam_masuk)->format(
                                                         'Y-m-d',
                                                     );
+                                                    if ($itemA->status == 'Terlambat') {
+                                                        $terlambatDates[] = \Carbon\Carbon::parse(
+                                                            $itemA->jam_masuk,
+                                                        )->format('Y-m-d');
+                                                    }
                                                 @endphp
                                             @endif
                                         @endforeach
@@ -144,6 +152,7 @@
                                         @endforeach
                                         @php
                                             $absensiDates = array_unique($absensiDates);
+                                            $terlambatDates = array_unique($terlambatDates);
                                         @endphp
                                         @foreach ($loopTanggal as $tanggal)
                                             <td class="text-center">
@@ -168,11 +177,15 @@
                                                         @php $totalP++; @endphp
                                                     @endif
                                                 @else
-                                                    @if (in_array($tanggal['date'], $absensiDates))
+                                                    @if (in_array($tanggal['date'], $terlambatDates))
+                                                        <span class="badge bg-red text-red-fg">T</span>
+                                                        @php $totalT++; @endphp
+                                                    @elseif (in_array($tanggal['date'], $absensiDates))
                                                         <span class="badge bg-green text-green-fg">M</span>
                                                         @php $totalM++; @endphp
                                                     @endif
                                                 @endif
+                                            </td>
                                         @endforeach
                                         <td class="text-center">{{ count($absensiDates) }}</td>
                                         <td class="text-center">{{ $totalI }}</td>
@@ -180,8 +193,17 @@
                                         <td class="text-center">{{ $totalA }}</td>
                                         <td class="text-center">{{ $totalL }}</td>
                                         <td class="text-center">{{ $totalP }}</td>
+                                        <td class="text-center">{{ count($terlambatDates) }}</td>
                                     </tr>
-
+                                    @php
+                                        $totalM = 0;
+                                        $totalI = 0;
+                                        $totalS = 0;
+                                        $totalA = 0;
+                                        $totalL = 0;
+                                        $totalP = 0;
+                                        $totalT = 0;
+                                    @endphp
                                 @empty
                                     <tr>
                                         @php
@@ -195,9 +217,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+
                     </div>
                 </div>
-
             </div>
             <div class="row row-cards mb-3">
                 <div class="col-10">

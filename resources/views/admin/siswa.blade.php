@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="page-wrapper">
-        @if (session('create'))
+        @if (session('success'))
             <div class="alert alert-important alert-success alert-dismissible mt-3" role="alert">
                 <div class="d-flex">
                     <div>
@@ -14,7 +14,7 @@
                         </svg>
                     </div>
                     <div>
-                        {{ session('create') }}
+                        {{ session('success') }}
                     </div>
                 </div>
                 <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
