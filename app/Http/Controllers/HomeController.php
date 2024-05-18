@@ -108,11 +108,11 @@ class HomeController extends Controller
             ]);
             try {
                 // $singkatNamaGuru = ucwords(substr($getTendik->nama,0,27));
-                Http::post('http://localhost:3000/waapi', [
+                $response = Http::post('http://localhost:3000/waapi', [
                     'token' => 'shjdksahlsakjdkaqijdsajhda',
                     'nohp' => $getTendik->nomor_whatsapp,
                     'pesan' =>
-                    '*SMK TI BAZMA*
+'*SMK TI BAZMA*
 Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
 Nama           : *' . $getTendik->nama . '*
@@ -125,6 +125,16 @@ keterangan  : *' . $status . '*
 Notification sent by the system
 *E-Absensi Digital SMK TI BAZMA*',
                 ]);
+                $responseData = $response->json();
+                if ($response->successful()) {
+                    if ($responseData['status'] === 'error') {
+                        $pesanT = "Gagal mengirim pesan: " . $responseData['pesan'];
+                    } else {
+                        $pesanT = "Pesan berhasil dikirim!";
+                    }
+                } else {
+                    $pesanT = "Gagal mengirim pesan: " . $responseData['pesan'];
+                }
             } catch (\Throwable $th) {
                 $pesanT = "Tidak tersambung Dengan WA";
             }
@@ -146,11 +156,11 @@ Notification sent by the system
             ]);
             try {
                 $singkatNamaSiswa = ucwords(substr($getSiswa->nama, 0, 27));
-                Http::post('http://localhost:3000/waapi', [
+                $response = Http::post('http://localhost:3000/waapi', [
                     'token' => 'shjdksahlsakjdkaqijdsajhda',
                     'nohp' => $getSiswa->nomor_whatsapp,
                     'pesan' =>
-                    '*SMK TI BAZMA*
+'*SMK TI BAZMA*
 Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
 Nama           : *' . $singkatNamaSiswa . '*
@@ -163,6 +173,16 @@ keterangan  : *' . $status . '*
 Notification sent by the system
 *E-Absensi Digital SMK TI BAZMA*',
                 ]);
+                $responseData = $response->json();
+                if ($response->successful()) {
+                    if ($responseData['status'] === 'error') {
+                        $pesanT = "Gagal mengirim pesan: " . $responseData['pesan'];
+                    } else {
+                        $pesanT = "Pesan berhasil dikirim!";
+                    }
+                } else {
+                    $pesanT = "Gagal mengirim pesan: " . $responseData['pesan'];
+                }
             } catch (\Throwable $th) {
                 $pesanT = "Tidak tersambung Dengan WA";
             }
