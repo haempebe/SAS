@@ -14,6 +14,24 @@
                         </svg>
                     </div>
                     <div>
+                        {{ session('create') }}
+                    </div>
+                </div>
+                <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+            </div>
+        @endif
+        @if (session('create'))
+            <div class="alert alert-important alert-success alert-dismissible mt-3" role="alert">
+                <div class="d-flex">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M5 12l5 5l10 -10"></path>
+                        </svg>
+                    </div>
+                    <div>
                         {{ session('success') }}
                     </div>
                 </div>
@@ -69,6 +87,18 @@
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
                         <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
+                            data-bs-target="#modal-import">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-file-import">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                <path d="M5 13v-8a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5.5m-9.5 -2h7m-3 -3l3 3l-3 3" />
+                            </svg>
+                            Import Excel
+                        </a>
+                        <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
                             data-bs-target="#modal-create">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -78,16 +108,6 @@
                                 <path d="M5 12l14 0"></path>
                             </svg>
                             Tambah Data
-                        </a>
-                        <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal"
-                            data-bs-target="#modal-report" aria-label="Create new report">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M12 5l0 14"></path>
-                                <path d="M5 12l14 0"></path>
-                            </svg>
                         </a>
                     </div>
                 </div>
@@ -239,6 +259,59 @@
                                     </td>
                                 </tr>
                             @endforelse
+                            {{-- Modal IMPORT EXCELL --}}
+                            <div class="modal modal-blur fade" id="modal-import" tabindex="-1" aria-modal="false"
+                                role="dialog">
+                                <form action="{{ route('siswa.import') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                            <div class="modal-status bg-blue"></div>
+                                            <div class="modal-body py-4">
+                                                <div class="text-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        class="icon icon-lg text-blue my-3" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-import">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                                        <path
+                                                            d="M5 13v-8a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2h-5.5m-9.5 -2h7m-3 -3l3 3l-3 3" />
+                                                    </svg>
+                                                </div>
+                                                <div class="mb-5">
+                                                    <label class="form-label">Import From Excel</label>
+                                                    <input type="file" class="form-control" name="excel_file"
+                                                        value="{{ old('excel_file') }}">
+                                                    @error('excel_file')
+                                                        <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+
+                                                <button type="button" class="btn me-auto"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button href="#" type="submit" class="btn btn-primary ms-auto"
+                                                    data-bs-dismiss="modal">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                                        height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                        stroke="currentColor" fill="none" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <path d="M12 5l0 14"></path>
+                                                        <path d="M5 12l14 0"></path>
+                                                    </svg>
+                                                    Import
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </tbody>
                     </table>
                 </div>

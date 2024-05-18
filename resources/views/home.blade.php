@@ -138,7 +138,7 @@
                     {{-- HOME --}}
                     <div class="row">
                         <div class="col-xl-8">
-                            <div class="row g-2 align-items-center mb-3" data-masonry='{"percentPosition": true }'>
+                            <div class="row gy-2 align-items-center mb-3" data-masonry='{"percentPosition": true }'>
                                 <div class="col-6">
                                     <div class="card bg-twitter rounded-4 p-2">
                                         <div class="card glass radius" style="min-height: 230px">

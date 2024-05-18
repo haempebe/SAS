@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Siswa;
+use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -153,5 +155,11 @@ class SiswaController extends Controller
     {
         $siswa = siswa::find($id);
         return view('admin.izin', ['siswa' => $siswa]);
+    }
+    public function importSiswa(Request $request)
+    {
+        Excel::import(new SiswaImport, $request->file('excel_file'));
+
+        return redirect()->back()->with('success','Menambahkan data berhasil');
     }
 }

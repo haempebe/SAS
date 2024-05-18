@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TendikRequest;
+use App\Imports\TendikImport;
 use App\Models\Tendik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TendikController extends Controller
 {
@@ -116,5 +118,11 @@ class TendikController extends Controller
     {
         $tendik = Tendik::find($id);
         return view('admin.izin', ['tendik' => $tendik]);
+    }
+    public function importTendik(Request $request)
+    {
+        Excel::import(new TendikImport, $request->file('excel_file'));
+
+        return redirect()->back()->with('success','Menambahkan data berhasil');
     }
 }

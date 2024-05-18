@@ -37,36 +37,15 @@ class HomeController extends Controller
         $totalOntime = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('tendik_id')->where('status',  'Tepat Waktu')->count();
         $waktu = Waktu::find(1);
 
-        $belumMasuk = Siswa::leftJoin('absensi', function ($join) {
-            $join->on('nisn', '=', 'absensi.siswa_id')
+        $baseQuery = Siswa::leftJoin('absensi', function ($join) {
+            $join->on('siswa.id', '=', 'absensi.siswa_id')
                 ->whereDate('absensi.jam_masuk', Carbon::today());
-        })
-            ->whereNull('absensi.siswa_id')
-            ->count();
+        })->whereNull('absensi.siswa_id');
 
-        $belumMasuk10 = Siswa::leftJoin('absensi', function ($join) {
-            $join->on('nisn', '=', 'absensi.siswa_id')
-                ->whereDate('absensi.jam_masuk', Carbon::today());
-        })
-            ->whereNull('absensi.siswa_id')
-            ->where('kelas', 'Kelas 10')
-            ->count();
-
-        $belumMasuk11 = Siswa::leftJoin('absensi', function ($join) {
-            $join->on('nisn', '=', 'absensi.siswa_id')
-                ->whereDate('absensi.jam_masuk', Carbon::today());
-        })
-            ->whereNull('absensi.siswa_id')
-            ->where('kelas', 'Kelas 11')
-            ->count();
-
-        $belumMasuk12 = Siswa::leftJoin('absensi', function ($join) {
-            $join->on('nisn', '=', 'absensi.siswa_id')
-                ->whereDate('absensi.jam_masuk', Carbon::today());
-        })
-            ->whereNull('absensi.siswa_id')
-            ->where('kelas', 'Kelas 12')
-            ->count();
+        $belumMasuk = (clone $baseQuery)->count();
+        $belumMasuk10 = (clone $baseQuery)->where('siswa.kelas', 'Kelas 10')->count();
+        $belumMasuk11 = (clone $baseQuery)->where('siswa.kelas', 'Kelas 11')->count();
+        $belumMasuk12 = (clone $baseQuery)->where('siswa.kelas', 'Kelas 12')->count();
 
         $role = 'Siswa';
         $totalIzin = Izin::whereDate('updated_at', Carbon::today())->where('jenis_izin', 'Izin')->whereHas('siswa', function ($query) use ($role) {
@@ -111,7 +90,7 @@ class HomeController extends Controller
 
         $waktu = Waktu::find(1);
         $waktuTerkini = Carbon::now();
-
+        $pesanT = "";
         if (is_null($getSiswa)) {
             $status = '';
 
@@ -127,12 +106,13 @@ class HomeController extends Controller
                 'jam_masuk' => $waktuTerkini,
                 'status'    => $status
             ]);
-            // $singkatNamaGuru = ucwords(substr($getTendik->nama,0,27));
-            Http::post('http://localhost:3000/waapi', [
-                'token' => 'shjdksahlsakjdkaqijdsajhda',
-                'nohp' => $getTendik->nomor_whatsapp,
-                'pesan' =>
-                '*SMK TI BAZMA*
+            try {
+                // $singkatNamaGuru = ucwords(substr($getTendik->nama,0,27));
+                Http::post('http://localhost:3000/waapi', [
+                    'token' => 'shjdksahlsakjdkaqijdsajhda',
+                    'nohp' => $getTendik->nomor_whatsapp,
+                    'pesan' =>
+                    '*SMK TI BAZMA*
 Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
 Nama           : *' . $getTendik->nama . '*
@@ -144,7 +124,10 @@ keterangan  : *' . $status . '*
 
 Notification sent by the system
 *E-Absensi Digital SMK TI BAZMA*',
-            ]);
+                ]);
+            } catch (\Throwable $th) {
+                $pesanT = "Tidak tersambung Dengan WA";
+            }
         } elseif (is_null($getTendik)) {
             $status = '';
 
@@ -161,12 +144,13 @@ Notification sent by the system
                 'jam_masuk' => $waktuTerkini,
                 'status'    => $status
             ]);
-            $singkatNamaSiswa = ucwords(substr($getSiswa->nama, 0, 27));
-            Http::post('http://localhost:3000/waapi', [
-                'token' => 'shjdksahlsakjdkaqijdsajhda',
-                'nohp' => $getSiswa->nomor_whatsapp,
-                'pesan' =>
-                '*SMK TI BAZMA*
+            try {
+                $singkatNamaSiswa = ucwords(substr($getSiswa->nama, 0, 27));
+                Http::post('http://localhost:3000/waapi', [
+                    'token' => 'shjdksahlsakjdkaqijdsajhda',
+                    'nohp' => $getSiswa->nomor_whatsapp,
+                    'pesan' =>
+                    '*SMK TI BAZMA*
 Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
 Nama           : *' . $singkatNamaSiswa . '*
@@ -178,10 +162,13 @@ keterangan  : *' . $status . '*
 
 Notification sent by the system
 *E-Absensi Digital SMK TI BAZMA*',
-            ]);
+                ]);
+            } catch (\Throwable $th) {
+                $pesanT = "Tidak tersambung Dengan WA";
+            }
         }
 
-        return redirect()->back()->with('success', 'Berhasil melakukan absensi masuk');
+        return redirect()->back()->with('success', 'Berhasil melakukan absensi masuk ' . $pesanT);
     }
 
     public function pulang(AbsenRequest $request)
