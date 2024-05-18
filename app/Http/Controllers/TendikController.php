@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TendikRequest;
 use App\Models\Tendik;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class TendikController extends Controller
@@ -15,9 +17,8 @@ class TendikController extends Controller
     }
     public function store(Request $request)
     {
-
-        $request->validate([
-            'nik'            => 'required|regex:/^[0-9.]+$/',
+        $validatedData = $request->validate([
+            'nik'            => 'required|unique:tendik,nik|regex:/^[0-9.]+$/',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
@@ -26,29 +27,34 @@ class TendikController extends Controller
             'jam_masuk'      => 'required',
             'jam_pulang'     => 'required',
             'nomor_whatsapp' => 'required',
-            'foto'           => 'required|image|mimes:jpg,png,jpeg',
+            'foto'           => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $fotoName = time() . '.' . $request->foto->extension();
+        try {
+            $fotoName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('img/foto'), $fotoName);
 
-        $request->foto->move(public_path('img/foto'), $fotoName);
+            DB::transaction(function () use ($request, $fotoName) {
+                $tendik = new Tendik;
 
-        $tendik = new Tendik;
+                $tendik->nik            = $request->nik;
+                $tendik->nama           = $request->nama;
+                $tendik->jenis_kelamin  = $request->jenis_kelamin;
+                $tendik->tempat_lahir   = $request->tempat_lahir;
+                $tendik->tanggal_lahir  = $request->tanggal_lahir;
+                $tendik->role           = $request->role;
+                $tendik->jam_masuk      = $request->jam_masuk;
+                $tendik->jam_pulang     = $request->jam_pulang;
+                $tendik->nomor_whatsapp = $request->nomor_whatsapp;
+                $tendik->foto           = $fotoName;
 
-        $tendik->nik            = $request->nik;
-        $tendik->nama           = $request->nama;
-        $tendik->jenis_kelamin  = $request->jenis_kelamin;
-        $tendik->tempat_lahir   = $request->tempat_lahir;
-        $tendik->tanggal_lahir  = $request->tanggal_lahir;
-        $tendik->role           = $request->role;
-        $tendik->jam_masuk      = $request->jam_masuk;
-        $tendik->jam_pulang     = $request->jam_pulang;
-        $tendik->nomor_whatsapp = $request->nomor_whatsapp;
-        $tendik->foto           = $fotoName;
-
-        $tendik->save();
-
-        return redirect('/tendik')->with('create', 'Data Tendik Berhasil Dibuat');
+                $tendik->save();
+            });
+            return redirect('/tendik')->with('create', 'Data Tendik Berhasil Dibuat');
+        } catch (\Throwable $th) {
+            report($th);
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
+        }
     }
     public function edit($id)
     {
@@ -57,8 +63,8 @@ class TendikController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nik'            => 'required|regex:/^[0-9.]+$/',
+        $validatedData = $request->validate([
+            'nik'            => 'required|unique:tendik,nik|regex:/^[0-9.]+$/',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
@@ -67,64 +73,33 @@ class TendikController extends Controller
             'jam_masuk'      => 'required',
             'jam_pulang'     => 'required',
             'nomor_whatsapp' => 'required',
-            'foto'           => 'image|mimes:jpg,png,jpeg'
+            'foto'           => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // try {
-        //     DB::transaction(function($request, $id){
-        //         $tendik = Tendik::findOrFail($id);
-        //         if(!$tendik){
-        //             dd('gagal');
-        //         }
-        //         Tendik::create([
-        //             'nik'            => $request->nik,
-        //         ]);
-        //     });
-        // } catch (\Throwable $th) {
-        //    DB::rollBack();
-        // }
+        try {
+            DB::beginTransaction();
 
+            $tendik = Tendik::findOrFail($id);
+            $tendik->update($validatedData);
 
-        if ($request->has('foto')) {
-            $tendik = Tendik::find($id);
+            if ($request->hasFile('foto')) {
+                $path = "img/foto/";
+                File::delete($path . $tendik->foto);
 
-            $path = "img/foto/";
-            File::delete($path . $tendik->foto);
+                $fotoName = time() . '.' . $request->foto->extension();
+                $request->foto->move(public_path('img/foto'), $fotoName);
 
-            $fotoName = time() . '.' . $request->foto->extension();
-
-            $request->foto->move(public_path('img/foto'), $fotoName);
-
-            $tendik->nik            = $request->nik;
-            $tendik->nama           = $request->nama;
-            $tendik->jenis_kelamin  = $request->jenis_kelamin;
-            $tendik->tempat_lahir   = $request->tempat_lahir;
-            $tendik->tanggal_lahir  = $request->tanggal_lahir;
-            $tendik->role           = $request->role;
-            $tendik->jam_masuk      = $request->jam_masuk;
-            $tendik->jam_pulang     = $request->jam_pulang;
-            $tendik->nomor_whatsapp = $request->nomor_whatsapp;
-            $tendik->foto           = $fotoName;
+                $tendik->foto = $fotoName;
+            }
 
             $tendik->save();
 
-            return redirect('/tendik')->with('update', 'Data Tendik Berhasil Diperbarui');
-        } else {
-            $tendik = Tendik::find($id);
-
-            $tendik->nik            = $request->nik;
-            $tendik->nama           = $request->nama;
-            $tendik->jenis_kelamin  = $request->jenis_kelamin;
-            $tendik->tempat_lahir   = $request->tempat_lahir;
-            $tendik->tanggal_lahir  = $request->tanggal_lahir;
-            $tendik->role           = $request->role;
-            $tendik->jam_masuk      = $request->jam_masuk;
-            $tendik->jam_pulang     = $request->jam_pulang;
-            $tendik->nomor_whatsapp = $request->nomor_whatsapp;
-
-            $tendik->save();
+            DB::commit();
 
             return redirect('/tendik')->with('update', 'Data Tendik Berhasil Diperbarui');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('/tendik')->with('error', 'Terjadi kesalahan saat memperbarui data Tendik: ' . $th->getMessage());
         }
     }
     public function destroy($id)
@@ -135,7 +110,7 @@ class TendikController extends Controller
         File::delete($path . $tendik->cover);
         $tendik->delete();
 
-        return redirect('/tendik')->with('delete', 'Data ' . $tendik->nama .' Berhasil Dihapus');
+        return redirect('/tendik')->with('delete', 'Data ' . $tendik->nama . ' Berhasil Dihapus');
     }
     public function show($id)
     {

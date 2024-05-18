@@ -419,29 +419,28 @@
                     <div class="modal-body">
                         <div class="form-label">Foto</div>
                         <input accept="image/*" type="file" class="form-control" name="foto"
-                            onchange="previewImage()" value="{{ old('foto') }}"
-                            @error('foto')
+                            onchange="previewImage()" value="{{ old('foto') }}">
+                        @error('foto')
                             <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                         @enderror
-                            </div>
-                        <div class="modal-footer">
-                            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                                Cancel
-                            </a>
-                            <button href="#" type="submit" class="btn btn-primary ms-auto"
-                                data-bs-dismiss="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M12 5l0 14"></path>
-                                    <path d="M5 12l14 0"></path>
-                                </svg>
-                                Simpan
-                            </button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                            Cancel
+                        </a>
+                        <button href="#" type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 5l0 14"></path>
+                                <path d="M5 12l14 0"></path>
+                            </svg>
+                            Simpan
+                        </button>
                     </div>
                 </div>
+            </div>
         </form>
     </div>
 
@@ -562,7 +561,7 @@
                                             <input class="form-control" placeholder="" id="datepicker-icon"
                                                 name="tanggal_lahir" value="{{ $item->tanggal_lahir }}">
                                             <span class="input-icon-addon">
-                                                <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                                     height="24" viewBox="0 0 24 24" stroke-width="2"
                                                     stroke="currentColor" fill="none" stroke-linecap="round"

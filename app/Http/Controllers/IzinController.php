@@ -65,7 +65,7 @@ class IzinController extends Controller
                 'keterangan' => $request->keterangan
             ]);
         }
-        
+
         if (is_null($getTendik)) {
             Izin::create([
                 'siswa_id' => $getSiswa->id,
