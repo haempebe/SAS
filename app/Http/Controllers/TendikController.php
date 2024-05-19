@@ -66,7 +66,7 @@ class TendikController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'nik'            => 'required|unique:tendik,nik|regex:/^[0-9.]+$/',
+            'nik'            => 'required|regex:/^[0-9.]+$/',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'tempat_lahir'   => 'required',
@@ -122,10 +122,10 @@ class TendikController extends Controller
     public function importTendik(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xls,xlsx'
+            'excel_file' => 'required|mimes:xls,xlsx'
         ]);
         Excel::import(new TendikImport, $request->file('excel_file'));
 
-        return redirect()->back()->with('success','Menambahkan data berhasil');
+        return redirect()->back()->with('success', 'Menambahkan data berhasil');
     }
 }

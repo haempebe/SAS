@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::controller(SiswaController::class)->group(function () {
         Route::get('/siswa', 'index')->name('siswa');
+        Route::get('/siswa-cari', 'siswaFilter')->name('siswa.filter');
         Route::get('/siswa-create', 'create');
         Route::post('/siswa-create', 'store')->name('siswa.perform');
         Route::post('/siswa-import', 'importSiswa')->name('siswa.import');

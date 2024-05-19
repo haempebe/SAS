@@ -14,12 +14,32 @@ class SiswaController extends Controller
     public function index()
     {
         $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10);
+
         return view('admin.siswa', compact('siswa'));
+    }
+
+    public function siswaFilter(Request $request)
+    {
+        $kelas = $request->kelas;
+        $cari = $request->cari;
+        $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10);
+        if ($kelas != 'Semua' && $cari != null) {
+            $siswa = Siswa::where('kelas', $kelas)->whereAny(['nama', 'nisn', 'tempat_lahir', 'tanggal_lahir'], 'LIKE', '%'.$cari.'%')->orderBy('nama')->paginate(10);
+        } elseif ($cari == null) {
+            if ($kelas == 'Semua') {
+                $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10);
+            } else {
+                $siswa = Siswa::where('kelas', $kelas)->orderBy('nama')->paginate(10);
+            }
+        } elseif ($kelas == 'Semua' && $cari != null) {
+            $siswa = Siswa::whereAny(['nama', 'nisn', 'tempat_lahir', 'tanggal_lahir'], 'LIKE', '%'.$cari.'%')->orderBy('nama')->paginate(10);
+        }
+        return view('admin.siswa', compact('siswa', 'kelas', 'cari'));
     }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nisn'           => 'required',
+            'nisn'           => 'required|unique:siswa,nisn',
             'nama'           => 'required',
             'jenis_kelamin'  => 'required',
             'kelas'          => 'required',
@@ -159,7 +179,7 @@ class SiswaController extends Controller
     public function importSiswa(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xls,xlsx' 
+            'excel_file' => 'required|mimes:xls,xlsx'
         ]);
         Excel::import(new SiswaImport, $request->file('excel_file'));
 
