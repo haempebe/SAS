@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\RekapAbsenSiswaController;
 use App\Http\Controllers\RekapAbsenTendikController;
+use App\Http\Controllers\SilatController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TendikController;
 use App\Http\Controllers\WaktuController;
@@ -55,11 +56,18 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(RekapAbsenTendikController::class)->group(function () {
         Route::get('/rekap-tendik', 'index')->name('rekap-tendik');
         Route::get('/filter-tendik', 'filter');
-        // Route::get('/filter-tendik/pdf/{start_date}/{end_date}', 'pdf');
         Route::get('/filter-tendik/pdf', 'pdf');
     });
     Route::controller(WaktuController::class)->group(function () {
         Route::get('/waktu', 'index');
         Route::put('/waktu-edit/{id}', 'update')->name('waktu.update');
+    });
+    Route::controller(SilatController::class)->group(function () {
+        Route::get('/silat', 'index');
+        Route::get('/silat-create', 'create');
+        Route::post('/silat-create', 'store')->name('silat.perform');
+        Route::get('/silat-edit/{id}', 'edit')->name('silat.edit');
+        Route::put('/silat-edit/{id}', 'update')->name('silat.update');
+        Route::delete('silat/{id}', 'destroy')->name('silat.delete');
     });
 });

@@ -34,11 +34,11 @@ class IzinController extends Controller
         $request->validated();
 
         Izin::findOrFail($id)->update([
-            'siswa_id' => $request->nama,
-            'jenis_izin' => $request->jenis_izin,
-            'jam_mulai' => $request->jam_mulai,
+            'siswa_id'     => $request->nama,
+            'jenis_izin'   => $request->jenis_izin,
+            'jam_mulai'    => $request->jam_mulai,
             'jam_berakhir' => $request->jam_berakhir,
-            'keterangan' => $request->keterangan
+            'keterangan'   => $request->keterangan
         ]);
 
         return redirect()->to('/izin')->with('update', 'Data Izin Berhasil Diperbarui');
@@ -58,21 +58,21 @@ class IzinController extends Controller
 
         if (is_null($getSiswa)) {
             Izin::create([
-                'tendik_id' => $getTendik->id,
-                'jenis_izin' => $request->jenis_izin,
-                'jam_mulai' => $request->jam_mulai,
+                'tendik_id'    => $getTendik->id,
+                'jenis_izin'   => $request->jenis_izin,
+                'jam_mulai'    => $request->jam_mulai,
                 'jam_berakhir' => $request->jam_berakhir,
-                'keterangan' => $request->keterangan
+                'keterangan'   => $request->keterangan
             ]);
         }
 
         if (is_null($getTendik)) {
             Izin::create([
-                'siswa_id' => $getSiswa->id,
-                'jenis_izin' => $request->jenis_izin,
-                'jam_mulai' => $request->jam_mulai,
+                'siswa_id'     => $getSiswa->id,
+                'jenis_izin'   => $request->jenis_izin,
+                'jam_mulai'    => $request->jam_mulai,
                 'jam_berakhir' => $request->jam_berakhir,
-                'keterangan' => $request->keterangan
+                'keterangan'   => $request->keterangan
             ]);
         }
     }
