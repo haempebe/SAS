@@ -249,7 +249,7 @@ Notification sent by the system
             if ($absensiTendikKemarin) {
                 if ($newJamPulangTendik < $jamMasukTendik) {
                     $jamMasukDate = Carbon::parse($absensiTendikKemarin->jam_masuk)->format('Y-m-d');
-                    $jamPulangTendik = Carbon::parse($jamMasukDate . ' ' . $jamPulangTendik)->addDay();
+                    $jamPulangTendik = Carbon::parse($jamMasukDate . ' ' . $getTendik->jam_pulang)->addDay();
                 } else {
                     $jamPulangTendik =  $getTendik->jam_pulang;
                 }
@@ -263,7 +263,6 @@ Notification sent by the system
                 } else {
                     return redirect()->back()->with('error', 'Belum melakukan absen masuk.');
                 }
-                $absensiTendikKemarin->update(['jam_pulang' => $waktuTerkini]);
             } else {
                 $absensi = Absensi::where('tendik_id', $getTendik->id)
                     ->whereNull('jam_pulang')

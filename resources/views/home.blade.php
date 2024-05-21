@@ -289,7 +289,7 @@
                                                         </div>
                                                     @endif
                                                     @if (session('message'))
-                                                        <div class="text-danger mb-3" role="alert">
+                                                        <div class="text-success mb-3" role="alert">
                                                             {{ session('message') }}
                                                         </div>
                                                     @endif

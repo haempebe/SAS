@@ -97,7 +97,7 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex py-1 align-items-center">
-                                            <img src="{{ asset('img/foto/' . $item->foto) }}" class="avatar me-2"
+                                            <img src="{{ asset('img/foto/' . $item->foto) ?? asset('static/avatars/000f.jpg') }}" class="avatar me-2"
                                                 alt="" srcset="">
                                             <div class="flex-fill">
                                                 <div class="font-weight-medium">{{ $item->nama }}</div>
