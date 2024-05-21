@@ -13,7 +13,7 @@ class SiswaController extends Controller
 {
     public function index()
     {
-        $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10);
+        $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10)->withQueryString();
 
         return view('admin.siswa', compact('siswa'));
     }
@@ -24,15 +24,15 @@ class SiswaController extends Controller
         $cari = $request->cari;
         $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10);
         if ($kelas != 'Semua' && $cari != null) {
-            $siswa = Siswa::where('kelas', $kelas)->whereAny(['nama', 'nisn', 'tempat_lahir', 'tanggal_lahir'], 'LIKE', '%'.$cari.'%')->orderBy('nama')->paginate(10);
+            $siswa = Siswa::where('kelas', $kelas)->whereAny(['nama', 'nisn', 'tempat_lahir', 'tanggal_lahir'], 'LIKE', '%' . $cari . '%')->orderBy('nama')->paginate(10)->withQueryString();
         } elseif ($cari == null) {
             if ($kelas == 'Semua') {
-                $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10);
+                $siswa = Siswa::orderBy('kelas')->orderBy('nama')->paginate(10)->withQueryString();
             } else {
-                $siswa = Siswa::where('kelas', $kelas)->orderBy('nama')->paginate(10);
+                $siswa = Siswa::where('kelas', $kelas)->orderBy('nama')->paginate(10)->withQueryString();
             }
         } elseif ($kelas == 'Semua' && $cari != null) {
-            $siswa = Siswa::whereAny(['nama', 'nisn', 'tempat_lahir', 'tanggal_lahir'], 'LIKE', '%'.$cari.'%')->orderBy('nama')->paginate(10);
+            $siswa = Siswa::whereAny(['nama', 'nisn', 'tempat_lahir', 'tanggal_lahir'], 'LIKE', '%' . $cari . '%')->orderBy('nama')->paginate(10)->withQueryString();
         }
         return view('admin.siswa', compact('siswa', 'kelas', 'cari'));
     }
