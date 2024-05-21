@@ -32,7 +32,16 @@ class HomeController extends Controller
     {
         $siswaCount = Siswa::count();
         $tendikCount = Tendik::count();
-        $absensi = Absensi::whereDate('jam_masuk', Carbon::today())->get();
+        $absensiAllToday = Absensi::whereDate('jam_masuk', Carbon::today())->get();
+        $absensiTendikKemarin = Absensi::whereDate('jam_masuk', Carbon::today()->subDay())
+            ->whereNotNull('tendik_id')
+            ->whereNull('jam_pulang')
+            ->whereHas('tendik', function ($query) {
+                $query->whereRaw('jam_pulang < jam_masuk');
+            })
+            ->get();
+        $absensi = $absensiAllToday->merge($absensiTendikKemarin);
+
         $totalTerlambat = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('tendik_id')->where('status', 'Terlambat')->count();
         $totalOntime = Absensi::whereDate('jam_masuk', Carbon::today())->whereNull('tendik_id')->where('status',  'Tepat Waktu')->count();
         $waktu = Waktu::find(1);
@@ -74,6 +83,23 @@ class HomeController extends Controller
             return redirect()->back()->with('message', 'Data tidak ditemukan.');
         }
 
+        $waktuTerkini = Carbon::now();
+        $absensiTendikKemarin = Absensi::where('tendik_id', $getTendik->id)
+            ->whereDate('jam_masuk', Carbon::yesterday())
+            ->whereNotNull('tendik_id')
+            ->whereNull('jam_pulang')
+            ->whereHas('tendik', function ($query) {
+                $query->whereRaw('jam_pulang < jam_masuk');
+            })
+            ->first();
+
+        if ($absensiTendikKemarin) {
+            $jamPulangTendik = Carbon::parse($absensiTendikKemarin->jam_masuk)->addDay()->format('Y-m-d H:i:s');
+            if ($waktuTerkini->lessThan($jamPulangTendik)) {
+                return redirect()->back()->with('message', 'Anda sudah absen masuk hari ini atau pada jam anda.');
+            }
+        }
+
         $absenExist = Absensi::whereDate('jam_masuk', '=', Carbon::today())
             ->where(function ($query) use ($getSiswa, $getTendik) {
                 if ($getSiswa) {
@@ -85,11 +111,10 @@ class HomeController extends Controller
             ->first();
 
         if ($absenExist) {
-            return redirect()->back()->with('message', 'Anda sudah absen masuk hari ini.');
+            return redirect()->back()->with('message', 'Anda sudah absen masuk hari ini atau pada jam anda.');
         }
 
         $waktu = Waktu::find(1);
-        $waktuTerkini = Carbon::now();
         $pesanT = "";
         if (is_null($getSiswa)) {
             $status = '';
@@ -112,7 +137,7 @@ class HomeController extends Controller
                     'token' => 'shjdksahlsakjdkaqijdsajhda',
                     'nohp' => $getTendik->nomor_whatsapp,
                     'pesan' =>
-'*SMK TI BAZMA*
+                    '*SMK TI BAZMA*
 Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
 Nama           : *' . $getTendik->nama . '*
@@ -160,7 +185,7 @@ Notification sent by the system
                     'token' => 'shjdksahlsakjdkaqijdsajhda',
                     'nohp' => $getSiswa->nomor_whatsapp,
                     'pesan' =>
-'*SMK TI BAZMA*
+                    '*SMK TI BAZMA*
 Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
 Nama           : *' . $singkatNamaSiswa . '*
@@ -209,29 +234,58 @@ Notification sent by the system
         $waktuTerkini = Carbon::now();
 
         if (is_null($getSiswa)) {
-            $absensi = Absensi::where('tendik_id', $getTendik->id)
+            $absensiTendikKemarin = Absensi::where('tendik_id', $getTendik->id)
+                ->whereDate('jam_masuk', Carbon::yesterday())
+                ->whereNotNull('tendik_id')
                 ->whereNull('jam_pulang')
-                ->whereDate('jam_masuk', Carbon::today())
+                ->whereHas('tendik', function ($query) {
+                    $query->whereRaw('jam_pulang < jam_masuk');
+                })
                 ->first();
 
             $jamPulangTendik =  '';
             $jamMasukTendik = strtotime($getTendik->jam_masuk);
             $newJamPulangTendik = strtotime($getTendik->jam_pulang);
-            if ($newJamPulangTendik < $jamMasukTendik) {
-                $jamMasukDate = Carbon::parse($absensi->jam_masuk)->format('Y-m-d');
-                $jamPulangTendik = Carbon::parse($jamMasukDate . ' ' . $jamPulangTendik)->addDay();
-            } else {
-                $jamPulangTendik =  $getTendik->jam_pulang;
-            }
-
-            if ($absensi) {
-                if ($waktuTerkini->lessThan($jamPulangTendik)) {
-                    return redirect()->back()->with('error', 'Belum Jam Pulang');
+            if ($absensiTendikKemarin) {
+                if ($newJamPulangTendik < $jamMasukTendik) {
+                    $jamMasukDate = Carbon::parse($absensiTendikKemarin->jam_masuk)->format('Y-m-d');
+                    $jamPulangTendik = Carbon::parse($jamMasukDate . ' ' . $jamPulangTendik)->addDay();
                 } else {
-                    $absensi->update(['jam_pulang' => $waktuTerkini]);
+                    $jamPulangTendik =  $getTendik->jam_pulang;
                 }
+
+                if ($absensiTendikKemarin) {
+                    if ($waktuTerkini->lessThan($jamPulangTendik)) {
+                        return redirect()->back()->with('error', 'Belum Jam Pulang');
+                    } else {
+                        $absensiTendikKemarin->update(['jam_pulang' => $waktuTerkini]);
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Belum melakukan absen masuk.');
+                }
+                $absensiTendikKemarin->update(['jam_pulang' => $waktuTerkini]);
             } else {
-                return redirect()->back()->with('error', 'Belum melakukan absen masuk.');
+                $absensi = Absensi::where('tendik_id', $getTendik->id)
+                    ->whereNull('jam_pulang')
+                    ->whereDate('jam_masuk', Carbon::today())
+                    ->first();
+
+                if ($newJamPulangTendik < $jamMasukTendik) {
+                    $jamMasukDate = Carbon::parse($absensi->jam_masuk)->format('Y-m-d');
+                    $jamPulangTendik = Carbon::parse($jamMasukDate . ' ' . $jamPulangTendik)->addDay();
+                } else {
+                    $jamPulangTendik =  $getTendik->jam_pulang;
+                }
+
+                if ($absensi) {
+                    if ($waktuTerkini->lessThan($jamPulangTendik)) {
+                        return redirect()->back()->with('error', 'Belum Jam Pulang');
+                    } else {
+                        $absensi->update(['jam_pulang' => $waktuTerkini]);
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'Belum melakukan absen masuk.');
+                }
             }
         } elseif (is_null($getTendik)) {
             $absensi = Absensi::where('siswa_id', $getSiswa->id)
