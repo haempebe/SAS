@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Silat;
+use App\Http\Requests\FutsalRequest;
+use App\Models\Futsal;
 use Illuminate\Http\Request;
-use App\Http\Requests\SilatRequest;
 
-class SilatController extends Controller
+class FutsalController extends Controller
 {
     public function index()
     {
-        $silat = Silat::paginate(10);
-        return view('admin.silat', compact('silat'));
+        $futsal = Futsal::paginate(10);
+        return view('admin.futsal', compact('futsal'));
     }
-    public function store(SilatRequest $request)
+    public function store(FutsalRequest $request)
     {
         $request->validated();
         $this->create($request);
 
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Dibuat');
+        return redirect()->to('/futsal')->with('success', 'Data Futsal Berhasil Dibuat');
     }
     public function edit($id)
     {
-        $silat = Silat::findOrFail($id);
-        return view('admin.silat', compact('silat'));
+        $futsal = Futsal::findOrFail($id);
+        return view('admin.futsal', compact('futsal'));
     }
-    public function update(SilatRequest $request, $id)
+    public function update(FutsalRequest $request, $id)
     {
         $request->validated();
 
-        Silat::findOrFail($id)->update([
+        Futsal::findOrFail($id)->update([
             'pelatih'      => $request->pelatih,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,
@@ -42,16 +42,16 @@ class SilatController extends Controller
             'alpa'         => $request->alpa
         ]);
 
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Diperbarui');
+        return redirect()->to('/futsal')->with('success', 'Data Futsal Berhasil Diperbarui');
     }
     public function destroy($id)
     {
-        Silat::findOrFail($id)->delete();
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Dihapus');
+        Futsal::findOrFail($id)->delete();
+        return redirect()->to('/futsal')->with('success', 'Data Futsal Berhasil Dihapus');
     }
     private function create($request)
     {
-        Silat::create([
+        Futsal::create([
             'pelatih'      => $request->pelatih,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,

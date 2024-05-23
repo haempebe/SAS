@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Silat;
+use App\Http\Requests\KodingRequest;
+use App\Models\Koding;
 use Illuminate\Http\Request;
-use App\Http\Requests\SilatRequest;
 
-class SilatController extends Controller
+class KodingController extends Controller
 {
     public function index()
     {
-        $silat = Silat::paginate(10);
-        return view('admin.silat', compact('silat'));
+        $koding = Koding::paginate(10);
+        return view('admin.koding', compact('koding'));
     }
-    public function store(SilatRequest $request)
+    public function store(KodingRequest $request)
     {
         $request->validated();
         $this->create($request);
 
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Dibuat');
+        return redirect()->to('/koding')->with('success', 'Data Koding Berhasil Dibuat');
     }
     public function edit($id)
     {
-        $silat = Silat::findOrFail($id);
-        return view('admin.silat', compact('silat'));
+        $koding = Koding::findOrFail($id);
+        return view('admin.koding', compact('koding'));
     }
-    public function update(SilatRequest $request, $id)
+    public function update(KodingRequest $request, $id)
     {
         $request->validated();
 
-        Silat::findOrFail($id)->update([
+        Koding::findOrFail($id)->update([
             'pelatih'      => $request->pelatih,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,
@@ -42,16 +42,16 @@ class SilatController extends Controller
             'alpa'         => $request->alpa
         ]);
 
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Diperbarui');
+        return redirect()->to('/koding')->with('success', 'Data Koding Berhasil Diperbarui');
     }
     public function destroy($id)
     {
-        Silat::findOrFail($id)->delete();
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Dihapus');
+        Koding::findOrFail($id)->delete();
+        return redirect()->to('/koding')->with('success', 'Data Koding Berhasil Dihapus');
     }
     private function create($request)
     {
-        Silat::create([
+        Koding::create([
             'pelatih'      => $request->pelatih,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,

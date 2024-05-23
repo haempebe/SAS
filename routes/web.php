@@ -3,13 +3,17 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\IzinController;
 use App\Http\Controllers\RekapAbsenSiswaController;
 use App\Http\Controllers\RekapAbsenTendikController;
-use App\Http\Controllers\SilatController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TendikController;
+use App\Http\Controllers\IzinController;
 use App\Http\Controllers\WaktuController;
+use App\Http\Controllers\SilatController;
+use App\Http\Controllers\FutsalController;
+use App\Http\Controllers\PramukaController;
+use App\Http\Controllers\KodingController;
+use App\Http\Controllers\RobotikController;
 
 Auth::routes([
     'register' => false, // Registration Routes...
@@ -64,11 +68,43 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/waktu-edit/{id}', 'update')->name('waktu.update');
     });
     Route::controller(SilatController::class)->group(function () {
-        Route::get('/silat', 'index');
+        Route::get('/silat', 'index')->name('silat');
         Route::get('/silat-create', 'create');
         Route::post('/silat-create', 'store')->name('silat.perform');
         Route::get('/silat-edit/{id}', 'edit')->name('silat.edit');
         Route::put('/silat-edit/{id}', 'update')->name('silat.update');
         Route::delete('silat/{id}', 'destroy')->name('silat.delete');
+    });
+    Route::controller(FutsalController::class)->group(function () {
+        Route::get('/futsal', 'index')->name('futsal');
+        Route::get('/futsal-create', 'create');
+        Route::post('/futsal-create', 'store')->name('futsal.perform');
+        Route::get('/futsal-edit/{id}', 'edit')->name('futsal.edit');
+        Route::put('/futsal-edit/{id}', 'update')->name('futsal.update');
+        Route::delete('futsal/{id}', 'destroy')->name('futsal.delete');
+    });
+    Route::controller(PramukaController::class)->group(function () {
+        Route::get('/pramuka', 'index')->name('pramuka');
+        Route::get('/pramuka-create', 'create');
+        Route::post('/pramuka-create', 'store')->name('pramuka.perform');
+        Route::get('/pramuka-edit/{id}', 'edit')->name('pramuka.edit');
+        Route::put('/pramuka-edit/{id}', 'update')->name('pramuka.update');
+        Route::delete('pramuka/{id}', 'destroy')->name('pramuka.delete');
+    });
+    Route::controller(KodingController::class)->group(function () {
+        Route::get('/koding', 'index')->name('koding');
+        Route::get('/koding-create', 'create');
+        Route::post('/koding-create', 'store')->name('koding.perform');
+        Route::get('/koding-edit/{id}', 'edit')->name('koding.edit');
+        Route::put('/koding-edit/{id}', 'update')->name('koding.update');
+        Route::delete('koding/{id}', 'destroy')->name('koding.delete');
+    });
+    Route::controller(RobotikController::class)->group(function () {
+        Route::get('/robotik', 'index')->name('robotik');
+        Route::get('/robotik-create', 'create');
+        Route::post('/robotik-create', 'store')->name('robotik.perform');
+        Route::get('/robotik-edit/{id}', 'edit')->name('robotik.edit');
+        Route::put('/robotik-edit/{id}', 'update')->name('robotik.update');
+        Route::delete('robotik/{id}', 'destroy')->name('robotik.delete');
     });
 });

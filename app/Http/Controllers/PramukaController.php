@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Silat;
+use App\Http\Requests\PramukaRequest;
+use App\Models\Pramuka;
 use Illuminate\Http\Request;
-use App\Http\Requests\SilatRequest;
 
-class SilatController extends Controller
+class PramukaController extends Controller
 {
     public function index()
     {
-        $silat = Silat::paginate(10);
-        return view('admin.silat', compact('silat'));
+        $pramuka = Pramuka::paginate(10);
+        return view('admin.pramuka', compact('pramuka'));
     }
-    public function store(SilatRequest $request)
+    public function store(PramukaRequest $request)
     {
         $request->validated();
         $this->create($request);
 
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Dibuat');
+        return redirect()->to('/pramuka')->with('success', 'Data Pramuka Berhasil Dibuat');
     }
     public function edit($id)
     {
-        $silat = Silat::findOrFail($id);
-        return view('admin.silat', compact('silat'));
+        $pramuka = Pramuka::findOrFail($id);
+        return view('admin.pramuka', compact('pramuka'));
     }
-    public function update(SilatRequest $request, $id)
+    public function update(PramukaRequest $request, $id)
     {
         $request->validated();
 
-        Silat::findOrFail($id)->update([
+        Pramuka::findOrFail($id)->update([
             'pelatih'      => $request->pelatih,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,
@@ -42,16 +42,16 @@ class SilatController extends Controller
             'alpa'         => $request->alpa
         ]);
 
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Diperbarui');
+        return redirect()->to('/pramuka')->with('success', 'Data Pramuka Berhasil Diperbarui');
     }
     public function destroy($id)
     {
-        Silat::findOrFail($id)->delete();
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Dihapus');
+        Pramuka::findOrFail($id)->delete();
+        return redirect()->to('/pramuka')->with('success', 'Data Pramuka Berhasil Dihapus');
     }
     private function create($request)
     {
-        Silat::create([
+        Pramuka::create([
             'pelatih'      => $request->pelatih,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,

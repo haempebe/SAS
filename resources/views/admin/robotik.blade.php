@@ -63,7 +63,7 @@
                         Data
                     </div>
                     <h2 class="page-title">
-                        Silat
+                        Robotik
                     </h2>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
@@ -109,7 +109,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($silat as $item)
+                            @forelse ($robotik as $item)
                                 <tr>
                                     <td>
                                         <div>{{ $item->pelatih }}</div>
@@ -180,7 +180,7 @@
                                 {{-- Form Delete --}}
                                 <div class="modal modal-blur fade" id="modal-delete-{{ $item->id }}" tabindex="-1"
                                     role="dialog" aria-hidden="true">
-                                    <form action="{{ route('silat.delete', $item->id) }}" method="POST">
+                                    <form action="{{ route('robotik.delete', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -240,13 +240,13 @@
                 </div>
                 <div class="card-footer d-flex align-items-center">
                     <p class="m-0 text-secondary">
-                        Showing {{ $silat->firstItem() }}
-                        to {{ $silat->lastItem() }}
-                        of {{ $silat->total() }}
+                        Showing {{ $robotik->firstItem() }}
+                        to {{ $robotik->lastItem() }}
+                        of {{ $robotik->total() }}
                         entries
                     </p>
                     <ul class="pagination m-0 ms-auto">
-                        {{ $silat->links() }}
+                        {{ $robotik->links() }}
                     </ul>
                 </div>
             </div>
@@ -255,7 +255,7 @@
 
     {{-- Form Create --}}
     <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('silat.perform') }}" method="POST">
+        <form action="{{ route('robotik.perform') }}" method="POST">
             @csrf
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -390,10 +390,10 @@
     </div>
 
     {{-- Form Edit --}}
-    @foreach ($silat as $item)
+    @foreach ($robotik as $item)
         <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
-            <form action="{{ route('silat.update', $item->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('robotik.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-dialog modal-lg" role="document">

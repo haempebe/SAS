@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Silat;
+use App\Http\Requests\RobotikRequest;
+use App\Models\Robotik;
 use Illuminate\Http\Request;
-use App\Http\Requests\SilatRequest;
 
-class SilatController extends Controller
+class RobotikController extends Controller
 {
     public function index()
     {
-        $silat = Silat::paginate(10);
-        return view('admin.silat', compact('silat'));
+        $robotik = Robotik::paginate(10);
+        return view('admin.robotik', compact('robotik'));
     }
-    public function store(SilatRequest $request)
+    public function store(RobotikRequest $request)
     {
         $request->validated();
         $this->create($request);
 
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Dibuat');
+        return redirect()->to('/robotik')->with('success', 'Data Robotik Berhasil Dibuat');
     }
     public function edit($id)
     {
-        $silat = Silat::findOrFail($id);
-        return view('admin.silat', compact('silat'));
+        $robotik = Robotik::findOrFail($id);
+        return view('admin.robotik', compact('robotik'));
     }
-    public function update(SilatRequest $request, $id)
+    public function update(RobotikRequest $request, $id)
     {
         $request->validated();
 
-        Silat::findOrFail($id)->update([
+        Robotik::findOrFail($id)->update([
             'pelatih'      => $request->pelatih,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,
@@ -42,16 +42,16 @@ class SilatController extends Controller
             'alpa'         => $request->alpa
         ]);
 
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Diperbarui');
+        return redirect()->to('/robotik')->with('success', 'Data Robotik Berhasil Diperbarui');
     }
     public function destroy($id)
     {
-        Silat::findOrFail($id)->delete();
-        return redirect()->to('/silat')->with('success', 'Data Silat Berhasil Dihapus');
+        Robotik::findOrFail($id)->delete();
+        return redirect()->to('/robotik')->with('success', 'Data Robotik Berhasil Dihapus');
     }
     private function create($request)
     {
-        Silat::create([
+        Robotik::create([
             'pelatih'      => $request->pelatih,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,

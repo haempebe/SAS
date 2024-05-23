@@ -99,7 +99,7 @@
                     </a>
                 </li>
                 <li
-                    class="nav-item dropdown">
+                    class="nav-item dropdown {{ Route::currentRouteName() == 'silat' ? 'active' : '' }} {{ Route::currentRouteName() == 'futsal' ? 'active' : '' }} {{ Route::currentRouteName() == 'pramuka' ? 'active' : '' }} {{ Route::currentRouteName() == 'koding' ? 'active' : '' }} {{ Route::currentRouteName() == 'robotik' ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -114,24 +114,32 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Ekstrakulikuler
+                            Ekstrakurikuler
                         </span>
                     </a>
                     <div
-                        class="dropdown-menu">
+                        class="dropdown-menu {{ Route::currentRouteName() == 'silat' ? 'show' : '' }} {{ Route::currentRouteName() == 'futsal' ? 'show' : '' }} {{ Route::currentRouteName() == 'pramuka' ? 'show' : '' }} {{ Route::currentRouteName() == 'koding' ? 'show' : '' }} {{ Route::currentRouteName() == 'robotik' ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item"
-                                    href="#">
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'silat' ? 'active' : '' }}"
+                                    href="silat">
                                     Silat
                                 </a>
-                                <a class="dropdown-item"
-                                    href="#">
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'futsal' ? 'active' : '' }}"
+                                    href="futsal">
                                     Futsal
                                 </a>
-                                <a class="dropdown-item"
-                                    href="#">
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'pramuka' ? 'active' : '' }}"
+                                    href="pramuka">
                                     Pramuka
+                                </a>
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'koding' ? 'active' : '' }}"
+                                    href="koding">
+                                    Koding
+                                </a>
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'robotik' ? 'active' : '' }}"
+                                    href="robotik">
+                                    Robotik
                                 </a>
                             </div>
                         </div>
@@ -176,6 +184,62 @@
                                 <a class="dropdown-item {{ Route::currentRouteName() == 'rekap-siswa' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter-siswa') == true ? 'active' : '' }}"
                                     href="rekap-siswa">
                                     Siswa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li
+                    class="nav-item dropdown {{ Route::currentRouteName() == 'rekap-silat' ? 'active' : '' }} {{ Route::currentRouteName() == 'rekap-futsal' ? 'active' : '' }} {{ Route::currentRouteName() == 'rekap-pramuka' ? 'active' : '' }} {{ Route::currentRouteName() == 'rekap-koding' ? 'active' : '' }} {{ Route::currentRouteName() == 'rekap-robotik' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter') == true ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                <path d="M16 3v4" />
+                                <path d="M8 3v4" />
+                                <path d="M4 11h16" />
+                                <path d="M7 14h.013" />
+                                <path d="M10.01 14h.005" />
+                                <path d="M13.01 14h.005" />
+                                <path d="M16.015 14h.005" />
+                                <path d="M13.015 17h.005" />
+                                <path d="M7.01 17h.005" />
+                                <path d="M10.01 17h.005" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Rekap Ekstrakurikuler
+                        </span>
+                    </a>
+                    <div
+                        class="dropdown-menu {{ Route::currentRouteName() == 'rekap-silat' ? 'show' : '' }} {{ Route::currentRouteName() == 'rekap-futsal' ? 'show' : '' }} {{ Route::currentRouteName() == 'rekap-pramuka' ? 'show' : '' }} {{ Route::currentRouteName() == 'rekap-koding' ? 'show' : '' }} {{ Route::currentRouteName() == 'rekap-robotik' ? 'show' : '' }} {{ str_contains(request()->url(), 'filter') == true ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'rekap-silat' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter-silat') == true ? 'active' : '' }}"
+                                    href="rekap-silat">
+                                    Silat
+                                </a>
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'rekap-futsal' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter-siswa') == true ? 'active' : '' }}"
+                                    href="rekap-futsal">
+                                    Futsal
+                                </a>
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'rekap-pramuka' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter-siswa') == true ? 'active' : '' }}"
+                                    href="rekap-pramuka">
+                                    Pramuka
+                                </a>
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'rekap-koding' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter-siswa') == true ? 'active' : '' }}"
+                                    href="rekap-koding">
+                                    Koding
+                                </a>
+                                <a class="dropdown-item {{ Route::currentRouteName() == 'rekap-robotik' ? 'active' : '' }} {{ str_contains(request()->url(), 'filter-siswa') == true ? 'active' : '' }}"
+                                    href="rekap-robotik">
+                                    Robotik
                                 </a>
                             </div>
                         </div>
