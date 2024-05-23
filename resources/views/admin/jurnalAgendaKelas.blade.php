@@ -63,7 +63,7 @@
                         Data
                     </div>
                     <h2 class="page-title">
-                        Silat
+                        Jurnal Agenda Kelas
                     </h2>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
@@ -99,7 +99,8 @@
                     <table class="table table-vcenter card-table">
                         <thead>
                             <tr>
-                                <th>Pelatih</th>
+                                <th>Tendik</th>
+                                <th>Mapel</th>
                                 <th>Tanggal</th>
                                 <th>Waktu</th>
                                 <th>Kelas</th>
@@ -109,16 +110,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($silat as $item)
+                            @forelse ($jurnal as $item)
                                 <tr>
                                     <td>
-                                        <div>{{ $item->pelatih }}</div>
+                                        <div>{{ $item->tendik->nama }}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{ $item->mapel }}</div>
                                     </td>
                                     <td>
                                         <div>{{ $item->tanggal }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
+                                        <div>{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }} -
+                                            {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
                                     </td>
                                     <td>
                                         <div>{{ $item->kelas }}</div>
@@ -180,7 +185,7 @@
                                 {{-- Form Delete --}}
                                 <div class="modal modal-blur fade" id="modal-delete-{{ $item->id }}" tabindex="-1"
                                     role="dialog" aria-hidden="true">
-                                    <form action="{{ route('silat.delete', $item->id) }}" method="POST">
+                                    <form action="{{ route('jurnal.delete', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -240,13 +245,13 @@
                 </div>
                 <div class="card-footer d-flex align-items-center">
                     <p class="m-0 text-secondary">
-                        Showing {{ $silat->firstItem() }}
-                        to {{ $silat->lastItem() }}
-                        of {{ $silat->total() }}
+                        Showing {{ $jurnal->firstItem() }}
+                        to {{ $jurnal->lastItem() }}
+                        of {{ $jurnal->total() }}
                         entries
                     </p>
                     <ul class="pagination m-0 ms-auto">
-                        {{ $silat->links() }}
+                        {{ $jurnal->links() }}
                     </ul>
                 </div>
             </div>
@@ -255,7 +260,7 @@
 
     {{-- Form Create --}}
     <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('silat.perform') }}" method="POST">
+        <form action="{{ route('jurnal.perform') }}" method="POST">
             @csrf
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -265,10 +270,21 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Pelatih</label>
-                            <input type="text" class="form-control" name="pelatih" value="{{ old('pelatih') }}"
+                            <label class="form-label">Tendik</label>
+                            <select class="form-select" name="tendik_id">
+                                @foreach ($tendik as $itemT)
+                                    <option value="{{ $itemT->nik }}">{{ $itemT->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('tendik')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mapel</label>
+                            <input type="text" class="form-control" name="mapel" value="{{ old('mapel') }}"
                                 autocomplete="off">
-                            @error('pelatih')
+                            @error('mapel')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
                         </div>
@@ -390,10 +406,10 @@
     </div>
 
     {{-- Form Edit --}}
-    @foreach ($silat as $item)
+    @foreach ($jurnal as $item)
         <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
-            <form action="{{ route('silat.update', $item->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('jurnal.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-dialog modal-lg" role="document">
@@ -405,10 +421,18 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label class="form-label">Pelatih</label>
-                                <input type="text" class="form-control" name="pelatih" value="{{ $item->pelatih }}"
+                                <label class="form-label">Tendik</label>
+                                <input type="text" class="form-control" name="tendik" value="{{ $item->tendik }}"
                                     autocomplete="off">
-                                @error('pelatih')
+                                @error('tendik')
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mapel</label>
+                                <input type="text" class="form-control" name="mapel" value="{{ $item->mapel }}"
+                                    autocomplete="off">
+                                @error('mapel')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror
                             </div>

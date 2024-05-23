@@ -11,8 +11,14 @@ use App\Http\Controllers\IzinController;
 use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\SilatController;
 use App\Http\Controllers\FutsalController;
+use App\Http\Controllers\JurnalAgendaKelasController;
 use App\Http\Controllers\PramukaController;
 use App\Http\Controllers\KodingController;
+use App\Http\Controllers\RekapFutsalController;
+use App\Http\Controllers\RekapKodingController;
+use App\Http\Controllers\RekapPramukaController;
+use App\Http\Controllers\RekapRobotikController;
+use App\Http\Controllers\RekapSilatController;
 use App\Http\Controllers\RobotikController;
 
 Auth::routes([
@@ -52,16 +58,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/izin-edit/{id}', 'edit')->name('izin.edit');
         Route::put('/izin-edit/{id}', 'update')->name('izin.update');
         Route::delete('izin/{id}', 'destroy')->name('izin.delete');
-    });
-    Route::controller(RekapAbsenSiswaController::class)->group(function () {
-        Route::get('/rekap-siswa', 'index')->name('rekap-siswa');
-        Route::get('/filter-siswa', 'filter');
-        Route::get('/filter-siswa/pdf', 'pdf');
-    });
-    Route::controller(RekapAbsenTendikController::class)->group(function () {
-        Route::get('/rekap-tendik', 'index')->name('rekap-tendik');
-        Route::get('/filter-tendik', 'filter');
-        Route::get('/filter-tendik/pdf', 'pdf');
     });
     Route::controller(WaktuController::class)->group(function () {
         Route::get('/waktu', 'index');
@@ -106,5 +102,48 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/robotik-edit/{id}', 'edit')->name('robotik.edit');
         Route::put('/robotik-edit/{id}', 'update')->name('robotik.update');
         Route::delete('robotik/{id}', 'destroy')->name('robotik.delete');
+    });
+    Route::controller(JurnalAgendaKelasController::class)->group(function () {
+        Route::get('/jurnal', 'index')->name('jurnal');
+        Route::get('/jurnal-create', 'create');
+        Route::post('/jurnal-create', 'store')->name('jurnal.perform');
+        Route::get('/jurnal-edit/{id}', 'edit')->name('jurnal.edit');
+        Route::put('/jurnal-edit/{id}', 'update')->name('jurnal.update');
+        Route::delete('jurnal/{id}', 'destroy')->name('jurnal.delete');
+    });
+    Route::controller(RekapAbsenSiswaController::class)->group(function () {
+        Route::get('/rekap-siswa', 'index')->name('rekap-siswa');
+        Route::get('/filter-siswa', 'filter');
+        Route::get('/filter-siswa/pdf', 'pdf');
+    });
+    Route::controller(RekapAbsenTendikController::class)->group(function () {
+        Route::get('/rekap-tendik', 'index')->name('rekap-tendik');
+        Route::get('/filter-tendik', 'filter');
+        Route::get('/filter-tendik/pdf', 'pdf');
+    });
+    Route::controller(RekapSilatController::class)->group(function () {
+        Route::get('/rekap-silat', 'index')->name('rekap-silat');
+        Route::get('/filter-silat', 'filter');
+        Route::get('/filter-silat/pdf', 'pdf');
+    });
+    Route::controller(RekapFutsalController::class)->group(function () {
+        Route::get('/rekap-futsal', 'index')->name('rekap-futsal');
+        Route::get('/filter-futsal', 'filter');
+        Route::get('/filter-futsal/pdf', 'pdf');
+    });
+    Route::controller(RekapPramukaController::class)->group(function () {
+        Route::get('/rekap-pramuka', 'index')->name('rekap-pramuka');
+        Route::get('/filter-pramuka', 'filter');
+        Route::get('/filter-pramuka/pdf', 'pdf');
+    });
+    Route::controller(RekapKodingController::class)->group(function () {
+        Route::get('/rekap-koding', 'index')->name('rekap-koding');
+        Route::get('/filter-koding', 'filter');
+        Route::get('/filter-koding/pdf', 'pdf');
+    });
+    Route::controller(RekapRobotikController::class)->group(function () {
+        Route::get('/rekap-robotik', 'index')->name('rekap-robotik');
+        Route::get('/filter-robotik', 'filter');
+        Route::get('/filter-robotik/pdf', 'pdf');
     });
 });

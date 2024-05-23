@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <form action="/filter-tendik" id="filter" method="GET">
+            <form action="/filter-silat" id="filter" method="GET">
                 <div class="row g-2">
                     <div class="col-5">
                         <div class="input-icon mb-3">
@@ -90,13 +90,55 @@
                         <table class="table table-vcenter table-bordered table-striped card-table">
                             <thead class="border-1">
                                 <tr>
-                                    <th>Nama</th>
+                                    <th>Pelatih</th>
+                                    <th>Tanggal</th>
+                                    <th>Waktu</th>
+                                    <th>Kelas</th>
+                                    <th>Materi</th>
+                                    <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse ($silat as $item)
+                                    <tr>
+                                        <td>
+                                            <div>{{ $item->pelatih }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->tanggal }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }} -
+                                                {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->kelas }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->materi }}</div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <span class="badge bg-green text-green-fg">M</span> :
+                                                {{ $item->hadir }}
+                                                <span class="badge bg-orange text-orange-fg">S</span> :
+                                                {{ $item->sakit }}
+                                                <span class="badge bg-azure text-azure-fg">I</span> :
+                                                {{ $item->izin }}
+                                                <span class="badge bg-red text-red-fg">A</span> :
+                                                {{ $item->alpa }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="text-center pt-4">
+                                            <p>Tidak Ada Data</p>
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>

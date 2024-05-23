@@ -118,7 +118,7 @@
                                         <div>{{ $item->tanggal }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ $item->jam_mulai }} - {{ $item->jam_berakhir }}</div>
+                                        <div>{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
                                     </td>
                                     <td>
                                         <div>{{ $item->kelas }}</div>
