@@ -21,6 +21,16 @@
         .bg-transparent {
             background-color: transparent !important;
         }
+
+        .clickable-row {
+            cursor: pointer;
+        }
+
+        .clickable-row:hover {
+            background-color: #f5f5f5;
+            color: #182433;
+            /* Ubah warna saat dihover sesuai tema */
+        }
     </style>
 @endsection
 @section('content')
@@ -62,7 +72,7 @@
                                 <div class="col-6">
                                     <div class="card bg-twitter rounded-4 p-2">
                                         <div class="card glass radius" style="min-height: 230px">
-                                            <div class="card-header bg-transparent" >
+                                            <div class="card-header bg-transparent">
                                                 <ul class="nav nav-tabs card-header-tabs nav-fill bg-transparent text-white glass"
                                                     style="border-top-left-radius: 13px; border-top-right-radius: 13px;"
                                                     data-bs-toggle="tabs" role="tablist">
@@ -83,12 +93,10 @@
                                                     <div class="tab-pane active show" id="tabs-ontime" role="tabpanel">
                                                         <div class="row row-cols-lg-2 align-items-center">
                                                             <img src="{{ asset('img/bahan/ontime.png') }}"
-                                                                style="width: 85px;" class="img-fluid mx-3"
-                                                                alt="">
+                                                                style="width: 85px;" class="img-fluid mx-3" alt="">
                                                             <div class="p-2 text-white ms-auto">
                                                                 <strong>Tepat Waktu</strong>
-                                                                <p style="font-size: 40px; font-weight:600"
-                                                                    class="mb-0">
+                                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
                                                                     {{ $totalOntime }}<span
                                                                         class="page-pretitle text-white">
                                                                         siswa</span></p>
@@ -98,12 +106,10 @@
                                                     <div class="tab-pane" id="tabs-terlambat" role="tabpanel">
                                                         <div class="row row-cols-lg-2 align-items-center">
                                                             <img src="{{ asset('img/bahan/terlambat.png') }}"
-                                                                style="width: 85px;" class="img-fluid mx-3"
-                                                                alt="">
+                                                                style="width: 85px;" class="img-fluid mx-3" alt="">
                                                             <div class="p-2 text-white ms-auto">
                                                                 <strong>Terlambat</strong>
-                                                                <p style="font-size: 40px; font-weight:600"
-                                                                    class="mb-0">
+                                                                <p style="font-size: 40px; font-weight:600" class="mb-0">
                                                                     {{ $totalTerlambat }}<span
                                                                         class="page-pretitle text-white">
                                                                         siswa</span></p>
@@ -115,7 +121,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6" >
+                                <div class="col-6">
                                     <div class="card bg-orange rounded-4 p-2">
                                         <div class="card glass radius" style="min-height: 230px">
                                             <div class="card-header glass pb-2"
@@ -289,7 +295,7 @@
                                                         </div>
                                                     @endif
                                                     @if (session('message'))
-                                                        <div class="text-success mb-3" role="alert">
+                                                        <div class="text-danger mb-3" role="alert">
                                                             {{ session('message') }}
                                                         </div>
                                                     @endif
@@ -501,8 +507,12 @@
                                 <tbody style="min-height: 16.5rem; max-heigth:16.5rem;overflow-y: auto;">
                                     @foreach ($absensi as $itemA)
                                         @if ($itemA->tendik_id == null)
-                                            <tr>
+                                            <tr id="offcanvasTrigger-{{ $itemA->id }}" class="clickable-row">
                                                 <td class="text-center">
+                                                    <a data-bs-toggle="offcanvas" class="text-decoration-none text-default"
+                                                        href="#offcanvasAbsensi-{{ $itemA->id }}" role="button"
+                                                        aria-controls="offcanvasAbsensi-{{ $itemA->id }}">
+                                                    </a>
                                                     @if ($itemA->status == 'Terlambat')
                                                         <span class="badge bg-red text-red-fg">{{ $itemA->status }}</span>
                                                     @else
@@ -525,8 +535,12 @@
                                                 </td>
                                             </tr>
                                         @elseif ($itemA->siswa_id == null)
-                                            <tr>
+                                            <tr id="offcanvasTrigger-{{ $itemA->id }}" class="clickable-row">
                                                 <td class="text-center">
+                                                    <a data-bs-toggle="offcanvas" class="text-decoration-none text-default"
+                                                        href="#offcanvasAbsensi-{{ $itemA->id }}" role="button"
+                                                        aria-controls="offcanvasAbsensi-{{ $itemA->id }}">
+                                                    </a>
                                                     @if ($itemA->status == 'Terlambat')
                                                         <span class="badge bg-red text-red-fg">{{ $itemA->status }}</span>
                                                     @else
@@ -639,55 +653,7 @@
             </div>
         </div>
     </div>
-    {{-- edit jam --}}
-    <div class="modal modal-blur fade" id="modal-edit-jam" tabindex="-1" aria-modal="false" role="dialog">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ubah Jam Siswa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('waktu.update', $waktu->id) }}" method="post">
-                        @csrf
-                        @method('PUT')
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="jam_masuk">Jam Masuk</label>
-                                    <input autocomplete="off" type="text" name="jam_masuk" class="form-control"
-                                        data-mask="00:00" data-mask-visible="true" placeholder="00:00"
-                                        autocomplete="off" value="{{ $waktu->jam_masuk }}">
-                                </div>
-                                @error('jam_masuk')
-                                    <p class="text-red">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-                            <div class="col-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="jam_Pulang">Jam Pulang</label>
-                                    <input autocomplete="off" type="text" name="jam_pulang" class="form-control"
-                                        data-mask="00:00" data-mask-visible="true" placeholder="00:00"
-                                        autocomplete="off" value="{{ $waktu->jam_pulang }}">
-                                </div>
-                                @error('jam_pulang')
-                                    <p class="text-red">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Simpan</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    @include('components.homeComponents')
 @endsection
 @section('scripts')
     <script type="text/javascript">
@@ -712,5 +678,17 @@
             e = e < 10 ? '0' + e : e;
             return e;
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var rows = document.querySelectorAll(".clickable-row");
+            rows.forEach(function(row) {
+                row.addEventListener("click", function() {
+                    var offcanvasId = this.querySelector("a[data-bs-toggle='offcanvas']")
+                        .getAttribute("href");
+                    var offcanvas = new bootstrap.Offcanvas(document.querySelector(offcanvasId));
+                    offcanvas.show();
+                });
+            });
+        });
     </script>
 @endsection

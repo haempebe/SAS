@@ -84,19 +84,22 @@ class HomeController extends Controller
         }
 
         $waktuTerkini = Carbon::now();
-        $absensiTendikKemarin = Absensi::where('tendik_id', $getTendik->id)
-            ->whereDate('jam_masuk', Carbon::yesterday())
-            ->whereNotNull('tendik_id')
-            ->whereNull('jam_pulang')
-            ->whereHas('tendik', function ($query) {
-                $query->whereRaw('jam_pulang < jam_masuk');
-            })
-            ->first();
+        if (is_null($getSiswa)) {
+            $absensiTendikKemarin = Absensi::where('tendik_id', $getTendik->id)
+                ->whereDate('jam_masuk', Carbon::yesterday())
+                ->whereNotNull('tendik_id')
+                
+                ->whereNull('jam_pulang')
+                ->whereHas('tendik', function ($query) {
+                    $query->whereRaw('jam_pulang < jam_masuk');
+                })
+                ->first();
 
-        if ($absensiTendikKemarin) {
-            $jamPulangTendik = Carbon::parse($absensiTendikKemarin->jam_masuk)->addDay()->format('Y-m-d H:i:s');
-            if ($waktuTerkini->lessThan($jamPulangTendik)) {
-                return redirect()->back()->with('message', 'Anda sudah absen masuk hari ini atau pada jam anda.');
+            if ($absensiTendikKemarin) {
+                $jamPulangTendik = Carbon::parse($absensiTendikKemarin->jam_masuk)->addDay()->format('Y-m-d');
+                if ($waktuTerkini->lessThan($jamPulangTendik . $getTendik->jam_pulang)) {
+                    return redirect()->back()->with('message', 'Anda sudah absen masuk hari ini atau pada jam anda.');
+                }
             }
         }
 

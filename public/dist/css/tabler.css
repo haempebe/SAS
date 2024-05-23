@@ -7213,7 +7213,7 @@ textarea.form-control-lg {
 }
 .offcanvas, .offcanvas-xxl, .offcanvas-xl, .offcanvas-lg, .offcanvas-md, .offcanvas-sm {
   --tblr-offcanvas-zindex: 1045;
-  --tblr-offcanvas-width: 400px;
+  --tblr-offcanvas-width: 800px;
   --tblr-offcanvas-height: 30vh;
   --tblr-offcanvas-padding-x: 1.5rem;
   --tblr-offcanvas-padding-y: 1.5rem;
