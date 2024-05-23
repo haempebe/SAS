@@ -91,11 +91,9 @@
                             <thead class="border-1">
                                 <tr>
                                     <th>Nama</th>
-
                                     @foreach ($loopTanggal as $tanggal)
                                         <th class="text-center">{{ htmlspecialchars($tanggal['day']) }}</th>
                                     @endforeach
-
                                     <th class="text-center"><span class="badge bg-green text-green-fg">M</span></th>
                                     <th class="text-center"><span class="badge bg-azure text-azure-fg">I</span></th>
                                     <th class="text-center"><span class="badge bg-orange text-orange-fg">S</span></th>
@@ -105,15 +103,15 @@
                                     <th class="text-center"><span class="badge bg-red text-red-fg">T</span></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-1">
                                 @php
                                     $totalM = 0;
+                                    $totalT = 0;
                                     $totalI = 0;
                                     $totalS = 0;
                                     $totalA = 0;
                                     $totalL = 0;
                                     $totalP = 0;
-                                    $totalT = 0;
                                 @endphp
                                 @forelse ($rowTableAbsensi as $item)
                                     <tr>
@@ -188,21 +186,21 @@
                                             </td>
                                         @endforeach
                                         <td class="text-center">{{ count($absensiDates) }}</td>
+                                        <td class="text-center">{{ count($terlambatDates) }}</td>
                                         <td class="text-center">{{ $totalI }}</td>
                                         <td class="text-center">{{ $totalS }}</td>
                                         <td class="text-center">{{ $totalA }}</td>
                                         <td class="text-center">{{ $totalL }}</td>
                                         <td class="text-center">{{ $totalP }}</td>
-                                        <td class="text-center">{{ count($terlambatDates) }}</td>
                                     </tr>
                                     @php
                                         $totalM = 0;
+                                        $totalT = 0;
                                         $totalI = 0;
                                         $totalS = 0;
                                         $totalA = 0;
                                         $totalL = 0;
                                         $totalP = 0;
-                                        $totalT = 0;
                                     @endphp
                                 @empty
                                     <tr>
@@ -236,7 +234,7 @@
                                     <th class="text-center">Total Jam Lembur</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-1">
                                 @forelse ($izin as $item)
                                     @if ($item->siswa_id == null)
                                         <tr>
@@ -303,7 +301,7 @@
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-1">
                                 <tr>
                                     <td>
                                         <span class="badge bg-green text-green-fg">M</span>

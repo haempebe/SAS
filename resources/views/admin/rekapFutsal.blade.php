@@ -98,7 +98,7 @@
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-1">
                                 @forelse ($futsal as $item)
                                     <tr>
                                         <td>

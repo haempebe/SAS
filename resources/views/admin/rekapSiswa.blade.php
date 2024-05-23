@@ -109,17 +109,19 @@
                                         <th class="text-center">{{ htmlspecialchars($tanggal['day']) }}</th>
                                     @endforeach
                                     <th class="text-center"><span class="badge bg-green text-green-fg">M</span></th>
+                                    <th class="text-center"><span class="badge bg-red text-red-fg">T</span></th>
                                     <th class="text-center"><span class="badge bg-blue text-blue-fg">I</span></th>
                                     <th class="text-center"><span class="badge bg-orange text-orange-fg">S</span></th>
                                     <th class="text-center"><span class="badge bg-red text-red-fg">A</span></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-1">
                                 @php
                                     $totalM = 0;
                                     $totalI = 0;
                                     $totalS = 0;
                                     $totalA = 0;
+                                    $totalT = 0;
                                 @endphp
                                 @forelse ($rowTableAbsensi as $item)
                                     <tr>
@@ -130,6 +132,7 @@
                                             $absensiDates = [];
                                             $izinDates = [];
                                             $lastIzin = [];
+                                            $terlambatDates = [];
                                         @endphp
                                         @foreach ($absensi as $itemA)
                                             @if ($itemA->siswa_id == $item->siswa_id)
@@ -137,6 +140,11 @@
                                                     $absensiDates[] = \Carbon\Carbon::parse($itemA->jam_masuk)->format(
                                                         'Y-m-d',
                                                     );
+                                                    if ($itemA->status == 'Terlambat') {
+                                                        $terlambatDates[] = \Carbon\Carbon::parse(
+                                                            $itemA->jam_masuk,
+                                                        )->format('Y-m-d');
+                                                    }
                                                 @endphp
                                             @endif
                                         @endforeach
@@ -152,6 +160,7 @@
                                         @endforeach
                                         @php
                                             $absensiDates = array_unique($absensiDates);
+                                            $terlambatDates = array_unique($terlambatDates);
                                         @endphp
                                         @foreach ($loopTanggal as $tanggal)
                                             <td class="text-center">
@@ -170,19 +179,24 @@
                                                         @php $totalA++; @endphp
                                                     @endif
                                                 @else
-                                                    @if (in_array($tanggal['date'], $absensiDates))
+                                                    @if (in_array($tanggal['date'], $terlambatDates))
+                                                        <span class="badge bg-red text-red-fg">T</span>
+                                                        @php $totalT++; @endphp
+                                                    @elseif (in_array($tanggal['date'], $absensiDates))
                                                         <span class="badge bg-green text-green-fg">M</span>
                                                         @php $totalM++; @endphp
                                                     @endif
                                                 @endif
                                         @endforeach
                                         <td class="text-center">{{ count($absensiDates) }}</td>
+                                        <td class="text-center">{{ count($terlambatDates) }}</td>
                                         <td class="text-center">{{ $totalI }}</td>
                                         <td class="text-center">{{ $totalS }}</td>
                                         <td class="text-center">{{ $totalA }}</td>
                                     </tr>
                                     @php
                                         $totalM = 0;
+                                        $totalT = 0;
                                         $totalI = 0;
                                         $totalS = 0;
                                         $totalA = 0;
@@ -215,7 +229,7 @@
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-1">
                                 @foreach ($izin as $item)
                                     @if ($item->tendik_id == null)
                                         <tr>
@@ -252,7 +266,7 @@
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-1">
                                 <tr>
                                     <td>
                                         <span class="badge bg-green text-green-fg">M</span>
