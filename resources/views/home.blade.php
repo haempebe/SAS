@@ -509,7 +509,8 @@
                                         @if ($itemA->tendik_id == null)
                                             <tr id="offcanvasTrigger-{{ $itemA->id }}" class="clickable-row">
                                                 <td class="text-center">
-                                                    <a data-bs-toggle="offcanvas" class="text-decoration-none text-default"
+                                                    <a data-bs-toggle="offcanvas"
+                                                        class="text-decoration-none text-default"
                                                         href="#offcanvasAbsensi-{{ $itemA->id }}" role="button"
                                                         aria-controls="offcanvasAbsensi-{{ $itemA->id }}">
                                                     </a>
@@ -537,7 +538,8 @@
                                         @elseif ($itemA->siswa_id == null)
                                             <tr id="offcanvasTrigger-{{ $itemA->id }}" class="clickable-row">
                                                 <td class="text-center">
-                                                    <a data-bs-toggle="offcanvas" class="text-decoration-none text-default"
+                                                    <a data-bs-toggle="offcanvas"
+                                                        class="text-decoration-none text-default"
                                                         href="#offcanvasAbsensi-{{ $itemA->id }}" role="button"
                                                         aria-controls="offcanvasAbsensi-{{ $itemA->id }}">
                                                     </a>
@@ -691,4 +693,116 @@
             });
         });
     </script>
+    <script src="{{ asset('./dist/js/apexcharts.min.js') }}" defer></script>
+    @php
+        $jsonDates = json_encode($dates, JSON_PRETTY_PRINT);
+    @endphp
+    @foreach ($absensi as $item)
+        @php
+            $siswaId = $item->siswa_id;
+            $tendikId = $item->tendik_id;
+            $tepatWaktuSiswa = [];
+            $terlambatSiswa = [];
+
+            if (isset($punctualityData[$siswaId])) {
+                foreach ($dates as $date) {
+                    $tepatWaktuSiswa[] = $punctualityData[$siswaId]['ontime'][$date];
+                    $terlambatSiswa[] = $punctualityData[$siswaId]['late'][$date];
+                }
+                $jsonTepatWaktu = json_encode($tepatWaktuSiswa);
+                $jsonTerlambat = json_encode($terlambatSiswa);
+            }
+
+            if (isset($punctualityData[$tendikId])) {
+                foreach ($dates as $date) {
+                    $tepatWaktuTendik[] = $punctualityData[$tendikId]['ontime'][$date];
+                    $terlambatTendik[] = $punctualityData[$tendikId]['late'][$date];
+                }
+                $jsonTepatWaktu = json_encode($tepatWaktuTendik);
+                $jsonTerlambat = json_encode($terlambatTendik);
+            }
+        @endphp
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                window.ApexCharts && (new ApexCharts(document.getElementById('chart-absensi-{{ $item->id }}'), {
+                    chart: {
+                        type: "area",
+                        fontFamily: 'inherit',
+                        height: 240,
+                        parentHeightOffset: 0,
+                        toolbar: {
+                            show: false,
+                        },
+                        animations: {
+                            enabled: true
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    fill: {
+                        opacity: .16,
+                        type: 'solid'
+                    },
+                    stroke: {
+                        width: 2,
+                        lineCap: "round",
+                        curve: "smooth",
+                    },
+                    series: [{
+                        name: "Tepat Waktu",
+                        data: {!! $jsonTepatWaktu !!}
+                    }, {
+                        name: "Terlambat",
+                        data: {!! $jsonTerlambat !!}
+                    }],
+                    tooltip: {
+                        theme: 'dark'
+                    },
+                    grid: {
+                        padding: {
+                            top: -20,
+                            right: 0,
+                            left: -4,
+                            bottom: -4
+                        },
+                        strokeDashArray: 4,
+                    },
+                    xaxis: {
+                        labels: {
+                            padding: 0,
+                        },
+                        tooltip: {
+                            enabled: false
+                        },
+                        axisBorder: {
+                            show: false,
+                        },
+                        type: 'datetime',
+                    },
+                    yaxis: {
+                        labels: {
+                            padding: 4
+                        },
+                    },
+                    labels: {!! $jsonDates !!},
+                    colors: [tabler.getColor("success"), tabler.getColor("red")],
+                    legend: {
+                        show: true,
+                        position: 'bottom',
+                        offsetY: 12,
+                        markers: {
+                            width: 10,
+                            height: 10,
+                            radius: 100,
+                        },
+                        itemMargin: {
+                            horizontal: 8,
+                            vertical: 8
+                        },
+                    },
+                })).render();
+            });
+        </script>
+    @endforeach
 @endsection

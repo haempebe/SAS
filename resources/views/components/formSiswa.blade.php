@@ -230,7 +230,7 @@
     </form>
 </div>
 
-{{-- Form Edit --}}
+{{-- Form Edit & delete --}}
 @foreach ($siswa as $item)
     <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
         aria-hidden="true">
@@ -275,7 +275,7 @@
                                 <label class="form-selectgroup-item">
                                     <input type="radio" name="kelas" value="Kelas 10"
                                         class="form-selectgroup-input"
-                                        @if ($item->kelas == 'Kelas 12') checked @endif>
+                                        @if ($item->kelas == 'Kelas 10') checked @endif>
                                     <span class="form-selectgroup-label d-flex align-items-center p-3">
                                         <span class="me-3">
                                             <span class="form-selectgroup-check"></span>
@@ -291,7 +291,7 @@
                                 <label class="form-selectgroup-item">
                                     <input type="radio" name="kelas" value="Kelas 11"
                                         class="form-selectgroup-input"
-                                        @if ($item->kelas == 'Kelas 12') checked @endif>
+                                        @if ($item->kelas == 'Kelas 11') checked @endif>
                                     <span class="form-selectgroup-label d-flex align-items-center p-3">
                                         <span class="me-3">
                                             <span class="form-selectgroup-check"></span>

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('role');
             $table->string('nomor_whatsapp');
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

@@ -39,7 +39,7 @@ class TendikImport implements ToCollection, ToModel
                     'jam_masuk'         => $row[7],
                     'jam_pulang'        => $row[8],
                     'nomor_whatsapp'    => $row[9],
-                    'foto'              => 'belum',
+                    'foto'              => null,
                 ]);
             }
         }

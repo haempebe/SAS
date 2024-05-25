@@ -49,7 +49,8 @@
                         @csrf
                         <div class="col-8">
                             <input class="form-control" name="cari" type="text" placeholder="Cari..."
-                                autocomplete="off" @if (strpos(url()->current(), 'cari') == true) value="{{ $cari }}" @endif>
+                                autocomplete="off"
+                                @if (strpos(url()->current(), 'cari') == true) value="{{ $cari }}" autofocus @endif>
                         </div>
                         <div class="col-2">
                             <select class="form-select" name="kelas">
@@ -97,8 +98,8 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex py-1 align-items-center">
-                                            <img src="{{ asset('img/foto/' . $item->foto) ?? asset('static/avatars/000f.jpg') }}" class="avatar me-2"
-                                                alt="" srcset="">
+                                            <img src="{{ $item->foto ? asset('img/foto/' . $item->foto) : asset('img/bahan/1.png') }}"
+                                                class="avatar me-2" alt="" srcset="">
                                             <div class="flex-fill">
                                                 <div class="font-weight-medium">{{ $item->nama }}</div>
                                                 <div class="text-secondary"><a href="#"

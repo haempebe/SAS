@@ -67,7 +67,65 @@ class HomeController extends Controller
             $query->where('role', $role);
         })->count();
 
-        return view('home', compact('tendikCount', 'siswaCount', 'absensi', 'waktu', 'totalOntime', 'totalTerlambat', 'belumMasuk', 'belumMasuk10', 'belumMasuk11', 'belumMasuk12', 'totalIzin', 'totalSakit', 'totalAlpa'));
+        $dates = [];
+        $today = Carbon::today();
+        for ($i = 0; $i < 30; $i++) {
+            $dates[] = $today->copy()->subDays($i)->format('Y-m-d');
+        }
+        $dates = array_reverse($dates);
+
+        $punctualityData = [];
+        foreach ($absensi as $item) {
+            if ($item->siswa_id !== null) {
+                $siswaId = $item->siswa_id;
+                if (!isset($punctualityData[$siswaId])) {
+                    $punctualityData[$siswaId] = ['ontime' => [], 'late' => []];
+                }
+                foreach ($dates as $date) {
+                    $ontimeCount = Absensi::where('siswa_id', $siswaId)
+                        ->whereDate('jam_masuk', '<=', $date)
+                        ->where('status', 'Tepat Waktu')
+                        ->count();
+                    $lateCount = Absensi::where('siswa_id', $siswaId)
+                        ->whereDate('jam_masuk', '<=', $date)
+                        ->where('status', 'Terlambat')
+                        ->count();
+
+                    $totalAbsensiCount = ($ontimeCount + $lateCount);
+
+                    $ontimePercentage = $totalAbsensiCount > 0 ? round(($ontimeCount / $totalAbsensiCount) * 100) : 0;
+                    $latePercentage = $totalAbsensiCount > 0 ? round(($lateCount / $totalAbsensiCount) * 100) : 0;
+
+                    $punctualityData[$siswaId]['ontime'][$date] = $ontimePercentage;
+                    $punctualityData[$siswaId]['late'][$date] = $latePercentage;
+                }
+            } elseif ($item->tendik_id !== null) {
+                $tendikId = $item->tendik_id;
+                if (!isset($punctualityData[$tendikId])) {
+                    $punctualityData[$tendikId] = ['ontime' => [], 'late' => []];
+                }
+                foreach ($dates as $date) {
+                    $ontimeCount = Absensi::where('tendik_id', $tendikId)
+                        ->whereDate('jam_masuk', '<=', $date)
+                        ->where('status', 'Tepat Waktu')
+                        ->count();
+                    $lateCount = Absensi::where('tendik_id', $tendikId)
+                        ->whereDate('jam_masuk', '<=', $date)
+                        ->where('status', 'Terlambat')
+                        ->count();
+
+                    $totalAbsensiCount = ($ontimeCount + $lateCount);
+
+                    $ontimePercentage = $totalAbsensiCount > 0 ? round(($ontimeCount / $totalAbsensiCount) * 100) : 0;
+                    $latePercentage = $totalAbsensiCount > 0 ? round(($lateCount / $totalAbsensiCount) * 100) : 0;
+
+                    $punctualityData[$tendikId]['ontime'][$date] = $ontimePercentage;
+                    $punctualityData[$tendikId]['late'][$date] = $latePercentage;
+                }
+            }
+        }
+
+        return view('home', compact('tendikCount', 'siswaCount', 'absensi', 'waktu', 'totalOntime', 'totalTerlambat', 'belumMasuk', 'belumMasuk10', 'belumMasuk11', 'belumMasuk12', 'totalIzin', 'totalSakit', 'totalAlpa', 'dates', 'punctualityData'));
     }
     public function masuk(AbsenRequest $request)
     {
@@ -88,7 +146,7 @@ class HomeController extends Controller
             $absensiTendikKemarin = Absensi::where('tendik_id', $getTendik->id)
                 ->whereDate('jam_masuk', Carbon::yesterday())
                 ->whereNotNull('tendik_id')
-                
+
                 ->whereNull('jam_pulang')
                 ->whereHas('tendik', function ($query) {
                     $query->whereRaw('jam_pulang < jam_masuk');

@@ -71,72 +71,80 @@
                             <div class="col-auto ms-auto">
                                 <h3 class="m-0">Tanggal Masuk:</h3>
                                 <p>
-                                    {{ \Carbon\Carbon::parse($item->jam_masuk)->isoFormat('dddd, D MMMM Y') ?? null }}
+                                    {{ \Carbon\Carbon::parse($item->jam_masuk)->isoFormat('dddd, D MMMM Y') }}
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-5">
-                        <div class="col-5">
-                            <div class="rounded-4">
-                                <img src="{{ asset('img/foto/' . $item->siswa->foto) ?? asset('static/avatars/000f.jpg') }}"
-                                    style="min-height: 300px;object-fit:cover;" class="rounded-4" alt="">
+                        <div class="col-md-5">
+                            <div
+                                class="card rounded-4 @if ($item->status == 'Terlambat') bg-red text-red-fg @else bg-green text-green-fg @endif text-center w-full p-2">
+                                <img src="{{ $item->siswa->foto ? asset('img/foto/' . $item->siswa->foto) : asset('img/bahan/1.png') }}"
+                                    style="max-height: 250px;object-fit:cover;min-height:250px;"
+                                    class="rounded-4 w-full" alt="">
+                                <div class="mt-2">
+                                    <h2 class="mb-2">
+                                        {{ $item->status }}
+                                    </h2>
+                                </div>
                             </div>
+                            <h3 class="mt-1 mb-0">
+                                <span class="badge bg-yellow text-dark w-full">
+                                    {{ \Carbon\Carbon::parse($item->jam_masuk)->isoFormat('dddd, D MMMM Y') }}
+                                </span>
+                            </h3>
+                            <table class="w-full mt-2 py-2">
+                                <tr>
+                                    <td class="align-top text-start"><strong>Masuk</strong></td>
+                                    <td class="text-start">:</td>
+                                    <td class="align-top text-end">
+                                        {{ \Carbon\Carbon::parse($item->jam_masuk)->format('H : i') }}
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                        <div class="col-7 ps-3">
-                            <h2>Data : </h2>
-                            <div class="table-responsive">
-                                <table>
-                                    <tr>
-                                        <td class="align-top"><strong>Nama</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->siswa->nama }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Kelas</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->siswa->kelas }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>NISN</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->siswa->nisn }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Jenis Kelamin</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->siswa->jenis_kelamin }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>TTL</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->siswa->tempat_lahir }},
-                                            {{ \Carbon\Carbon::parse($item->siswa->tanggal_lahir)->format('d-m-Y') ?? null }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>No. WA</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->siswa->nomor_whatsapp }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Jam Masuk</strong> </td>
-                                        <td class="ps-2 align-top">:
-                                            {{ \Carbon\Carbon::parse($item->jam_masuk)->format('H : i') ?? null }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Tanggal Masuk</strong> </td>
-                                        <td class="ps-2 align-top">:
-                                            <span class="badge bg-yellow text-dark">
-                                                {{ \Carbon\Carbon::parse($item->jam_masuk)->isoFormat('dddd, D MMMM Y') ?? null }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Status</strong> </td>
-                                        <td class="ps-2 align-top">:
-                                            @if ($item->status == 'Terlambat')
-                                                <span class="badge bg-red text-red-fg">{{ $item->status }}</span>
-                                            @else
-                                                <span class="badge bg-green text-green-fg">{{ $item->status }}</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </table>
+                        <div class="col-md-7">
+                            <div class="ms-lg-5">
+                                <h2>Data : </h2>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody class="table-body">
+                                            <tr>
+                                                <td class="align-top"><strong>Nama</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->siswa->nama }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>Kelas</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->siswa->kelas }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>NISN</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->siswa->nisn }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>Jenis Kelamin</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->siswa->jenis_kelamin }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>TTL</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->siswa->tempat_lahir }},
+                                                    {{ \Carbon\Carbon::parse($item->siswa->tanggal_lahir)->format('d-m-Y') }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>No. WA</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->siswa->nomor_whatsapp }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>
@@ -155,73 +163,106 @@
                             <div class="col-auto ms-auto">
                                 <h3 class="m-0">Tanggal Masuk:</h3>
                                 <p>
-                                    {{ \Carbon\Carbon::parse($item->jam_masuk)->isoFormat('dddd, D MMMM Y') ?? null }}
+                                    {{ \Carbon\Carbon::parse($item->jam_masuk)->isoFormat('dddd, D MMMM Y') }}
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-5">
-                        <div class="col-5">
-                            <div class="rounded-4">
+                        <div class="col-md-5">
+                            <div
+                                class="card rounded-4 @if ($item->status == 'Terlambat') bg-red text-red-fg @else bg-green text-green-fg @endif text-center w-full p-2">
                                 <img src="{{ asset('img/foto/' . $item->tendik->foto) ?? asset('static/avatars/000f.jpg') }}"
-                                    style="min-height: 300px;object-fit:cover;" class="rounded-4" alt="">
+                                    style="max-height: 250px;object-fit:cover;min-height:250px;"
+                                    class="rounded-4 w-full" alt="">
+                                <div class="mt-2">
+                                    <h2 class="mb-2">
+                                        {{ $item->status }}
+                                    </h2>
+                                </div>
                             </div>
+                            <h3 class="mt-1 mb-0">
+                                <span class="badge bg-yellow text-dark w-full">
+                                    {{ \Carbon\Carbon::parse($item->jam_masuk)->isoFormat('dddd, D MMMM Y') }}
+                                </span>
+                            </h3>
+                            <table class="w-full mt-2 py-2">
+                                <tr>
+                                    <td class="align-top text-start"><strong>Masuk</strong></td>
+                                    <td class="text-start">:</td>
+                                    <td class="align-top text-end">
+                                        {{ \Carbon\Carbon::parse($item->jam_masuk)->format('H : i') }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-top text-start"><strong>Pulang</strong></td>
+                                    <td class="text-start">:</td>
+                                    <td class="align-top text-end">
+                                        {{ $item->jam_pulang ? date('H : i', strtotime($item->jam_pulang)) : '?' }}
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                        <div class="col-7 ps-3">
-                            <h2>Data : </h2>
-                            <div class="table-responsive">
-                                <table>
-                                    <tr>
-                                        <td class="align-top"><strong>Nama</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->tendik->nama }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>NIK</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->tendik->nik }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Jenis Kelamin</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->tendik->jenis_kelamin }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>TTL</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->tendik->tempat_lahir }},
-                                            {{ \Carbon\Carbon::parse($item->tendik->tanggal_lahir)->format('d-m-Y') ?? null }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>No. WA</strong> </td>
-                                        <td class="ps-2 align-top">: {{ $item->tendik->nomor_whatsapp }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Jam Masuk</strong> </td>
-                                        <td class="ps-2 align-top">:
-                                            {{ \Carbon\Carbon::parse($item->jam_masuk)->format('H : i') ?? null }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Tanggal Masuk</strong> </td>
-                                        <td class="ps-2 align-top">:
-                                            <span class="badge bg-yellow text-dark">
-                                                {{ \Carbon\Carbon::parse($item->jam_masuk)->isoFormat('dddd, D MMMM Y') ?? null }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-top"><strong>Status</strong> </td>
-                                        <td class="ps-2 align-top">:
-                                            @if ($item->status == 'Terlambat')
-                                                <span class="badge bg-red text-red-fg">{{ $item->status }}</span>
-                                            @else
-                                                <span class="badge bg-green text-green-fg">{{ $item->status }}</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </table>
+                        <div class="col-md-7">
+                            <div class="ms-lg-5">
+                                <h2>Data : </h2>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody class="table-body">
+                                            <tr>
+                                                <td class="align-top"><strong>Nama</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->tendik->nama }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>NIK</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->tendik->nik }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>Jenis Kelamin</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->tendik->jenis_kelamin }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>TTL</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->tendik->tempat_lahir }},
+                                                    {{ \Carbon\Carbon::parse($item->tendik->tanggal_lahir)->format('d-m-Y') }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>No. WA</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">{{ $item->tendik->nomor_whatsapp }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>Jam Masuk</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">
+                                                    {{ \Carbon\Carbon::parse($item->tendik->jam_masuk)->format('H:i') }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top"><strong>Jam Pulang</strong> </td>
+                                                <td>:</td>
+                                                <td class="align-top">
+                                                    {{ \Carbon\Carbon::parse($item->tendik->jam_pulang)->format('H:i') }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>
                     </div>
                 @endif
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <div id="chart-absensi-{{ $item->id }}" class="chart-lg"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

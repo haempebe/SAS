@@ -38,7 +38,7 @@ class SiswaImport implements ToCollection, ToModel
                     'tanggal_lahir'     => $row[6],
                     'role'              => $row[7],
                     'nomor_whatsapp'    => $row[8],
-                    'foto'              => 'belum',
+                    'foto'              => null,
                 ]);
             }
         }

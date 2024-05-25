@@ -22,7 +22,7 @@ return new class extends Migration
             $table->time('jam_masuk');
             $table->time('jam_pulang');
             $table->string('nomor_whatsapp');
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }
