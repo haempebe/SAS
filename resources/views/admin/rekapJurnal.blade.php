@@ -10,12 +10,12 @@
                             Data
                         </div>
                         <h2 class="page-title">
-                            Ekstrakurikuler Pramuka
+                            Jurnal Agenda Kelas
                         </h2>
                     </div>
                 </div>
             </div>
-            <form action="/filter-pramuka" id="filter" method="GET">
+            <form action="/filter-jak" id="filter" method="GET">
                 <div class="row g-2">
                     <div class="col-5">
                         <div class="input-icon mb-3">
@@ -82,7 +82,7 @@
     </div>
     @if (strpos(url()->current(), 'filter') == true)
         <div style="min-height: 80vh">
-            <h1>Data Ekstrakurikuler Pramuka</h1>
+            <h1>Data Jurnal Agenda Kelas</h1>
             <p><b>Tanggal : </b>{{ now()->format('d F Y') }}</p>
             <div class="row row-cards mb-3">
                 <div class="col">
@@ -90,7 +90,8 @@
                         <table class="table table-vcenter table-bordered table-striped card-table">
                             <thead class="border-1">
                                 <tr>
-                                    <th>Pelatih</th>
+                                    <th>Tendik</th>
+                                    <th>Mapel</th>
                                     <th>Tanggal</th>
                                     <th>Waktu</th>
                                     <th>Kelas</th>
@@ -99,17 +100,21 @@
                                 </tr>
                             </thead>
                             <tbody class="border-1">
-                                @forelse ($pramuka as $item)
+                                @forelse ($jurnal as $item)
                                     <tr>
                                         <td>
-                                            <div>{{ $item->pelatih }}</div>
+                                            <div>{{ $item->tendik->nama }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->mapel }}</div>
                                         </td>
                                         <td>
                                             <div>{{ $item->tanggal }}</div>
                                         </td>
                                         <td>
                                             <div>{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }} -
-                                                {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
+                                                {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}
+                                            </div>
                                         </td>
                                         <td>
                                             <div>{{ $item->kelas }}</div>

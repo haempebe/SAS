@@ -133,14 +133,26 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <span class="badge bg-green text-green-fg">M</span> :
-                                            {{ $item->hadir }}
-                                            <span class="badge bg-orange text-orange-fg">S</span> :
-                                            {{ $item->sakit }}
-                                            <span class="badge bg-azure text-azure-fg">I</span> :
-                                            {{ $item->izin }}
-                                            <span class="badge bg-red text-red-fg">A</span> :
-                                            {{ $item->alpa }}
+                                            <button class="btn">Masuk
+                                                <span class="badge bg-green text-green-fg ms-2">
+                                                    {{ $item->hadir }}
+                                                </span>
+                                            </button>
+                                            <button class="btn">Sakit
+                                                <span class="badge bg-orange text-orange-fg ms-2">
+                                                    {{ $item->sakit }}
+                                                </span>
+                                            </button>
+                                            <button class="btn">Izin
+                                                <span class="badge bg-azure text-azure-fg ms-2">
+                                                    {{ $item->izin }}
+                                                </span>
+                                            </button>
+                                            <button class="btn">Alpa
+                                                <span class="badge bg-red text-red-fg ms-2">
+                                                    {{ $item->alpa }}
+                                                </span>
+                                            </button>
                                         </div>
                                     </td>
                                     <td class="text-end">
@@ -409,7 +421,7 @@
     @foreach ($jurnal as $item)
         <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
-            <form action="{{ route('jurnal.update', $item->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('jurnal.update', $item->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-dialog modal-lg" role="document">
@@ -422,7 +434,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label class="form-label">Tendik</label>
-                                <input type="text" class="form-control" name="tendik" value="{{ $item->tendik }}"
+                                <input type="text" class="form-control" name="tendik" value="{{ $item->tendik->nama }}"
                                     autocomplete="off">
                                 @error('tendik')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>

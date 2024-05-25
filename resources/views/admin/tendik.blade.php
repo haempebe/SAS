@@ -123,8 +123,10 @@
                                 <th>Jenis Kelamin</th>
                                 <th>NIK</th>
                                 <th>Tempat/Tanggal Lahir</th>
-                                <th>Role</th>
+                                <th>Jam Masuk</th>
+                                <th>Jam Pulang</th>
                                 <th>Whatsapp</th>
+                                <th>Role</th>
                                 <th class="w-8"></th>
                             </tr>
                         </thead>
@@ -153,11 +155,17 @@
                                     <td>
                                         <div>{{ $item->tempat_lahir }}, {{ $item->tanggal_lahir }}</div>
                                     </td>
-                                    <td class="text-secondary">
-                                        {{ $item->role }}
+                                    <td>
+                                        <div>{{ \Carbon\Carbon::parse($item->jam_masuk)->format('H:i') }}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{ \Carbon\Carbon::parse($item->jam_pulang)->format('H:i') }}</div>
                                     </td>
                                     <td>
                                         <div>{{ $item->nomor_whatsapp }}</div>
+                                    </td>
+                                    <td class="text-secondary">
+                                        {{ $item->role }}
                                     </td>
                                     <td class="text-end">
                                         <div class="row g-0">

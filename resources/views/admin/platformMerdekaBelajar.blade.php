@@ -63,7 +63,7 @@
                         Data
                     </div>
                     <h2 class="page-title">
-                        Koding
+                        Platform Merdeka Belajar
                     </h2>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
@@ -99,20 +99,22 @@
                     <table class="table table-vcenter card-table">
                         <thead>
                             <tr>
-                                <th>Pelatih</th>
+                                <th>Tendik</th>
+                                <th>Topik</th>
                                 <th>Tanggal</th>
                                 <th>Waktu</th>
-                                <th>Kelas</th>
-                                <th>Materi</th>
-                                <th>Keterangan</th>
+                                <th>Hasil</th>
                                 <th class="w-8"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($koding as $item)
+                            @forelse ($platform as $item)
                                 <tr>
                                     <td>
-                                        <div>{{ $item->pelatih }}</div>
+                                        <div>{{ $item->tendik->nama }}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{ $item->topik }}</div>
                                     </td>
                                     <td>
                                         <div>{{ $item->tanggal }}</div>
@@ -122,34 +124,7 @@
                                             {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ $item->kelas }}</div>
-                                    </td>
-                                    <td>
-                                        <div>{{ $item->materi }}</div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <button class="btn">Masuk
-                                                <span class="badge bg-green text-green-fg ms-2">
-                                                    {{ $item->hadir }}
-                                                </span>
-                                            </button>
-                                            <button class="btn">Sakit
-                                                <span class="badge bg-orange text-orange-fg ms-2">
-                                                    {{ $item->sakit }}
-                                                </span>
-                                            </button>
-                                            <button class="btn">Izin
-                                                <span class="badge bg-azure text-azure-fg ms-2">
-                                                    {{ $item->izin }}
-                                                </span>
-                                            </button>
-                                            <button class="btn">Alpa
-                                                <span class="badge bg-red text-red-fg ms-2">
-                                                    {{ $item->alpa }}
-                                                </span>
-                                            </button>
-                                        </div>
+                                        <div>{{ $item->hasil }}</div>
                                     </td>
                                     <td class="text-end">
                                         <div class="row g-0">
@@ -193,7 +168,7 @@
                                 {{-- Form Delete --}}
                                 <div class="modal modal-blur fade" id="modal-delete-{{ $item->id }}" tabindex="-1"
                                     role="dialog" aria-hidden="true">
-                                    <form action="{{ route('koding.delete', $item->id) }}" method="POST">
+                                    <form action="{{ route('platform.delete', $item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -253,13 +228,13 @@
                 </div>
                 <div class="card-footer d-flex align-items-center">
                     <p class="m-0 text-secondary">
-                        Showing {{ $koding->firstItem() }}
-                        to {{ $koding->lastItem() }}
-                        of {{ $koding->total() }}
+                        Showing {{ $platform->firstItem() }}
+                        to {{ $platform->lastItem() }}
+                        of {{ $platform->total() }}
                         entries
                     </p>
                     <ul class="pagination m-0 ms-auto">
-                        {{ $koding->links() }}
+                        {{ $platform->links() }}
                     </ul>
                 </div>
             </div>
@@ -268,7 +243,7 @@
 
     {{-- Form Create --}}
     <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('koding.perform') }}" method="POST">
+        <form action="{{ route('platform.perform') }}" method="POST">
             @csrf
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -278,10 +253,21 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Pelatih</label>
-                            <input type="text" class="form-control" name="pelatih" value="{{ old('pelatih') }}"
+                            <label class="form-label">Tendik</label>
+                            <select class="form-select" name="tendik_id">
+                                @foreach ($tendik as $itemT)
+                                    <option value="{{ $itemT->nik }}">{{ $itemT->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('tendik')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Topik</label>
+                            <input type="text" class="form-control" name="topik" value="{{ old('topik') }}"
                                 autocomplete="off">
-                            @error('pelatih')
+                            @error('topik')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
                         </div>
@@ -333,53 +319,12 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Kelas</label>
-                            <input type="text" class="form-control" name="kelas" value="{{ old('kelas') }}"
+                            <label class="form-label">Hasil</label>
+                            <input type="text" class="form-control" name="hasil" value="{{ old('hasil') }}"
                                 autocomplete="off">
-                            @error('kelas')
+                            @error('hasil')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Materi</label>
-                            <input type="text" class="form-control" name="materi" value="{{ old('materi') }}"
-                                autocomplete="off">
-                            @error('materi')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <div class="row">
-                                <label class="form-label">Keterangan</label>
-                                <div class="col-lg-3">
-                                    <input type="number" class="form-control" name="hadir"
-                                        value="{{ old('hadir') }}" placeholder="Hadir" autocomplete="off">
-                                    @error('hadir')
-                                        <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                    @enderror
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="number" class="form-control" name="sakit"
-                                        value="{{ old('sakit') }}" placeholder="Sakit" autocomplete="off">
-                                    @error('sakit')
-                                        <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                    @enderror
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="number" class="form-control" name="izin"
-                                        value="{{ old('izin') }}" placeholder="Izin" autocomplete="off">
-                                    @error('izin')
-                                        <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                    @enderror
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="number" class="form-control" name="alpa"
-                                        value="{{ old('alpa') }}" placeholder="Alpa" autocomplete="off">
-                                    @error('alpa')
-                                        <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -403,10 +348,10 @@
     </div>
 
     {{-- Form Edit --}}
-    @foreach ($koding as $item)
+    @foreach ($platform as $item)
         <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
-            <form action="{{ route('koding.update', $item->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('platform.update', $item->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-dialog modal-lg" role="document">
@@ -418,10 +363,18 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label class="form-label">Pelatih</label>
-                                <input type="text" class="form-control" name="pelatih" value="{{ $item->pelatih }}"
+                                <label class="form-label">Tendik</label>
+                                <input type="text" class="form-control" name="tendik" value="{{ $item->tendik->nama }}"
                                     autocomplete="off">
-                                @error('pelatih')
+                                @error('tendik')
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Topik</label>
+                                <input type="text" class="form-control" name="topik" value="{{ $item->topik }}"
+                                    autocomplete="off">
+                                @error('topik')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror
                             </div>
@@ -473,53 +426,12 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Kelas</label>
-                                <input type="text" class="form-control" name="kelas" value="{{ $item->kelas }}"
+                                <label class="form-label">Hasil</label>
+                                <input type="text" class="form-control" name="hasil" value="{{ $item->hasil }}"
                                     autocomplete="off">
-                                @error('kelas')
+                                @error('hasil')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Materi</label>
-                                <input type="text" class="form-control" name="materi" value="{{ $item->materi }}"
-                                    autocomplete="off">
-                                @error('materi')
-                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <div class="row">
-                                    <label class="form-label">Keterangan</label>
-                                    <div class="col-lg-3">
-                                        <input type="number" class="form-control" name="hadir"
-                                            value="{{ $item->hadir }}" placeholder="Hadir" autocomplete="off">
-                                        @error('hadir')
-                                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                        @enderror
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input type="number" class="form-control" name="sakit"
-                                            value="{{ $item->sakit }}" placeholder="Sakit" autocomplete="off">
-                                        @error('sakit')
-                                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                        @enderror
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input type="number" class="form-control" name="izin"
-                                            value="{{ $item->izin }}" placeholder="Izin" autocomplete="off">
-                                        @error('izin')
-                                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                        @enderror
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input type="number" class="form-control" name="alpa"
-                                            value="{{ $item->alpa }}" placeholder="Alpa" autocomplete="off">
-                                        @error('alpa')
-                                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                        @enderror
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

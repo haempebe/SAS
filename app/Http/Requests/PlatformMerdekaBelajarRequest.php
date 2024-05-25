@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class KodingRequest extends FormRequest
+class PlatformMerdekaBelajarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,12 @@ class KodingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pelatih'      => 'required',
+            'tendik_id'    => 'required',
+            'topik'        => 'required',
             'tanggal'      => 'required',
             'jam_mulai'    => 'required',
             'jam_berakhir' => 'required',
-            'kelas'        => 'required',
-            'materi'       => 'required',
-            'hadir'        => 'required',
-            'sakit'        => 'required',
-            'izin'         => 'required',
-            'alpa'         => 'required'
+            'hasil'        => 'required'
         ];
     }
 }

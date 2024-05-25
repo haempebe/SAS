@@ -14,7 +14,9 @@ use App\Http\Controllers\FutsalController;
 use App\Http\Controllers\JurnalAgendaKelasController;
 use App\Http\Controllers\PramukaController;
 use App\Http\Controllers\KodingController;
+use App\Http\Controllers\PlatformMerdekaBelajarController;
 use App\Http\Controllers\RekapFutsalController;
+use App\Http\Controllers\RekapJurnalAgendaKelasController;
 use App\Http\Controllers\RekapKodingController;
 use App\Http\Controllers\RekapPramukaController;
 use App\Http\Controllers\RekapRobotikController;
@@ -111,39 +113,44 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/jurnal-edit/{id}', 'update')->name('jurnal.update');
         Route::delete('jurnal/{id}', 'destroy')->name('jurnal.delete');
     });
+    Route::controller(PlatformMerdekaBelajarController::class)->group(function () {
+        Route::get('/platform', 'index')->name('platform');
+        Route::get('/platform-create', 'create');
+        Route::post('/platform-create', 'store')->name('platform.perform');
+        Route::get('/platform-edit/{id}', 'edit')->name('platform.edit');
+        Route::put('/platform-edit/{id}', 'update')->name('platform.update');
+        Route::delete('platform/{id}', 'destroy')->name('platform.delete');
+    });
     Route::controller(RekapAbsenSiswaController::class)->group(function () {
         Route::get('/rekap-siswa', 'index')->name('rekap-siswa');
         Route::get('/filter-siswa', 'filter');
-        Route::get('/filter-siswa/pdf', 'pdf');
     });
     Route::controller(RekapAbsenTendikController::class)->group(function () {
         Route::get('/rekap-tendik', 'index')->name('rekap-tendik');
         Route::get('/filter-tendik', 'filter');
-        Route::get('/filter-tendik/pdf', 'pdf');
     });
     Route::controller(RekapSilatController::class)->group(function () {
         Route::get('/rekap-silat', 'index')->name('rekap-silat');
         Route::get('/filter-silat', 'filter');
-        Route::get('/filter-silat/pdf', 'pdf');
     });
     Route::controller(RekapFutsalController::class)->group(function () {
         Route::get('/rekap-futsal', 'index')->name('rekap-futsal');
         Route::get('/filter-futsal', 'filter');
-        Route::get('/filter-futsal/pdf', 'pdf');
     });
     Route::controller(RekapPramukaController::class)->group(function () {
         Route::get('/rekap-pramuka', 'index')->name('rekap-pramuka');
         Route::get('/filter-pramuka', 'filter');
-        Route::get('/filter-pramuka/pdf', 'pdf');
     });
     Route::controller(RekapKodingController::class)->group(function () {
         Route::get('/rekap-koding', 'index')->name('rekap-koding');
         Route::get('/filter-koding', 'filter');
-        Route::get('/filter-koding/pdf', 'pdf');
     });
     Route::controller(RekapRobotikController::class)->group(function () {
         Route::get('/rekap-robotik', 'index')->name('rekap-robotik');
         Route::get('/filter-robotik', 'filter');
-        Route::get('/filter-robotik/pdf', 'pdf');
+    });
+    Route::controller(RekapJurnalAgendaKelasController::class)->group(function () {
+        Route::get('/rekap-jak', 'index')->name('rekap-jak');
+        Route::get('/filter-jak', 'filter');
     });
 });

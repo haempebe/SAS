@@ -6,7 +6,7 @@ use App\Models\JurnalAgendaKelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class RekapJurnalAgendaKelas extends Controller
+class RekapJurnalAgendaKelasController extends Controller
 {
     public function index()
     {

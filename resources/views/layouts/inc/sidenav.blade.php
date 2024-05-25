@@ -143,7 +143,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item {{ str_contains(request()->url(), 'jurnalAgenda') == true ? 'active' : '' }}">
+                <li class="nav-item {{ str_contains(request()->url(), 'jurnal') == true ? 'active' : '' }}">
                     <a class="nav-link" href="jurnal">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -159,6 +159,23 @@
                         </span>
                         <span class="nav-link-title">
                             Jurnal Agenda Kelas
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item {{ str_contains(request()->url(), 'platform') == true ? 'active' : '' }}">
+                    <a class="nav-link" href="platform">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                                <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Platform Merdeka Belajar
                         </span>
                     </a>
                 </li>
@@ -248,6 +265,48 @@
                             </div>
                         </div>
                     </div>
+                </li>
+                <li class="nav-item {{ str_contains(request()->url(), 'rekap-jak') == true ? 'active' : '' }}">
+                    <a class="nav-link" href="rekap-jak">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-stats">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+                                <path d="M18 14v4h4" />
+                                <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                <path d="M15 3v4" />
+                                <path d="M7 3v4" />
+                                <path d="M3 11h16" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Rekap JAK
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item {{ str_contains(request()->url(), 'rekap-platform') == true ? 'active' : '' }}">
+                    <a class="nav-link" href="rekap-platform">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-star">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M11 21h-5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3.5" />
+                                <path d="M16 3v4" />
+                                <path d="M8 3v4" />
+                                <path d="M4 11h11" />
+                                <path
+                                    d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Rekap PMB
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div>

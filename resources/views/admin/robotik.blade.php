@@ -128,14 +128,26 @@
                                     </td>
                                     <td>
                                         <div>
-                                            <span class="badge bg-green text-green-fg">M</span> :
-                                            {{ $item->hadir }}
-                                            <span class="badge bg-orange text-orange-fg">S</span> :
-                                            {{ $item->sakit }}
-                                            <span class="badge bg-azure text-azure-fg">I</span> :
-                                            {{ $item->izin }}
-                                            <span class="badge bg-red text-red-fg">A</span> :
-                                            {{ $item->alpa }}
+                                            <button class="btn">Masuk
+                                                <span class="badge bg-green text-green-fg ms-2">
+                                                    {{ $item->hadir }}
+                                                </span>
+                                            </button>
+                                            <button class="btn">Sakit
+                                                <span class="badge bg-orange text-orange-fg ms-2">
+                                                    {{ $item->sakit }}
+                                                </span>
+                                            </button>
+                                            <button class="btn">Izin
+                                                <span class="badge bg-azure text-azure-fg ms-2">
+                                                    {{ $item->izin }}
+                                                </span>
+                                            </button>
+                                            <button class="btn">Alpa
+                                                <span class="badge bg-red text-red-fg ms-2">
+                                                    {{ $item->alpa }}
+                                                </span>
+                                            </button>
                                         </div>
                                     </td>
                                     <td class="text-end">
