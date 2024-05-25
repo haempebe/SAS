@@ -63,7 +63,7 @@
                         Data
                     </div>
                     <h2 class="page-title">
-                        Platform Merdeka Belajar
+                        Platform Merdeka Mengajar
                     </h2>
                 </div>
                 <div class="col-auto ms-auto d-print-none">

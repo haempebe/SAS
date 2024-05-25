@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('platform_merdeka_belajar', function (Blueprint $table) {
+        Schema::create('platform_merdeka_mengajar', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tendik_id')->index()->nullable()->constrained('tendik')->cascadeOnDelete();
             $table->string('topik');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('platform_merdeka_belajar');
+        Schema::dropIfExists('platform_merdeka_mengajar');
     }
 };

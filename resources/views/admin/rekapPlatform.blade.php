@@ -10,12 +10,12 @@
                             Rekap Data
                         </div>
                         <h2 class="page-title">
-                            Ekstrakurikuler Futsal
+                            Platform Merdeka Mengajar
                         </h2>
                     </div>
                 </div>
             </div>
-            <form action="/filter-futsal" id="filter" method="GET">
+            <form action="/filter-pmm" id="filter" method="GET">
                 <div class="row g-2">
                     <div class="col-5">
                         <div class="input-icon mb-3">
@@ -82,7 +82,7 @@
     </div>
     @if (strpos(url()->current(), 'filter') == true)
         <div style="min-height: 80vh">
-            <h1>Data Ekstrakurikuler Futsal</h1>
+            <h1>Data Platform Merdeka Megajar</h1>
             <p><b>Tanggal : </b>{{ now()->format('d F Y') }}</p>
             <div class="row row-cards mb-3">
                 <div class="col">
@@ -90,56 +90,32 @@
                         <table class="table table-vcenter table-bordered table-striped card-table">
                             <thead class="border-1">
                                 <tr>
-                                    <th>Pelatih</th>
+                                    <th>Tendik</th>
+                                    <th>Topik</th>
                                     <th>Tanggal</th>
                                     <th>Waktu</th>
-                                    <th>Kelas</th>
-                                    <th>Materi</th>
-                                    <th>Keterangan</th>
+                                    <th>Hasil</th>
                                 </tr>
                             </thead>
                             <tbody class="border-1">
-                                @forelse ($futsal as $item)
+                                @forelse ($platform as $item)
                                     <tr>
                                         <td>
-                                            <div>{{ $item->pelatih }}</div>
+                                            <div>{{ $item->tendik->nama }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->topik }}</div>
                                         </td>
                                         <td>
                                             <div>{{ $item->tanggal }}</div>
                                         </td>
                                         <td>
                                             <div>{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }} -
-                                                {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
-                                        </td>
-                                        <td>
-                                            <div>{{ $item->kelas }}</div>
-                                        </td>
-                                        <td>
-                                            <div>{{ $item->materi }}</div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <button class="btn">Masuk
-                                                    <span class="badge bg-green text-green-fg ms-2">
-                                                        {{ $item->hadir }}
-                                                    </span>
-                                                </button>
-                                                <button class="btn">Sakit
-                                                    <span class="badge bg-orange text-orange-fg ms-2">
-                                                        {{ $item->sakit }}
-                                                    </span>
-                                                </button>
-                                                <button class="btn">Izin
-                                                    <span class="badge bg-azure text-azure-fg ms-2">
-                                                        {{ $item->izin }}
-                                                    </span>
-                                                </button>
-                                                <button class="btn">Alpa
-                                                    <span class="badge bg-red text-red-fg ms-2">
-                                                        {{ $item->alpa }}
-                                                    </span>
-                                                </button>
+                                                {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}
                                             </div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->hasil }}</div>
                                         </td>
                                     </tr>
                                 @empty

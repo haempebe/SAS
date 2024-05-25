@@ -14,10 +14,11 @@ use App\Http\Controllers\FutsalController;
 use App\Http\Controllers\JurnalAgendaKelasController;
 use App\Http\Controllers\PramukaController;
 use App\Http\Controllers\KodingController;
-use App\Http\Controllers\PlatformMerdekaBelajarController;
+use App\Http\Controllers\PlatformMerdekaMengajarController;
 use App\Http\Controllers\RekapFutsalController;
 use App\Http\Controllers\RekapJurnalAgendaKelasController;
 use App\Http\Controllers\RekapKodingController;
+use App\Http\Controllers\RekapPlatformMerdekaMengajarController;
 use App\Http\Controllers\RekapPramukaController;
 use App\Http\Controllers\RekapRobotikController;
 use App\Http\Controllers\RekapSilatController;
@@ -113,7 +114,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/jurnal-edit/{id}', 'update')->name('jurnal.update');
         Route::delete('jurnal/{id}', 'destroy')->name('jurnal.delete');
     });
-    Route::controller(PlatformMerdekaBelajarController::class)->group(function () {
+    Route::controller(PlatformMerdekaMengajarController::class)->group(function () {
         Route::get('/platform', 'index')->name('platform');
         Route::get('/platform-create', 'create');
         Route::post('/platform-create', 'store')->name('platform.perform');
@@ -152,5 +153,9 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(RekapJurnalAgendaKelasController::class)->group(function () {
         Route::get('/rekap-jak', 'index')->name('rekap-jak');
         Route::get('/filter-jak', 'filter');
+    });
+    Route::controller(RekapPlatformMerdekaMengajarController::class)->group(function () {
+        Route::get('/rekap-pmm', 'index')->name('rekap-pmm');
+        Route::get('/filter-pmm', 'filter');
     });
 });

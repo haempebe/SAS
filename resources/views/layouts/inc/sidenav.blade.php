@@ -158,7 +158,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Jurnal Agenda Kelas
+                            JAK
                         </span>
                     </a>
                 </li>
@@ -175,7 +175,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Platform Merdeka Belajar
+                            PMM
                         </span>
                     </a>
                 </li>
@@ -287,8 +287,8 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ str_contains(request()->url(), 'rekap-platform') == true ? 'active' : '' }}">
-                    <a class="nav-link" href="rekap-platform">
+                <li class="nav-item {{ str_contains(request()->url(), 'rekap-pmm') == true ? 'active' : '' }}">
+                    <a class="nav-link" href="rekap-pmm">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -304,7 +304,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Rekap PMB
+                            Rekap PMM
                         </span>
                     </a>
                 </li>
