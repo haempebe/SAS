@@ -701,26 +701,23 @@
         @php
             $siswaId = $item->siswa_id;
             $tendikId = $item->tendik_id;
-            $tepatWaktuSiswa = [];
-            $terlambatSiswa = [];
+            $tepatWaktu = [];
+            $terlambat = [];
 
             if (isset($punctualityData[$siswaId])) {
                 foreach ($dates as $date) {
-                    $tepatWaktuSiswa[] = $punctualityData[$siswaId]['ontime'][$date];
-                    $terlambatSiswa[] = $punctualityData[$siswaId]['late'][$date];
+                    $tepatWaktu[] = $punctualityData[$siswaId]['ontime'][$date];
+                    $terlambat[] = $punctualityData[$siswaId]['late'][$date];
                 }
-                $jsonTepatWaktu = json_encode($tepatWaktuSiswa);
-                $jsonTerlambat = json_encode($terlambatSiswa);
+            } elseif (isset($punctualityData[$tendikId])) {
+                foreach ($dates as $date) {
+                    $tepatWaktu[] = $punctualityData[$tendikId]['ontime'][$date];
+                    $terlambat[] = $punctualityData[$tendikId]['late'][$date];
+                }
             }
 
-            if (isset($punctualityData[$tendikId])) {
-                foreach ($dates as $date) {
-                    $tepatWaktuTendik[] = $punctualityData[$tendikId]['ontime'][$date];
-                    $terlambatTendik[] = $punctualityData[$tendikId]['late'][$date];
-                }
-                $jsonTepatWaktu = json_encode($tepatWaktuTendik);
-                $jsonTerlambat = json_encode($terlambatTendik);
-            }
+            $jsonTepatWaktu = json_encode($tepatWaktu);
+            $jsonTerlambat = json_encode($terlambat);
         @endphp
         <script>
             document.addEventListener("DOMContentLoaded", function() {
