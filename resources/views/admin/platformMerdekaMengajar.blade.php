@@ -124,7 +124,7 @@
                                             {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ $item->hasil }}</div>
+                                        <div>{!! $item->hasil !!}</div>
                                     </td>
                                     <td class="text-end">
                                         <div class="row g-0">
@@ -320,8 +320,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Hasil</label>
-                            <input type="text" class="form-control" name="hasil" value="{{ old('hasil') }}"
-                                autocomplete="off">
+                            <textarea name="hasil" id="tinymce-mytextarea">{!! old('hasil') !!}</textarea>
                             @error('hasil')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
@@ -363,9 +362,13 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label class="form-label">Tendik</label>
-                                <input type="text" class="form-control" name="tendik" value="{{ $item->tendik->nama }}"
-                                    autocomplete="off">
+                                <label class="form-label" for="tendik_id">Tendik</label>
+                                <select class="form-select" name="tendik_id">
+                                    @foreach ($tendik as $itemT)
+                                        <option value="{{ $itemT->id }}"
+                                            @if ($item->tendik_id == $itemT->id) selected @endif>{{ $itemT->nama }}</option>
+                                    @endforeach
+                                </select>
                                 @error('tendik')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror
@@ -427,8 +430,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Hasil</label>
-                                <input type="text" class="form-control" name="hasil" value="{{ $item->hasil }}"
-                                    autocomplete="off">
+                                <textarea name="hasil" id="tinymce-mytextarea">{!! $item->hasil !!}</textarea>
                                 @error('hasil')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror
@@ -455,4 +457,37 @@
             </form>
         </div>
     @endforeach
+@endsection
+
+@section('TinyMCE')
+    <script src="{{ asset('dist/libs/tinymce/tinymce.min.js') }}" defer=""></script>
+    <script>
+        // @formatter:off
+        document.addEventListener("DOMContentLoaded", function() {
+            let options = {
+                selector: '#tinymce-mytextarea',
+                height: 300,
+                menubar: false,
+                statusbar: false,
+                plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount',
+                    'textcolor'
+                ],
+                toolbar: 'undo redo | formatselect | ' +
+                    'bold italic backcolor forecolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat',
+                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }'
+            }
+            if (localStorage.getItem("tablerTheme") === 'dark') {
+                options.skin = 'oxide-dark';
+                options.content_css = 'dark';
+            }
+            tinyMCE.init(options);
+        })
+        // @formatter:on
+    </script>
+    <div class="tox tox-silver-sink tox-tinymce-aux" style="position: relative;"></div>
 @endsection

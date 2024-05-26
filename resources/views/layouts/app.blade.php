@@ -14,6 +14,8 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" id="mce-u0"
+        href="{{asset('dist/libs/tinymce/skins/ui/oxide/skin.min.css')}}">
     @yield('styles')
 
     <!-- Scripts -->
@@ -43,6 +45,7 @@
         </div>
     </div>
     @yield('scripts')
+    @yield('TinyMCE')
     <!-- Libs JS -->
     <script src="{{ asset('dist/libs/apexcharts/dist/apexcharts.min.js') }}" defer></script>
     <script src="{{ asset('dist/libs/jsvectormap/dist/js/jsvectormap.min.js') }}" defer></script>

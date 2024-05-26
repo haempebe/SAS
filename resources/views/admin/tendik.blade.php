@@ -827,13 +827,3 @@
         </div>
     @endforeach
 @endsection
-
-@section('form-class')
-    {{ session('create_errors') ? 'modal-open' : '' }}
-    {{ session('edit_errors') ? 'modal-open' : '' }}
-@endsection
-
-@section('form-style')
-    {{ session('create_errors') ? 'overflow: hidden; padding-right: 0px;' : '' }}
-    {{ session('edit_errors') ? 'overflow: hidden; padding-right: 0px;' : '' }}
-@endsection
