@@ -54,11 +54,8 @@ class JurnalAgendaKelasController extends Controller
     }
     private function create($request)
     {
-        $getTendik = Tendik::where('nik', $request->tendik_id)
-            ->first();
-
         JurnalAgendaKelas::create([
-            'tendik_id'    => $getTendik->id,
+            'tendik_id'    => $request->tendik_id,
             'mapel'        => $request->mapel,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,

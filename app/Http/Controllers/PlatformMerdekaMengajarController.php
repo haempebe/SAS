@@ -49,11 +49,8 @@ class PlatformMerdekaMengajarController extends Controller
     }
     private function create($request)
     {
-        $getTendik = Tendik::where('nik', $request->tendik_id)
-            ->first();
-
         PlatformMerdekaMengajar::create([
-            'tendik_id'    => $getTendik->id,
+            'tendik_id'    => $request->tendik_id,
             'topik'        => $request->topik,
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,

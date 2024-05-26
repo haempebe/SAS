@@ -285,7 +285,7 @@
                             <label class="form-label">Tendik</label>
                             <select class="form-select" name="tendik_id">
                                 @foreach ($tendik as $itemT)
-                                    <option value="{{ $itemT->nik }}">{{ $itemT->nama }}</option>
+                                    <option value="{{ $itemT->id }}">{{ $itemT->nama }}</option>
                                 @endforeach
                             </select>
                             @error('tendik')
@@ -347,10 +347,53 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="form-selectgroup-boxes row mb-3">
                             <label class="form-label">Kelas</label>
-                            <input type="text" class="form-control" name="kelas" value="{{ old('kelas') }}"
-                                autocomplete="off">
+                            <div class="col-lg-4">
+                                <label class="form-selectgroup-item">
+                                    <input type="radio" name="kelas" value="Kelas 10" class="form-selectgroup-input"
+                                        @if (old('kelas') == 'Kelas 10') checked @endif>
+                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                        <span class="me-3">
+                                            <span class="form-selectgroup-check"></span>
+                                        </span>
+                                        <span class="form-selectgroup-label-content">
+                                            <span class="form-selectgroup-title strong mb-1">Kelas 10</span>
+                                            <span class="d-block text-secondary">Pengem Perangkat Lunak & Game</span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-selectgroup-item">
+                                    <input type="radio" name="kelas" value="Kelas 11" class="form-selectgroup-input"
+                                        @if (old('kelas') == 'Kelas 11') checked @endif>
+                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                        <span class="me-3">
+                                            <span class="form-selectgroup-check"></span>
+                                        </span>
+                                        <span class="form-selectgroup-label-content">
+                                            <span class="form-selectgroup-title strong mb-1">Kelas 11</span>
+                                            <span class="d-block text-secondary">Sistem Infomasi Jaringan & Aplikasi</span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-selectgroup-item">
+                                    <input type="radio" name="kelas" value="Kelas 12" class="form-selectgroup-input"
+                                        @if (old('kelas') == 'Kelas 12') checked @endif>
+                                    <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                        <span class="me-3">
+                                            <span class="form-selectgroup-check"></span>
+                                        </span>
+                                        <span class="form-selectgroup-label-content">
+                                            <span class="form-selectgroup-title strong mb-1">Kelas 12</span>
+                                            <span class="d-block text-secondary">Sistem Infomasi Jaringan & Aplikasi</span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
                             @error('kelas')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
@@ -434,8 +477,12 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label class="form-label">Tendik</label>
-                                <input type="text" class="form-control" name="tendik" value="{{ $item->tendik->nama }}"
-                                    autocomplete="off">
+                                <select class="form-select" name="tendik_id">
+                                    @foreach ($tendik as $itemT)
+                                        <option value="{{ $itemT->id }}"
+                                            @if ($item->tendik_id == $itemT->id) selected @endif>{{ $itemT->nama }}</option>
+                                    @endforeach
+                                </select>
                                 @error('tendik')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror
@@ -495,10 +542,58 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="form-selectgroup-boxes row mb-3">
                                 <label class="form-label">Kelas</label>
-                                <input type="text" class="form-control" name="kelas" value="{{ $item->kelas }}"
-                                    autocomplete="off">
+                                <div class="col-lg-4">
+                                    <label class="form-selectgroup-item">
+                                        <input type="radio" name="kelas" value="Kelas 10"
+                                            class="form-selectgroup-input"
+                                            @if ($item->kelas == 'Kelas 10') checked @endif>
+                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <span class="me-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </span>
+                                            <span class="form-selectgroup-label-content">
+                                                <span class="form-selectgroup-title strong mb-1">Kelas 10</span>
+                                                <span class="d-block text-secondary">Pengem Perangkat Lunak & Game</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="form-selectgroup-item">
+                                        <input type="radio" name="kelas" value="Kelas 11"
+                                            class="form-selectgroup-input"
+                                            @if ($item->kelas == 'Kelas 11') checked @endif>
+                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <span class="me-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </span>
+                                            <span class="form-selectgroup-label-content">
+                                                <span class="form-selectgroup-title strong mb-1">Kelas 11</span>
+                                                <span class="d-block text-secondary">Sistem Infomasi Jaringan &
+                                                    Aplikasi</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="form-selectgroup-item">
+                                        <input type="radio" name="kelas" value="Kelas 12"
+                                            class="form-selectgroup-input"
+                                            @if ($item->kelas == 'Kelas 12') checked @endif>
+                                        <span class="form-selectgroup-label d-flex align-items-center p-3">
+                                            <span class="me-3">
+                                                <span class="form-selectgroup-check"></span>
+                                            </span>
+                                            <span class="form-selectgroup-label-content">
+                                                <span class="form-selectgroup-title strong mb-1">Kelas 12</span>
+                                                <span class="d-block text-secondary">Sistem Infomasi Jaringan &
+                                                    Aplikasi</span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
                                 @error('kelas')
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror

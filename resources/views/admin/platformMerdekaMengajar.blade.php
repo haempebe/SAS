@@ -256,7 +256,7 @@
                             <label class="form-label">Tendik</label>
                             <select class="form-select" name="tendik_id">
                                 @foreach ($tendik as $itemT)
-                                    <option value="{{ $itemT->nik }}">{{ $itemT->nama }}</option>
+                                    <option value="{{ $itemT->id }}">{{ $itemT->nama }}</option>
                                 @endforeach
                             </select>
                             @error('tendik')
