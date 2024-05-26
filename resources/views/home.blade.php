@@ -697,6 +697,7 @@
     @php
         $jsonDates = json_encode($dates, JSON_PRETTY_PRINT);
     @endphp
+
     @foreach ($absensi as $item)
         @php
             $siswaId = $item->siswa_id;
@@ -725,10 +726,17 @@
                     chart: {
                         type: "area",
                         fontFamily: 'inherit',
-                        height: 240,
+                        height: 330,
                         parentHeightOffset: 0,
                         toolbar: {
-                            show: false,
+                            show: true, // Show the toolbar
+                            tools: {
+                                zoom: true, // Enable zooming
+                                zoomin: true, // Enable zoom-in button
+                                zoomout: true, // Enable zoom-out button
+                                pan: true, // Enable panning
+                                reset: true // Enable reset button
+                            },
                         },
                         animations: {
                             enabled: true
@@ -779,8 +787,9 @@
                     },
                     yaxis: {
                         labels: {
-                            padding: 4
+                            padding: 5
                         },
+                        max: 100, // Set maximum value of y-axis to 100
                     },
                     labels: {!! $jsonDates !!},
                     colors: [tabler.getColor("success"), tabler.getColor("red")],
