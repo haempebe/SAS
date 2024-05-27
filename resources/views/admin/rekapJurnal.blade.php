@@ -17,7 +17,7 @@
             </div>
             <form action="/filter-jak" id="filter" method="GET">
                 <div class="row g-2">
-                    <div class="col-5">
+                    <div class="col-4">
                         <div class="input-icon mb-3">
                             <input class="form-control" name="start_date" placeholder="{{ request('start_date') }}"
                                 id="datepicker-icon-1" value="" fdprocessedid="m75zlq" autocomplete="off">
@@ -38,7 +38,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-5">
+                    <div class="col-4">
                         <div class="input-icon mb-3">
                             <input class="form-control" name="end_date" placeholder="{{ request('end_date') }}"
                                 id="datepicker-icon-2" value="" fdprocessedid="m75zlq" autocomplete="off">
@@ -57,6 +57,15 @@
                                     <path d="M12 15v3"></path>
                                 </svg>
                             </span>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="mb-3">
+                            <select class="form-select" name="kelas">
+                                <option value="Kelas 10">Kelas 10</option>
+                                <option value="Kelas 11">Kelas 11</option>
+                                <option value="Kelas 12">Kelas 12</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col">

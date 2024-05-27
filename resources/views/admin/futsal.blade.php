@@ -121,7 +121,7 @@
                                         <div>{{ \Carbon\Carbon::parse($item->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($item->jam_berakhir)->format('H:i') }}</div>
                                     </td>
                                     <td>
-                                        <div>{{ $item->kelas }}</div>
+                                        <div>Kelas : {{ $item->kelas }}</div>
                                     </td>
                                     <td>
                                         <div>{{ $item->materi }}</div>
@@ -333,7 +333,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Kelas</label>
-                            <input type="text" class="form-control" name="kelas" value="{{ old('kelas') }}"
+                            <input type="text" class="form-control" name="kelas" value="{{ old('kelas') }}" placeholder="10, 11 & 12"
                                 autocomplete="off">
                             @error('kelas')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
@@ -352,28 +352,28 @@
                                 <label class="form-label">Keterangan</label>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="hadir"
-                                        value="{{ old('hadir') }}" placeholder="Hadir" autocomplete="off">
+                                        value="{{ old('hadir', 0) }}" placeholder="Hadir" autocomplete="off">
                                     @error('hadir')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="sakit"
-                                        value="{{ old('sakit') }}" placeholder="Sakit" autocomplete="off">
+                                        value="{{ old('sakit', 0) }}" placeholder="Sakit" autocomplete="off">
                                     @error('sakit')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="izin"
-                                        value="{{ old('izin') }}" placeholder="Izin" autocomplete="off">
+                                        value="{{ old('izin', 0) }}" placeholder="Izin" autocomplete="off">
                                     @error('izin')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="alpa"
-                                        value="{{ old('alpa') }}" placeholder="Alpa" autocomplete="off">
+                                        value="{{ old('alpa', 0) }}" placeholder="Alpa" autocomplete="off">
                                     @error('alpa')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
