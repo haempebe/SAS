@@ -427,9 +427,9 @@
                             <label class="form-label required">Nama</label>
                             <div class="mb-3">
                                 <select class="form-select" name="nama"
-                                    value="@if ($item->tendik_id == null) {{ $item->siswa->nama }} @else {{ $item->tendik->nama }} @endif">
+                                    value="@if ($item->tendik_id == null) {{ $item->siswa->nisn }} @else {{ $item->tendik->nik }} @endif">
                                     <option
-                                        value="@if ($item->tendik_id == null) {{ $item->siswa->nama }} @else {{ $item->tendik->nama }} @endif"
+                                        value="@if ($item->tendik_id == null) {{ $item->siswa->nisn }} @else {{ $item->tendik->nik }} @endif"
                                         selected>
                                         @if ($item->tendik_id == null)
                                             {{ $item->siswa->nama }}
