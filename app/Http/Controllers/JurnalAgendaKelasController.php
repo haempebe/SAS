@@ -11,7 +11,7 @@ class JurnalAgendaKelasController extends Controller
 {
     public function index()
     {
-        $jurnal = JurnalAgendaKelas::paginate(10);
+        $jurnal = JurnalAgendaKelas::orderBy('created_at', 'desc')->paginate(10);
         $tendik = Tendik::get();
         return view('admin.jurnalAgendaKelas', compact('jurnal', 'tendik'));
     }

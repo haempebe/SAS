@@ -11,7 +11,7 @@ class PlatformMerdekaMengajarController extends Controller
 {
     public function index()
     {
-        $platform = PlatformMerdekaMengajar::paginate(10);
+        $platform = PlatformMerdekaMengajar::orderBy('created_at', 'desc')->paginate(10);
         $tendik = Tendik::get();
         return view('admin.platformMerdekaMengajar', compact('platform', 'tendik'));
     }
