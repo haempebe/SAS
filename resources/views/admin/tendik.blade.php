@@ -259,7 +259,7 @@
                                 </div>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center pt-4">
+                                    <td colspan="9" class="text-center pt-4">
                                         <p>Tidak Ada Data</p>
                                     </td>
                                 </tr>
@@ -335,8 +335,9 @@
             </div>
         </div>
     </div>
+
     {{-- Form Create  {{ session('create_errors') ? 'show' : '' }}  style="{{ session('create_errors') ? 'display: block;' : 'display: none;' }}" --}}
-    <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
+    {{-- <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
         <form action="{{ route('tendik.perform') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-dialog modal-lg" role="document">
@@ -495,7 +496,8 @@
                 </div>
             </div>
         </form>
-    </div>
+    </div> --}}
+
     {{-- Form Create --}}
     <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
         <form action="{{ route('tendik.perform') }}" method="POST" enctype="multipart/form-data">
@@ -522,8 +524,10 @@
                                 <div class="mb-3">
                                     <label class="form-label">Jenis Kelamin</label>
                                     <select class="form-select" name="jenis_kelamin">
-                                        <option value="Laki-Laki">Laki-Laki</option>
-                                        <option value="Perempuan">Perempuan</option>
+                                        <option value="Laki-Laki"
+                                            {{ old('jenis_kelamin') == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki</option>
+                                        <option value="Perempuan"
+                                            {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                                     </select>
                                     @error('jenis_kelamin')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
@@ -533,28 +537,28 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">NIK</label>
-                            <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                            <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                 class="form-control" name="nik" value="{{ old('nik') }}">
                             @error('nik')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
                         </div>
-                        <div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Tempat Lahir</label>
-                                        <input type="text" class="form-control" name="tempat_lahir"
-                                            value="{{ old('tempat_lahir') }}">
-                                        @error('tempat_lahir')
-                                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                        @enderror
-                                    </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Tempat Lahir</label>
+                                    <input type="text" class="form-control" name="tempat_lahir"
+                                        value="{{ old('tempat_lahir') }}">
+                                    @error('tempat_lahir')
+                                        <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                    @enderror
                                 </div>
-                                <div class="col-lg-6">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
                                     <label class="form-label">Tanggal Lahir</label>
                                     <div class="input-icon">
-                                        <input class="form-control" placeholder="" id="datepicker-icon"
+                                        <input class="form-control" placeholder="Tanggal Lahir" id="datepicker-icon"
                                             name="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
                                         <span class="input-icon-addon">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
@@ -583,7 +587,7 @@
                         <div class="form-selectgroup-boxes row mb-3">
                             <label class="form-selectgroup-item">
                                 <input type="radio" name="role" value="Tendik" class="form-selectgroup-input"
-                                    checked>
+                                    {{ old('role') == 'Tendik' ? 'checked' : '' }}>
                                 <span class="form-selectgroup-label d-flex align-items-center p-3">
                                     <span class="me-3">
                                         <span class="form-selectgroup-check"></span>
@@ -597,24 +601,24 @@
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
                         </div>
-                        <div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Jam Masuk</label>
-                                        <input type="text" name="jam_masuk" class="form-control" data-mask="00:00"
-                                            data-mask-visible="true" placeholder="00:00" autocomplete="off"
-                                            fdprocessedid="ms68ld" value="{{ old('jam_masuk') }}">
-                                        @error('jam_masuk')
-                                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                                        @enderror
-                                    </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Jam Masuk</label>
+                                    <input type="text" name="jam_masuk" class="form-control" data-mask="00:00"
+                                        data-mask-visible="true" placeholder="00:00" autocomplete="off"
+                                        value="{{ old('jam_masuk') }}">
+                                    @error('jam_masuk')
+                                        <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                    @enderror
                                 </div>
-                                <div class="col-lg-6">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
                                     <label class="form-label">Jam Pulang</label>
                                     <input type="text" name="jam_pulang" class="form-control" data-mask="00:00"
                                         data-mask-visible="true" placeholder="00:00" autocomplete="off"
-                                        fdprocessedid="ms68ld" value="{{ old('jam_pulang') }}">
+                                        value="{{ old('jam_pulang') }}">
                                     @error('jam_pulang')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
@@ -622,7 +626,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Nomor Whastapp</label>
+                            <label class="form-label">Nomor Whatsapp</label>
                             <input type="number" class="form-control" name="nomor_whatsapp"
                                 value="{{ old('nomor_whatsapp') }}">
                             @error('nomor_whatsapp')
@@ -642,7 +646,7 @@
                         <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                             Cancel
                         </a>
-                        <button href="#" type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                        <button type="submit" class="btn btn-primary ms-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">

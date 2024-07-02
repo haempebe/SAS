@@ -95,12 +95,12 @@
                                         <th class="text-center">{{ htmlspecialchars($tanggal['day']) }}</th>
                                     @endforeach
                                     <th class="text-center"><span class="badge bg-green text-green-fg">M</span></th>
+                                    <th class="text-center"><span class="badge bg-red text-red-fg">T</span></th>
                                     <th class="text-center"><span class="badge bg-azure text-azure-fg">I</span></th>
                                     <th class="text-center"><span class="badge bg-orange text-orange-fg">S</span></th>
                                     <th class="text-center"><span class="badge bg-red text-red-fg">A</span></th>
                                     <th class="text-center"><span class="badge bg-blue text-blue-fg">L</span></th>
                                     <th class="text-center"><span class="badge bg-indigo text-indigo-fg">P</span></th>
-                                    <th class="text-center"><span class="badge bg-red text-red-fg">T</span></th>
                                 </tr>
                             </thead>
                             <tbody class="border-1">

@@ -118,10 +118,10 @@
                             <tbody class="border-1">
                                 @php
                                     $totalM = 0;
+                                    $totalT = 0;
                                     $totalI = 0;
                                     $totalS = 0;
                                     $totalA = 0;
-                                    $totalT = 0;
                                 @endphp
                                 @forelse ($rowTableAbsensi as $item)
                                     <tr>

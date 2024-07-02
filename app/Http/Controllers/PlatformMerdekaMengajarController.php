@@ -11,7 +11,7 @@ class PlatformMerdekaMengajarController extends Controller
 {
     public function index()
     {
-        $platform = PlatformMerdekaMengajar::paginate(10);
+        $platform = PlatformMerdekaMengajar::orderBy('created_at', 'desc')->paginate(10);
         $tendik = Tendik::get();
         return view('admin.platformMerdekaMengajar', compact('platform', 'tendik'));
     }
@@ -37,7 +37,8 @@ class PlatformMerdekaMengajarController extends Controller
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,
             'jam_berakhir' => $request->jam_berakhir,
-            'hasil'        => $request->hasil
+            'hasil'        => $request->hasil,
+            'sertifikat'   => $request->sertifikat,
         ]);
 
         return redirect()->to('/platform')->with('success', 'Data Platform Berhasil Diperbarui');
@@ -55,7 +56,8 @@ class PlatformMerdekaMengajarController extends Controller
             'tanggal'      => $request->tanggal,
             'jam_mulai'    => $request->jam_mulai,
             'jam_berakhir' => $request->jam_berakhir,
-            'hasil'        => $request->hasil
+            'hasil'        => $request->hasil,
+            'sertifikat'   => $request->sertifikat,
         ]);
     }
 }

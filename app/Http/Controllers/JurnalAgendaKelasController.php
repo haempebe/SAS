@@ -11,7 +11,7 @@ class JurnalAgendaKelasController extends Controller
 {
     public function index()
     {
-        $jurnal = JurnalAgendaKelas::paginate(10);
+        $jurnal = JurnalAgendaKelas::orderBy('created_at', 'desc')->paginate(10);
         $tendik = Tendik::get();
         return view('admin.jurnalAgendaKelas', compact('jurnal', 'tendik'));
     }
@@ -42,7 +42,8 @@ class JurnalAgendaKelasController extends Controller
             'hadir'        => $request->hadir,
             'sakit'        => $request->sakit,
             'izin'         => $request->izin,
-            'alpa'         => $request->alpa
+            'alpa'         => $request->alpa,
+            'keterangan'   => $request->keterangan,
         ]);
 
         return redirect()->to('/jurnal')->with('success', 'Data Jurnal Berhasil Diperbarui');
@@ -65,7 +66,8 @@ class JurnalAgendaKelasController extends Controller
             'hadir'        => $request->hadir,
             'sakit'        => $request->sakit,
             'izin'         => $request->izin,
-            'alpa'         => $request->alpa
+            'alpa'         => $request->alpa,
+            'keterangan'   => $request->keterangan,
         ]);
     }
 }

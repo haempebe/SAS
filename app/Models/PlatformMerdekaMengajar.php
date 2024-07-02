@@ -9,7 +9,7 @@ class PlatformMerdekaMengajar extends Model
 {
     use HasFactory;
     protected $table = 'platform_merdeka_mengajar';
-    protected $fillable = ['tendik_id', 'topik', 'tanggal', 'jam_mulai', 'jam_berakhir', 'hasil'];
+    protected $fillable = ['tendik_id', 'topik', 'tanggal', 'jam_mulai', 'jam_berakhir', 'hasil', 'sertifikat'];
 
     public function tendik()
     {
