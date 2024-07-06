@@ -326,6 +326,14 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="modal-body">
+                        <div class="form-label">Sertifikat</div>
+                        <input accept="image/*" type="file" class="form-control" name="sertifikat"
+                            onchange="previewImage()" value="{{ old('sertifikat') }}">
+                        @error('sertifikat')
+                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                        @enderror
+                    </div>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                             Cancel
@@ -435,6 +443,14 @@
                                     <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-label">Sertifikat</div>
+                            <input accept="image/*" type="file" class="form-control" name="sertifikat"
+                                onchange="previewImage()" value="{{ $item->sertifikat }}">
+                            @error('sertifikat')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
                         </div>
                         <div class="modal-footer">
                             <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">

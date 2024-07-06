@@ -16,7 +16,8 @@ class Siswa extends Model
     {
         return $this->hasMany('App\Models\Izin');
     }
-    public function absensi(){
+    public function absensi()
+    {
         return $this->hasMany(Absensi::class);
     }
 }

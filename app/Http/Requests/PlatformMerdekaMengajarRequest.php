@@ -27,7 +27,8 @@ class PlatformMerdekaMengajarRequest extends FormRequest
             'tanggal'      => 'required',
             'jam_mulai'    => 'required',
             'jam_berakhir' => 'required',
-            'hasil'        => 'required'
+            'hasil'        => 'required',
+            'sertifikat'   => 'required',
         ];
     }
 }

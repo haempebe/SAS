@@ -603,7 +603,7 @@
                                                 <img src="{{ asset('img/bahan/belum.png') }}" style="width: 85px;"
                                                     class="img-fluid mx-3" alt="">
                                                 <div class="p-2 text-white ms-auto">
-                                                    <strong>Belum Absen</strong>
+                                                    <strong>Belum Masuk</strong>
                                                     <p style="font-size: 40px; font-weight:600" class="mb-0">
                                                         {{ $belumMasuk10 }}<span class="page-pretitle text-white">
                                                             siswa</span></p>
@@ -615,7 +615,7 @@
                                                 <img src="{{ asset('img/bahan/belum.png') }}" style="width: 85px;"
                                                     class="img-fluid mx-3" alt="">
                                                 <div class="p-2 text-white ms-auto">
-                                                    <strong>Belum Absen</strong>
+                                                    <strong>Belum Masuk</strong>
                                                     <p style="font-size: 40px; font-weight:600" class="mb-0">
                                                         {{ $belumMasuk11 }}<span class="page-pretitle text-white">
                                                             siswa</span></p>
@@ -627,7 +627,7 @@
                                                 <img src="{{ asset('img/bahan/belum.png') }}" style="width: 85px;"
                                                     class="img-fluid mx-3" alt="">
                                                 <div class="p-2 text-white ms-auto">
-                                                    <strong>Belum Absen</strong>
+                                                    <strong>Belum Masuk</strong>
                                                     <p style="font-size: 40px; font-weight:600" class="mb-0">
                                                         {{ $belumMasuk12 }}<span class="page-pretitle text-white">
                                                             siswa</span></p>
@@ -639,7 +639,7 @@
                                                 <img src="{{ asset('img/bahan/belum.png') }}" style="width: 85px;"
                                                     class="img-fluid mx-3" alt="">
                                                 <div class="p-2 text-white ms-auto">
-                                                    <strong>Belum Absen</strong>
+                                                    <strong>Belum Masuk</strong>
                                                     <p style="font-size: 40px; font-weight:600" class="mb-0">
                                                         {{ $belumMasuk }}<span class="page-pretitle text-white">
                                                             siswa</span></p>

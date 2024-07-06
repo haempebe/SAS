@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('jam_mulai');
             $table->time('jam_berakhir');
             $table->text('hasil');
+            $table->string('sertifikat')->nullable();
             $table->timestamps();
         });
     }

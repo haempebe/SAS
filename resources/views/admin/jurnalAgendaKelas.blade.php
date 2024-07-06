@@ -408,36 +408,43 @@
                         </div>
                         <div class="mb-3">
                             <div class="row">
-                                <label class="form-label">Keterangan</label>
+                                <label class="form-label">Absensi</label>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="hadir"
-                                        value="{{ old('hadir') }}" placeholder="Hadir" autocomplete="off">
+                                        value="{{ old('hadir', 0) }}" placeholder="Hadir" autocomplete="off">
                                     @error('hadir')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="sakit"
-                                        value="{{ old('sakit') }}" placeholder="Sakit" autocomplete="off">
+                                        value="{{ old('sakit', 0) }}" placeholder="Sakit" autocomplete="off">
                                     @error('sakit')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="izin"
-                                        value="{{ old('izin') }}" placeholder="Izin" autocomplete="off">
+                                        value="{{ old('izin', 0) }}" placeholder="Izin" autocomplete="off">
                                     @error('izin')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="alpa"
-                                        value="{{ old('alpa') }}" placeholder="Alpa" autocomplete="off">
+                                        value="{{ old('alpa', 0) }}" placeholder="Alpa" autocomplete="off">
                                     @error('alpa')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">Keterangan</label>
+                            <textarea rows="5" class="form-control" name="keterangan"></textarea>
+                            @error('keterangan')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('sakit');
             $table->string('izin');
             $table->string('alpa');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }

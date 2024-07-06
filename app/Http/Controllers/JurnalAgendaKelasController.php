@@ -42,7 +42,8 @@ class JurnalAgendaKelasController extends Controller
             'hadir'        => $request->hadir,
             'sakit'        => $request->sakit,
             'izin'         => $request->izin,
-            'alpa'         => $request->alpa
+            'alpa'         => $request->alpa,
+            'keterangan'   => $request->keterangan,
         ]);
 
         return redirect()->to('/jurnal')->with('success', 'Data Jurnal Berhasil Diperbarui');
@@ -65,7 +66,8 @@ class JurnalAgendaKelasController extends Controller
             'hadir'        => $request->hadir,
             'sakit'        => $request->sakit,
             'izin'         => $request->izin,
-            'alpa'         => $request->alpa
+            'alpa'         => $request->alpa,
+            'keterangan'   => $request->keterangan,
         ]);
     }
 }
