@@ -102,6 +102,7 @@
                                 <th>Nama</th>
                                 <th>role</th>
                                 <th>Jenis Izin</th>
+                                <th>Tanggal</th>
                                 <th>Keterangan</th>
                                 <th class="w-8"></th>
                             </tr>
@@ -129,6 +130,9 @@
                                             @else
                                                 <span class="badge bg-indigo text-indigo-fg">Perjalanan Dinas</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->created_at }}</div>
                                         </td>
                                         <td>
                                             <div>{{ $item->keterangan }}</div>
@@ -194,6 +198,9 @@
                                             @else
                                                 <span class="badge bg-indigo text-indigo-fg">Perjalanan Dinas</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <div>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-y') }}</div>
                                         </td>
                                         <td>
                                             <div>{{ $item->keterangan }}</div>

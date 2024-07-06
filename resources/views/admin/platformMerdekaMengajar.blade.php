@@ -104,6 +104,7 @@
                                 <th>Tanggal</th>
                                 <th>Waktu</th>
                                 <th>Hasil</th>
+                                <th>Sertifikat</th>
                                 <th class="w-8"></th>
                             </tr>
                         </thead>
@@ -125,6 +126,13 @@
                                     </td>
                                     <td>
                                         <div>{!! $item->hasil !!}</div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex py-1 align-items-center">
+                                            <img src="{{ asset('img/foto/' . $item->sertifikat) }}"
+                                                class="avatar avatar-lg img-fluid rounded" alt="" srcset=""
+                                                style="object-fit:cover;">
+                                        </div>
                                     </td>
                                     <td class="text-end">
                                         <div class="row g-0">
@@ -243,7 +251,7 @@
 
     {{-- Form Create --}}
     <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('platform.perform') }}" method="POST">
+        <form action="{{ route('platform.perform') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -330,9 +338,6 @@
                         <div class="form-label">Sertifikat</div>
                         <input accept="image/*" type="file" class="form-control" name="sertifikat"
                             onchange="previewImage()" value="{{ old('sertifikat') }}">
-                        @error('sertifikat')
-                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                        @enderror
                     </div>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
@@ -358,7 +363,7 @@
     @foreach ($platform as $item)
         <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
-            <form action="{{ route('platform.update', $item->id) }}" method="POST">
+            <form action="{{ route('platform.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-dialog modal-lg" role="document">
@@ -448,9 +453,6 @@
                             <div class="form-label">Sertifikat</div>
                             <input accept="image/*" type="file" class="form-control" name="sertifikat"
                                 onchange="previewImage()" value="{{ $item->sertifikat }}">
-                            @error('sertifikat')
-                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
-                            @enderror
                         </div>
                         <div class="modal-footer">
                             <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
