@@ -29,10 +29,6 @@ class JurnalAgendaKelasRequest extends FormRequest
             'jam_berakhir' => 'required',
             'kelas'        => 'required',
             'materi'       => 'required',
-            'hadir'        => 'required',
-            'sakit'        => 'required',
-            'izin'         => 'required',
-            'alpa'         => 'required',
             'keterangan'   => 'required'
         ];
     }
