@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('jam_mulai')->nullable();
             $table->time('jam_berakhir')->nullable();
             $table->text('keterangan');
+            $table->string('foto');
             $table->timestamps();
         });
     }

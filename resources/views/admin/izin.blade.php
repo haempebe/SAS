@@ -104,6 +104,7 @@
                                 <th>Jenis Izin</th>
                                 <th>Tanggal</th>
                                 <th>Keterangan</th>
+                                <th>Foto</th>
                                 <th class="w-8"></th>
                             </tr>
                         </thead>
@@ -205,6 +206,13 @@
                                         <td>
                                             <div>{{ $item->keterangan }}</div>
                                         </td>
+                                        <td>
+                                            <div class="d-flex py-1 align-items-center">
+                                                <img src="{{ asset('img/foto/' . $item->foto) }}"
+                                                    class="avatar avatar-lg img-fluid rounded" alt=""
+                                                    srcset="" style="object-fit:cover;">
+                                            </div>
+                                        </td>
                                         <td class="text-end">
                                             <div class="row g-0">
                                                 <div class="col">
@@ -298,7 +306,7 @@
                                 </div>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center pt-4">
+                                    <td colspan="7" class="text-center pt-4">
                                         <p>Tidak Ada Data</p>
                                     </td>
                                 </tr>
@@ -324,7 +332,7 @@
 
     {{-- Form Create --}}
     <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('izin.perform') }}" method="POST">
+        <form action="{{ route('izin.perform') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -396,6 +404,14 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="modal-body">
+                        <div class="form-label">Foto</div>
+                        <input accept="image/*" type="file" class="form-control" name="foto"
+                            onchange="previewImage()" value="{{ old('foto') }}">
+                        @error('foto')
+                            <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                        @enderror
+                    </div>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                             Cancel
@@ -420,7 +436,7 @@
     @foreach ($izin as $item)
         <div class="modal modal-blur fade" id="modal-update-{{ $item->id }}" tabindex="-1" role="dialog"
             aria-hidden="true">
-            <form action="{{ route('izin.update', $item->id) }}" method="POST">
+            <form action="{{ route('izin.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-dialog modal-lg" role="document">
@@ -515,6 +531,14 @@
                                     </p>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-label">Foto</div>
+                            <input accept="image/*" type="file" class="form-control" name="foto"
+                                onchange="previewImage()">
+                            @error('foto')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
                         </div>
                         <div class="modal-footer">
                             <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">

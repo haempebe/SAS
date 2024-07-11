@@ -9,7 +9,7 @@ class Izin extends Model
 {
     use HasFactory;
     protected $table = 'izin';
-    protected $fillable = ['siswa_id', 'tendik_id', 'jenis_izin', 'jam_mulai', 'jam_berakhir', 'keterangan'];
+    protected $fillable = ['siswa_id', 'tendik_id', 'jenis_izin', 'jam_mulai', 'jam_berakhir', 'keterangan', 'foto'];
 
     public function siswa()
     {

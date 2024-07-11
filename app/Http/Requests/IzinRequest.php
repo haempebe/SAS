@@ -28,6 +28,7 @@ class IzinRequest extends FormRequest
             'jam_mulai'      => 'nullable',
             'jam_berakhir'   => 'nullable',
             'keterangan'     => 'required',
+            'foto'           => 'required'
         ];
     }
     public function messages(): array
@@ -35,6 +36,7 @@ class IzinRequest extends FormRequest
         return [
             'jenis_izin.required' => 'Jenis izin harus diisi',
             'keterangan.required' => 'Keterangan harus diisi',
+            'foto.required'       => 'Foto harus diisi'
         ];
     }
 }

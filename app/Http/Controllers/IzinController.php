@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Izin;
 use App\Models\Tendik;
 use App\Models\Siswa;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class IzinController extends Controller
 {
@@ -20,9 +22,44 @@ class IzinController extends Controller
     public function store(IzinRequest $request)
     {
         $request->validated();
-        $this->cari($request);
 
-        return redirect()->to('/izin')->with('create', 'Data Izin Berhasil Dibuat');
+        try {
+            $fotoName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('img/foto'), $fotoName);
+
+            DB::transaction(function () use ($request, $fotoName) {
+                $getSiswa = Siswa::where('nisn', $request->nama)
+                    ->first();
+                $getTendik = Tendik::where('nik', $request->nama)
+                    ->first();
+
+                if (is_null($getSiswa)) {
+                    Izin::create([
+                        'tendik_id'    => $getTendik->id,
+                        'jenis_izin'   => $request->jenis_izin,
+                        'jam_mulai'    => $request->jam_mulai,
+                        'jam_berakhir' => $request->jam_berakhir,
+                        'keterangan'   => $request->keterangan,
+                        'foto'         => $fotoName,
+                    ]);
+                }
+
+                if (is_null($getTendik)) {
+                    Izin::create([
+                        'siswa_id'     => $getSiswa->id,
+                        'jenis_izin'   => $request->jenis_izin,
+                        'jam_mulai'    => $request->jam_mulai,
+                        'jam_berakhir' => $request->jam_berakhir,
+                        'keterangan'   => $request->keterangan,
+                        'foto'         => $fotoName,
+                    ]);
+                }
+            });
+            return redirect()->to('/izin')->with('create', 'Data Izin Berhasil Dibuat');
+        } catch (\Throwable $th) {
+            report($th);
+            return redirect()->to('/izin')->with('error', 'Data Izin Tidak Berhasil Dibuat');
+        }
     }
     public function edit($id)
     {
@@ -31,49 +68,69 @@ class IzinController extends Controller
     }
     public function update(IzinRequest $request, $id)
     {
-        $request->validated();
+        $validatedData = $request->validated();
 
-        Izin::findOrFail($id)->update([
-            'siswa_id'     => $request->nama,
-            'jenis_izin'   => $request->jenis_izin,
-            'jam_mulai'    => $request->jam_mulai,
-            'jam_berakhir' => $request->jam_berakhir,
-            'keterangan'   => $request->keterangan
-        ]);
+        try {
+            DB::beginTransaction();
 
-        return redirect()->to('/izin')->with('update', 'Data Izin Berhasil Diperbarui');
+            $izin = Izin::findOrFail($id);
+            $izin->update($validatedData);
+
+            if ($request->hasFile('foto')) {
+                $path = "img/foto/";
+                File::delete($path . $izin->foto);
+
+                $fotoName = time() . '.' . $request->foto->extension();
+                $request->foto->move(public_path('img/foto'), $fotoName);
+
+                $izin->foto = $fotoName;
+            }
+
+            $izin->save();
+
+            DB::commit();
+
+            return redirect()->to('/izin')->with('update', 'Data Izin Berhasil Diperbarui');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect('/izin')->with('error', 'Terjadi kesalahan saat memperbarui data Izin: ' . $th->getMessage());
+        }
+
+        if ($request->has('foto')) {
+
+            $path = "img/foto/";
+            File::delete($path . $izin->foto);
+
+            $fotoName = time() . '.' . $request->foto->extension();
+
+            $request->foto->move(public_path('img/foto'), $fotoName);
+
+            Izin::findOrFail($id)->update([
+                'siswa_id'     => $request->nama,
+                'jenis_izin'   => $request->jenis_izin,
+                'jam_mulai'    => $request->jam_mulai,
+                'jam_berakhir' => $request->jam_berakhir,
+                'keterangan'   => $request->keterangan,
+                'foto'         => $fotoName,
+            ]);
+
+            return redirect('/platform');
+        } else {
+            Izin::findOrFail($id)->update([
+                'siswa_id'     => $request->nama,
+                'jenis_izin'   => $request->jenis_izin,
+                'jam_mulai'    => $request->jam_mulai,
+                'jam_berakhir' => $request->jam_berakhir,
+                'keterangan'   => $request->keterangan,
+                'foto'         => $fotoName,
+            ]);
+
+            return redirect()->to('/platform')->with('success', 'Data Platform Berhasil Diperbarui');
+        }
     }
     public function destroy($id)
     {
         Izin::findOrFail($id)->delete();
         return redirect()->to('/izin')->with('delete', 'Data Izin Berhasil Dihapus');
-    }
-    private function cari($request)
-    {
-        $getSiswa = Siswa::where('nisn', $request->nama)
-            ->first();
-
-        $getTendik = Tendik::where('nik', $request->nama)
-            ->first();
-
-        if (is_null($getSiswa)) {
-            Izin::create([
-                'tendik_id'    => $getTendik->id,
-                'jenis_izin'   => $request->jenis_izin,
-                'jam_mulai'    => $request->jam_mulai,
-                'jam_berakhir' => $request->jam_berakhir,
-                'keterangan'   => $request->keterangan
-            ]);
-        }
-
-        if (is_null($getTendik)) {
-            Izin::create([
-                'siswa_id'     => $getSiswa->id,
-                'jenis_izin'   => $request->jenis_izin,
-                'jam_mulai'    => $request->jam_mulai,
-                'jam_berakhir' => $request->jam_berakhir,
-                'keterangan'   => $request->keterangan
-            ]);
-        }
     }
 }
