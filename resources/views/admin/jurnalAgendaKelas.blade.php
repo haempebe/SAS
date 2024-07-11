@@ -105,6 +105,7 @@
                                 <th>Waktu</th>
                                 <th>Kelas</th>
                                 <th>Materi</th>
+                                <th>Absensi</th>
                                 <th>Keterangan</th>
                                 <th class="w-8"></th>
                             </tr>
@@ -154,6 +155,9 @@
                                                 </span>
                                             </button>
                                         </div>
+                                    </td>
+                                    <td>
+                                        {{ $item->keterangan }}
                                     </td>
                                     <td class="text-end">
                                         <div class="row g-0">
@@ -411,28 +415,32 @@
                                 <label class="form-label">Absensi</label>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="hadir"
-                                        value="{{ old('hadir', 0) }}" placeholder="Hadir" autocomplete="off">
+                                        value="{{ old('hadir') }}" min="0" placeholder="Hadir"
+                                        autocomplete="off">
                                     @error('hadir')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="sakit"
-                                        value="{{ old('sakit', 0) }}" placeholder="Sakit" autocomplete="off">
+                                        value="{{ old('sakit') }}" min="0" placeholder="Sakit"
+                                        autocomplete="off">
                                     @error('sakit')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="izin"
-                                        value="{{ old('izin', 0) }}" placeholder="Izin" autocomplete="off">
+                                        value="{{ old('izin') }}" min="0" placeholder="Izin"
+                                        autocomplete="off">
                                     @error('izin')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3">
                                     <input type="number" class="form-control" name="alpa"
-                                        value="{{ old('alpa', 0) }}" placeholder="Alpa" autocomplete="off">
+                                        value="{{ old('alpa') }}" min="0" placeholder="Alpa"
+                                        autocomplete="off">
                                     @error('alpa')
                                         <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                                     @enderror
@@ -441,7 +449,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label required">Keterangan</label>
-                            <textarea rows="5" class="form-control" name="keterangan"></textarea>
+                            <textarea rows="5" class="form-control" name="keterangan">{{ old('keterangan') }}</textarea>
                             @error('keterangan')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
@@ -615,7 +623,7 @@
                             </div>
                             <div class="mb-3">
                                 <div class="row">
-                                    <label class="form-label">Keterangan</label>
+                                    <label class="form-label">Absensi</label>
                                     <div class="col-lg-3">
                                         <input type="number" class="form-control" name="hadir"
                                             value="{{ $item->hadir }}" placeholder="Hadir" autocomplete="off">
@@ -645,6 +653,13 @@
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label required">Keterangan</label>
+                                <textarea rows="5" class="form-control" name="keterangan">{{ $item->keterangan }}</textarea>
+                                @error('keterangan')
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                @enderror
                             </div>
                         </div>
                         <div class="modal-footer">

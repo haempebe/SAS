@@ -719,7 +719,7 @@
 
             $jsonTepatWaktu = json_encode($tepatWaktu);
             $jsonTerlambat = json_encode($terlambat);
-        @endphp
+        @endphp 
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 window.ApexCharts && (new ApexCharts(document.getElementById('chart-absensi-{{ $item->id }}'), {

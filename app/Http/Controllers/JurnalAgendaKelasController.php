@@ -18,6 +18,7 @@ class JurnalAgendaKelasController extends Controller
     public function store(JurnalAgendaKelasRequest $request)
     {
         $request->validated();
+
         $this->create($request);
 
         return redirect()->to('/jurnal')->with('success', 'Data Jurnal Berhasil Dibuat');
@@ -39,14 +40,16 @@ class JurnalAgendaKelasController extends Controller
             'jam_berakhir' => $request->jam_berakhir,
             'kelas'        => $request->kelas,
             'materi'       => $request->materi,
-            'hadir'        => $request->hadir,
-            'sakit'        => $request->sakit,
-            'izin'         => $request->izin,
-            'alpa'         => $request->alpa,
+            'hadir'        => $request->hadir ? $request->hadir : 0,
+            'sakit'        => $request->sakit ? $request->sakit : 0,
+            'izin'         => $request->izin ? $request->izin : 0,
+            'alpa'         => $request->alpa ? $request->alpa : 0,
             'keterangan'   => $request->keterangan,
         ]);
 
-        return redirect()->to('/jurnal')->with('success', 'Data Jurnal Berhasil Diperbarui');
+        $namaTendik = Tendik::find($request->tendik_id);
+
+        return redirect()->to('/jurnal')->with('success', 'Data Jurnal Berhasil Diperbarui ' . $namaTendik->nama);
     }
     public function destroy($id)
     {
@@ -63,10 +66,10 @@ class JurnalAgendaKelasController extends Controller
             'jam_berakhir' => $request->jam_berakhir,
             'kelas'        => $request->kelas,
             'materi'       => $request->materi,
-            'hadir'        => $request->hadir,
-            'sakit'        => $request->sakit,
-            'izin'         => $request->izin,
-            'alpa'         => $request->alpa,
+            'hadir'        => $request->hadir ? $request->hadir : 0,
+            'sakit'        => $request->sakit ? $request->sakit : 0,
+            'izin'         => $request->izin ? $request->izin : 0,
+            'alpa'         => $request->alpa ? $request->alpa : 0,
             'keterangan'   => $request->keterangan,
         ]);
     }
