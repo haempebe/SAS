@@ -75,4 +75,20 @@ class RekapAbsenTendikController extends Controller
 
         return view('admin.rekapTendik', compact('absensi', 'izin', 'start_date', 'end_date', 'rowTableAbsensi', 'totalJamPerTendik', 'loopTanggal'));
     }
+
+    public function pin()
+    {
+        return view('admin.pin');
+    }
+    public function checkPin(Request $request)
+    {
+        $pin = $request->input('pin');
+
+        if ($pin === env('PIN_CODE')) {
+            $request->session()->put('pin', $pin);
+            return redirect()->intended(route('rekap-tendik'));
+        }
+
+        return back()->withErrors(['pin' => 'Invalid PIN']);
+    }
 }

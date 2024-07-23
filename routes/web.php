@@ -126,9 +126,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/rekap-siswa', 'index')->name('rekap-siswa');
         Route::get('/filter-siswa', 'filter');
     });
+
     Route::controller(RekapAbsenTendikController::class)->group(function () {
-        Route::get('/rekap-tendik', 'index')->name('rekap-tendik');
-        Route::get('/filter-tendik', 'filter');
+        Route::get('/pin', 'pin')->name('pin');
+        Route::post('/check-pin', 'checkPin')->name('check.pin');
+        Route::get('/rekap-tendik', 'index')->middleware('check.pin')->name('rekap-tendik');
+        Route::get('/filter-tendik', 'filter')->middleware('check.pin');
     });
     Route::controller(RekapSilatController::class)->group(function () {
         Route::get('/rekap-silat', 'index')->name('rekap-silat');
