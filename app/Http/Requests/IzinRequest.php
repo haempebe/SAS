@@ -25,6 +25,7 @@ class IzinRequest extends FormRequest
             'tendik_id'      => 'nullable',
             'siswa_id'       => 'nullable',
             'jenis_izin'     => 'required',
+            'tanggal'        => 'required',
             'jam_mulai'      => 'nullable',
             'jam_berakhir'   => 'nullable',
             'keterangan'     => 'required',

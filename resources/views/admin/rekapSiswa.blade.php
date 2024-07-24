@@ -227,6 +227,7 @@
                                     <th>Jenis Izin</th>
                                     <th>Tanggal</th>
                                     <th>Keterangan</th>
+                                    <th class="text-center">Validasi</th>
                                 </tr>
                             </thead>
                             <tbody class="border-1">
@@ -250,6 +251,32 @@
                                             @endif
                                             <td>{{ $item->created_at->format('d F') }}</td>
                                             <td>{{ $item->keterangan }}</td>
+                                            <td class="text-center">
+                                                {{-- Badge jika checkbox ter-check --}}
+                                                <span class="badge bg-green text-green-fg badge-checked"
+                                                    id="badge-checked-{{ $item->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                                        <path d="M9 12l2 2l4 -4" />
+                                                    </svg>
+                                                </span>
+                                                {{-- Badge jika checkbox tidak ter-check --}}
+                                                <span class="badge bg-danger text-danger-fg badge-unchecked"
+                                                    id="badge-unchecked-{{ $item->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-circle-x">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                                        <path d="M10 10l4 4m0 -4l-4 4" />
+                                                    </svg>
+                                                </span>
+                                            </td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -315,4 +342,27 @@
             }
         </script>
     @endif
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const items = @json($izin); // Pastikan variabel items tersedia di Blade
+
+            items.forEach(item => {
+                const checkboxId = 'checkbox-' + item.id;
+                const badgeChecked = document.getElementById('badge-checked-' + item.id);
+                const badgeUnchecked = document.getElementById('badge-unchecked-' + item.id);
+                const savedState = localStorage.getItem(checkboxId);
+
+                if (savedState === 'true') {
+                    badgeChecked.style.display = 'inline';
+                    badgeUnchecked.style.display = 'none';
+                } else {
+                    badgeChecked.style.display = 'none';
+                    badgeUnchecked.style.display = 'inline';
+                }
+            });
+        });
+    </script>
 @endsection

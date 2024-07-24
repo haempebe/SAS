@@ -105,6 +105,7 @@
                                 <th>Tanggal</th>
                                 <th>Keterangan</th>
                                 <th>Foto</th>
+                                <th>Validasi</th>
                                 <th class="w-8"></th>
                             </tr>
                         </thead>
@@ -133,10 +134,21 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <div>{{ $item->created_at }}</div>
+                                            <div>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-y') }}</div>
                                         </td>
                                         <td>
                                             <div>{{ $item->keterangan }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex py-1 align-items-center">
+                                                <img src="{{ asset('img/foto/' . $item->foto) }}"
+                                                    class="avatar avatar-lg img-fluid rounded" alt=""
+                                                    srcset="" style="object-fit:cover;">
+                                            </div>
+                                        </td>
+                                        <td class="mx-auto">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="checkbox-{{ $item->id }}">
                                         </td>
                                         <td class="text-end">
                                             <div class="row g-0">
@@ -201,7 +213,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <div>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-y') }}</div>
+                                            <div>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-y') }}</div>
                                         </td>
                                         <td>
                                             <div>{{ $item->keterangan }}</div>
@@ -212,6 +224,10 @@
                                                     class="avatar avatar-lg img-fluid rounded" alt=""
                                                     srcset="" style="object-fit:cover;">
                                             </div>
+                                        </td>
+                                        <td class="mx-auto">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="checkbox-{{ $item->id }}">
                                         </td>
                                         <td class="text-end">
                                             <div class="row g-0">
@@ -306,7 +322,7 @@
                                 </div>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center pt-4">
+                                    <td colspan="8" class="text-center pt-4">
                                         <p>Tidak Ada Data</p>
                                     </td>
                                 </tr>
@@ -369,6 +385,31 @@
                                 <option value="Perjalanan Dinas">Perjalanan Dinas</option>
                             </select>
                             @error('jenis_izin')
+                                <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal</label>
+                            <div class="input-icon" autocomplete="off">
+                                <input class="form-control" placeholder="" id="datepicker-icon" name="tanggal"
+                                    autocomplete="off" value="{{ old('tanggal') }}">
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path
+                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z">
+                                        </path>
+                                        <path d="M16 3v4"></path>
+                                        <path d="M8 3v4"></path>
+                                        <path d="M4 11h16"></path>
+                                        <path d="M11 15h1"></path>
+                                        <path d="M12 15v3"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            @error('tanggal')
                                 <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
                             @enderror
                         </div>
@@ -498,6 +539,31 @@
                                     </p>
                                 @enderror
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal</label>
+                                <div class="input-icon" autocomplete="off">
+                                    <input class="form-control" placeholder="" id="datepicker-icon" name="tanggal"
+                                        value="{{ $item->tanggal }}">
+                                    <span class="input-icon-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path
+                                                d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z">
+                                            </path>
+                                            <path d="M16 3v4"></path>
+                                            <path d="M8 3v4"></path>
+                                            <path d="M4 11h16"></path>
+                                            <path d="M11 15h1"></path>
+                                            <path d="M12 15v3"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                                @error('tanggal')
+                                    <p class='text-danger mb-0 text-xs pt-1'> {{ $message }} </p>
+                                @enderror
+                            </div>
                             <div>
                                 <div class="row">
                                     <div class="col-lg-6" id="jam_mulai_{{ $item->id }}">
@@ -620,4 +686,25 @@
         </script>
     @endforeach
     {{-- Place this at the end of your HTML body or use DOMContentLoaded event --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const checkboxes = document.querySelectorAll('.form-check-input');
+
+            checkboxes.forEach(checkbox => {
+                // Set the checkbox state from localStorage
+                const checkboxId = checkbox.id;
+                const savedState = localStorage.getItem(checkboxId);
+                if (savedState === 'true') {
+                    checkbox.checked = true;
+                } else if (savedState === 'false') {
+                    checkbox.checked = false;
+                }
+
+                // Add event listener to save state on change
+                checkbox.addEventListener('change', () => {
+                    localStorage.setItem(checkboxId, checkbox.checked);
+                });
+            });
+        });
+    </script>
 @endsection

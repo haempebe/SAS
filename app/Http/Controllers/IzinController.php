@@ -37,6 +37,7 @@ class IzinController extends Controller
                     Izin::create([
                         'tendik_id'    => $getTendik->id,
                         'jenis_izin'   => $request->jenis_izin,
+                        'tanggal'      => $request->tanggal,
                         'jam_mulai'    => $request->jam_mulai,
                         'jam_berakhir' => $request->jam_berakhir,
                         'keterangan'   => $request->keterangan,
@@ -48,6 +49,7 @@ class IzinController extends Controller
                     Izin::create([
                         'siswa_id'     => $getSiswa->id,
                         'jenis_izin'   => $request->jenis_izin,
+                        'tanggal'      => $request->tanggal,
                         'jam_mulai'    => $request->jam_mulai,
                         'jam_berakhir' => $request->jam_berakhir,
                         'keterangan'   => $request->keterangan,
@@ -108,6 +110,7 @@ class IzinController extends Controller
             Izin::findOrFail($id)->update([
                 'siswa_id'     => $request->nama,
                 'jenis_izin'   => $request->jenis_izin,
+                'tanggal'      => $request->tanggal,
                 'jam_mulai'    => $request->jam_mulai,
                 'jam_berakhir' => $request->jam_berakhir,
                 'keterangan'   => $request->keterangan,
@@ -119,6 +122,7 @@ class IzinController extends Controller
             Izin::findOrFail($id)->update([
                 'siswa_id'     => $request->nama,
                 'jenis_izin'   => $request->jenis_izin,
+                'tanggal'      => $request->tanggal,
                 'jam_mulai'    => $request->jam_mulai,
                 'jam_berakhir' => $request->jam_berakhir,
                 'keterangan'   => $request->keterangan,

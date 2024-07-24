@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('tendik_id')->index()->nullable()->constrained('tendik')->cascadeOnDelete();
             $table->foreignId('siswa_id')->index()->nullable()->constrained('siswa')->cascadeOnDelete();
             $table->string('jenis_izin');
+            $table->date('tanggal');
             $table->time('jam_mulai')->nullable();
             $table->time('jam_berakhir')->nullable();
             $table->text('keterangan');
