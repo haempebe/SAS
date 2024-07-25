@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Pin;
 use App\Models\Izin;
 use App\Models\Absensi;
 use Illuminate\Http\Request;
@@ -83,12 +84,22 @@ class RekapAbsenTendikController extends Controller
     public function checkPin(Request $request)
     {
         $pin = $request->input('pin');
-
-        if ($pin === env('PIN_CODE')) {
+        $pw = Pin::find(1)->first();
+        if ($pin === $pw->pin) {
             $request->session()->put('pin', $pin);
             return redirect()->intended(route('rekap-tendik'));
         }
 
         return back()->withErrors(['pin' => 'Invalid PIN']);
+    }
+
+    public function upadatePin(Request $request, $id)
+    {
+        $request->validate([
+            'pin' => 'min:6|max:6|required'
+        ]);
+        Pin::find($id)->update(['pin' => $request->pin]);
+
+        return redirect('/rekap-tendik')->with('success', 'Pin Benar');
     }
 }

@@ -23,5 +23,8 @@ class DatabaseSeeder extends Seeder
             'jam_masuk' => '07:00',
             'jam_pulang' => '15:00'
         ]);
+        DB::table('pin')->insert([
+            'pin' => '123456'
+        ]);
     }
 }

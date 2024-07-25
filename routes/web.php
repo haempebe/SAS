@@ -34,7 +34,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/masuk', [HomeController::class, 'masuk'])->name('home.masuk');
 Route::post('/pulang', [HomeController::class, 'pulang'])->name('home.pulang');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','check.pin'])->group(function () {
     Route::controller(TendikController::class)->group(function () {
         Route::get('/tendik', 'index')->name('tendik');
         Route::get('/tendik-create', 'create');
@@ -130,6 +130,7 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(RekapAbsenTendikController::class)->group(function () {
         Route::get('/pin', 'pin')->name('pin');
         Route::post('/check-pin', 'checkPin')->name('check.pin');
+        Route::post('/update-pin', 'updatePin')->middleware('check.pin')->name('update.pin');
         Route::get('/rekap-tendik', 'index')->middleware('check.pin')->name('rekap-tendik');
         Route::get('/filter-tendik', 'filter')->middleware('check.pin');
     });
