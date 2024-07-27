@@ -30,11 +30,11 @@ Auth::routes([
     'verify' => false, // Email Verification Routes...
 ]);
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::post('/masuk', [HomeController::class, 'masuk'])->name('home.masuk');
-Route::post('/pulang', [HomeController::class, 'pulang'])->name('home.pulang');
+Route::get('/', [HomeController::class, 'index'])->middleware('check.pin')->name('home');
+Route::post('/masuk', [HomeController::class, 'masuk'])->middleware('check.pin')->name('home.masuk');
+Route::post('/pulang', [HomeController::class, 'pulang'])->middleware('check.pin')->name('home.pulang');
 
-Route::middleware(['auth','check.pin'])->group(function () {
+Route::middleware(['auth', 'check.pin'])->group(function () {
     Route::controller(TendikController::class)->group(function () {
         Route::get('/tendik', 'index')->name('tendik');
         Route::get('/tendik-create', 'create');

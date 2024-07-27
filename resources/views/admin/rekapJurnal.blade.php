@@ -105,6 +105,7 @@
                                     <th>Waktu</th>
                                     <th>Kelas</th>
                                     <th>Materi</th>
+                                    <th>Absensi</th>
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
@@ -154,6 +155,9 @@
                                                     </span>
                                                 </button>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $item->keterangan }}</div>
                                         </td>
                                     </tr>
                                 @empty
