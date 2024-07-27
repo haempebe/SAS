@@ -141,11 +141,10 @@
                                         @foreach ($izin as $itemI)
                                             @if ($itemI->tendik->nama == $item->tendik->nama)
                                                 @php
-                                                    $izinDates[] = \Carbon\Carbon::parse($itemI->tanggal)->format(
+                                                    $izinDates[] = \Carbon\Carbon::parse($itemI->created_at)->format(
                                                         'Y-m-d',
                                                     );
-                                                    $lastIzin[\Carbon\Carbon::parse($itemI->tanggal)->format('Y-m-d')] =
-                                                        $itemI->jenis_izin;
+                                                    $lastIzin[$itemI->created_at->format('Y-m-d')] = $itemI->jenis_izin;
                                                 @endphp
                                             @endif
                                         @endforeach
@@ -265,7 +264,9 @@
                                                 </td>
                                             @endif
                                             <td class="text-center">{{ $item->keterangan }}</td>
-                                            <td class="text-center">{{ $item->tanggal }}</td>
+                                            <td class="text-center">
+                                                {{ \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') }}
+                                            </td>
                                             <td class="text-center">
                                                 @if ($item->jam_mulai == '00:00:00' && $item->jam_berakhir == '00:00:00')
                                                     -

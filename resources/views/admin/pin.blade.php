@@ -24,7 +24,7 @@
                                 <div class="row g-2">
                                     @for ($i = 0; $i < 3; $i++)
                                         <div class="col">
-                                            <input type="text" class="form-control form-control-lg text-center py-3"
+                                            <input type="password" class="form-control form-control-lg text-center py-3"
                                                 maxlength="1" inputmode="numeric" pattern="[0-9]*" data-code-input>
                                         </div>
                                     @endfor
@@ -34,7 +34,7 @@
                                 <div class="row g-2">
                                     @for ($i = 0; $i < 3; $i++)
                                         <div class="col">
-                                            <input type="text" class="form-control form-control-lg text-center py-3"
+                                            <input type="password" class="form-control form-control-lg text-center py-3"
                                                 maxlength="1" inputmode="numeric" pattern="[0-9]*" data-code-input>
                                         </div>
                                     @endfor

@@ -9,12 +9,13 @@ use App\Models\Tendik;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class IzinController extends Controller
 {
     public function index()
     {
-        $izin = Izin::orderBy('created_at', 'desc')->paginate(10);
+        $izin = Izin::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->paginate(10);
         $tendik = tendik::get();
         $siswa = siswa::get();
         return view('admin.izin', compact('izin', 'tendik', 'siswa'));
@@ -33,11 +34,12 @@ class IzinController extends Controller
                 $getTendik = Tendik::where('nik', $request->nama)
                     ->first();
 
+                $created_at = Carbon::createFromFormat('Y-m-d', $request->tanggal)->startOfDay();
                 if (is_null($getSiswa)) {
                     Izin::create([
                         'tendik_id'    => $getTendik->id,
                         'jenis_izin'   => $request->jenis_izin,
-                        'tanggal'      => $request->tanggal,
+                        'created_at'      => $created_at,
                         'jam_mulai'    => $request->jam_mulai,
                         'jam_berakhir' => $request->jam_berakhir,
                         'keterangan'   => $request->keterangan,
@@ -49,7 +51,7 @@ class IzinController extends Controller
                     Izin::create([
                         'siswa_id'     => $getSiswa->id,
                         'jenis_izin'   => $request->jenis_izin,
-                        'tanggal'      => $request->tanggal,
+                        'created_at'   => $created_at,
                         'jam_mulai'    => $request->jam_mulai,
                         'jam_berakhir' => $request->jam_berakhir,
                         'keterangan'   => $request->keterangan,
@@ -99,7 +101,7 @@ class IzinController extends Controller
         }
 
         if ($request->has('foto')) {
-
+            $created_at = Carbon::createFromFormat('Y-m-d', $request->tanggal)->startOfDay();
             $path = "img/foto/";
             File::delete($path . $izin->foto);
 
@@ -110,7 +112,7 @@ class IzinController extends Controller
             Izin::findOrFail($id)->update([
                 'siswa_id'     => $request->nama,
                 'jenis_izin'   => $request->jenis_izin,
-                'tanggal'      => $request->tanggal,
+                'created_at'      => $created_at,
                 'jam_mulai'    => $request->jam_mulai,
                 'jam_berakhir' => $request->jam_berakhir,
                 'keterangan'   => $request->keterangan,
@@ -119,10 +121,11 @@ class IzinController extends Controller
 
             return redirect('/platform');
         } else {
+            $created_at = Carbon::createFromFormat('Y-m-d', $request->tanggal)->startOfDay();
             Izin::findOrFail($id)->update([
                 'siswa_id'     => $request->nama,
                 'jenis_izin'   => $request->jenis_izin,
-                'tanggal'      => $request->tanggal,
+                'created_at'   => $created_at,
                 'jam_mulai'    => $request->jam_mulai,
                 'jam_berakhir' => $request->jam_berakhir,
                 'keterangan'   => $request->keterangan,
