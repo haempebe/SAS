@@ -6,7 +6,7 @@ Cara instalasi seperti berikut:
 
 1. git clone
 ```bash
-git clone https://github.com/haempebe/pas-berita-hamidzan.git
+git clone https://github.com/haempebe/sas.git
 ```
 2. copy .env.example menjadi .env
 ```bash
@@ -14,7 +14,7 @@ cp .env.example .env
 ```
 3. setelah git clone masuk kedalam file dengan perintah cd
 ```bash
-cd pas-berita-hamidzan
+cd sas
 ```
 4. Composer install
 ```bash
