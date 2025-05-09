@@ -110,10 +110,10 @@ class HomeController extends Controller
                         ->where('status', 'Tepat Waktu')
                         ->count();
                     $lateCount = Absensi::where('tendik_id', $tendikId)
-                        ->whereDate('jam_masuk', '<=', $date)
-                        ->where('status', 'Terlambat')
-                        ->count();
 
+                        ->where('status', 'Terlambat')
+                        ->whereDate('jam_masuk', '<=', $date)
+                        ->count();
                     $totalAbsensiCount = ($ontimeCount + $lateCount);
 
                     $ontimePercentage = $totalAbsensiCount > 0 ? round(($ontimeCount / $totalAbsensiCount) * 100) : 0;
@@ -194,7 +194,7 @@ class HomeController extends Controller
             ]);
             try {
                 // $singkatNamaGuru = ucwords(substr($getTendik->nama,0,27));
-                $response = Http::post('http://localhost:3000/waapi', [
+                $response = Http::post('https://wasismako.smktibazma.sch.id/waapi/', [
                     'token' => 'shjdksahlsakjdkaqijdsajhda',
                     'nohp' => $getTendik->nomor_whatsapp,
                     'pesan' =>
@@ -249,10 +249,10 @@ Notification sent by the system
                     '*SMK TI BAZMA*
 Presensi : ' . $waktuTerkini->isoFormat('dddd, D MMMM Y') . '
 
-Nama           : *' . $singkatNamaSiswa . '*
-No.Induk      : ' . $getSiswa->nisn . '
-Presensi       : *' . 'Masuk' . '*
 Kelas            : ' . $getSiswa->kelas . '
+No.Induk      : ' . $getSiswa->nisn . '
+Nama           : *' . $singkatNamaSiswa . '*
+Presensi       : *' . 'Masuk' . '*
 Jam Absen  : ' . $waktuTerkini->format('H:i') . '
 keterangan  : *' . $status . '*
 
